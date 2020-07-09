@@ -21,7 +21,8 @@ class Scraper:
         self.isCourse = False
 
         # keeps track of the current name and title of the courses
-        self.courseLabel = ""
+        # Stored as HTML
+        self.courseLabel = None
 
         # A list of Course
         self.courses = list()
@@ -125,10 +126,8 @@ class Scraper:
                         # then the next row is a course
                         self.isCourse = True
 
-                        self.courseLabel = prevRow.findChildren("td")[0].text
-                        print("UCIrvineScraper -- scrapeRow --", "label found:", self.courseLabel)
-
-
+                        self.courseLabel = prevRow.findChildren("td")[0]
+                        print("UCIrvineScraper -- scrapeRow --", "label found:", self.courseLabel.find(text=True, recursive = False))
 
         elif (len(cells) > 4):
             # if this row doesn't contain a course and has more than four cells
@@ -151,13 +150,22 @@ class Scraper:
         Course Label has both the course name and title
         '''
         course = Course()
-        course.name = courseLabel
 
-        print("UCIrvineScraper -- scrapeCells --", "courseLabel", courseLabel.split("&nbsp"))
+        # remove extra spaces
+        course.name = " ".join(courseLabel.find(text = True, recursive = False).strip().split())
 
+        course.title = courseLabel.find("b").text
         course.code = cells[0].text
+        course.type = cells[1].text
+        course.units = self.toInt(cells[3].text)
         course.instructor = cells[4].text
-        course.location = cells[6].text
+        course.time = cells[5].text.strip()
+        course.location = cells[6].text.strip()
+        course.final = cells[7].text.strip()
+        course.max = self.toInt(cells[8].text)
+        course.enrolled = self.toInt(cells[9].text)
+
+        # need to do waitlisted and others
 
         print("UCIrvineScraper -- scrapeCells --", "added course", course)
 
@@ -221,6 +229,14 @@ class Scraper:
         self.courses = self.getCoursesByCourseCodes()
 
         return self.courses
+
+
+
+    def toInt(self, s: str) -> int:
+        try:
+            return int(s)
+        except ValueError:
+            return -1
 
 
 
