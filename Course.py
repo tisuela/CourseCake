@@ -17,4 +17,19 @@ class Course:
 
 
     def __str__(self) -> str:
-        return f"Course:  {self.code}\n    {self.instructor}\n    {self.location}"
+        return f"Course:\n    {self.name}\n    {self.code}\n    {self.instructor}\n    {self.location}"
+
+
+
+
+
+def main():
+    course = Course()
+    course.name = "yeet"
+    course.code = "1223"
+
+    print(course.__dict__)
+
+
+if __name__ == '__main__':
+    main()

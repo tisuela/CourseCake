@@ -36,7 +36,6 @@ class Universities:
         data.update(newUniversity)
 
         with open(self.jsonFileName, "w+") as jsonFile:
-            jsonFile.seek(0)
             json.dump(data, jsonFile)
 
 

@@ -20,7 +20,10 @@ class Scraper:
         # flag to identify a course in a table
         self.isCourse = False
 
-        # A list of Course (not used at the moment)
+        # keeps track of the current name and title of the courses
+        self.courseLabel = ""
+
+        # A list of Course
         self.courses = list()
 
         # UCI's WebSoc requires that we identify ourselves (User-Agent)
@@ -48,6 +51,7 @@ class Scraper:
         print("UCIrvineScraper -- getDepartments --","Departments initialized")
 
 
+
     def getDepartmentCourses(self, dept: str) -> list:
         '''
         Retrieves list of courses by querying department name
@@ -60,6 +64,7 @@ class Scraper:
         courses = self.scrapePage(page)
 
         return courses
+
 
 
     def getCourseCodeCourses(self, courseCodes: str) -> list:
@@ -87,24 +92,30 @@ class Scraper:
 
             # flag to identify a valid course row
             rowIsCourse = False
+
+            # stores previous row so we can refer back to it
+            prevRow = rows[0]
             for row in rows:
-                courses.extend(self.scrapeRow(row))
+                courses.extend(self.scrapeRow(row, prevRow))
+                prevRow = row
+
 
         except IndexError:
             # index error means no course list was in the page
             # We want to print out the error message
-            print("UCIrvineScraper -- scrapePage --", soup.find("div", {"style":"color: red; font-weight: bold;"}).text.strip())
+            print("UCIrvineScraper -- scrapePage --","ERROR:", soup.find("div", {"style":"color: red; font-weight: bold;"}).text.strip())
         return courses
 
 
-    def scrapeRow(self, row) -> list:
+
+    def scrapeRow(self, row, prevRow) -> list:
         courses = list()
         cells = row.findChildren(["th", "td"])
 
         # make sure this is a valid row
         if (len(cells) > 10):
             if self.isCourse:
-                course = self.scrapeCells(cells)
+                course = self.scrapeCells(cells, self.courseLabel)
                 courses.append(course)
 
             else:
@@ -113,6 +124,11 @@ class Scraper:
                         # If this row has the word "Code",
                         # then the next row is a course
                         self.isCourse = True
+
+                        self.courseLabel = prevRow.findChildren("td")[0].text
+                        print("UCIrvineScraper -- scrapeRow --", "label found:", self.courseLabel)
+
+
 
         elif (len(cells) > 4):
             # if this row doesn't contain a course and has more than four cells
@@ -128,13 +144,22 @@ class Scraper:
 
 
 
-    def scrapeCells(self, cells) -> Course:
+    def scrapeCells(self, cells, courseLabel) -> Course:
+        '''
+        Scrapes the cells where Course information is located
+
+        Course Label has both the course name and title
+        '''
         course = Course()
+        course.name = courseLabel
+
+        print("UCIrvineScraper -- scrapeCells --", "courseLabel", courseLabel.split("&nbsp"))
+
         course.code = cells[0].text
         course.instructor = cells[4].text
         course.location = cells[6].text
 
-        # print("UCIrvineScraper -- scrapeCells --", "added course", course)
+        print("UCIrvineScraper -- scrapeCells --", "added course", course)
 
         return course
 
@@ -177,16 +202,25 @@ class Scraper:
 
             courseCodes = f"{lowerBound}-{upperBound}"
             print("UCIrvineScraper -- getCoursesByCourseCodes --", "scraping", courseCodes)
-            self.getCourseCodeCourses(courseCodes)
+
+            courses.extend(self.getCourseCodeCourses(courseCodes))
 
             lowerBound = upperBound + 1
             upperBound += increment
 
 
+        return courses
 
-    def scrape(self):
+
+
+    def scrape(self) -> list:
+        '''
+        Gets all UCIrvine courses
+        '''
         # self.getCoursesByDepartment()
-        self.getCoursesByCourseCodes()
+        self.courses = self.getCoursesByCourseCodes()
+
+        return self.courses
 
 
 
