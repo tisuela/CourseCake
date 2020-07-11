@@ -14,7 +14,7 @@ class CourseScraper:
 
     def downloadCoursesAsJson(self, courses, fileName):
         with open(fileName, "w+") as jsonFile:
-            json.dump(list(course.__dict__ for course in courses), jsonFile)
+            json.dump({"courses": list(course.__dict__ for course in courses)}, jsonFile)
 
 
         jsonFile.close()
@@ -33,7 +33,7 @@ def main():
     courses = [course]
 
     courseScraper.downloadUCIrvineCourses()
-    courseScraper.downloadCoursesAsJson(courses, "test.json")
+    # courseScraper.downloadCoursesAsJson(courses, "test.json")
 
 
 
