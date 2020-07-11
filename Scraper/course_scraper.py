@@ -1,5 +1,5 @@
-import UCIrvineScraper
-import Course
+from .ucirvine_scraper import Scraper
+from .course import Course
 
 import json
 
@@ -8,7 +8,7 @@ class CourseScraper:
         pass
 
     def downloadUCIrvineCourses(self):
-        courses = UCIrvineScraper.Scraper().scrape()
+        courses = Scraper().scrape()
         self.downloadCoursesAsJson(courses, "UCIrvineCourses.json")
 
 
@@ -27,7 +27,7 @@ class CourseScraper:
 def main():
     courseScraper = CourseScraper()
 
-    course = Course.Course()
+    course = Course()
     course.name = "yeet"
     course.code = "1223"
     courses = [course]

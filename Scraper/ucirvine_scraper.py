@@ -1,5 +1,5 @@
-import Universities
-from Course import Course
+from .universities import Universities
+from .course import Course
 
 from bs4 import BeautifulSoup
 import requests
@@ -9,7 +9,7 @@ import requests
 class Scraper:
     def __init__(self):
         # get the course website url
-        self.url = Universities.Universities().getUniversity("UCIrvine")
+        self.url = Universities().getUniversity("UCIrvine")
 
         # used to specify which term / tear
         self.yearTerm = "2020-92"
