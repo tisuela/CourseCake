@@ -1,3 +1,4 @@
 *.json
+!universities.json
 __pycache__
 env

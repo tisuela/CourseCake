@@ -23,8 +23,11 @@ class Universities:
 
 
 
-    def getUniversity(self, name: str):
-        return self.getData()[name]
+    def getUniversity(self, name: str) -> str:
+        try:
+            return self.getData()[name]
+        except KeyError:
+            return "university name and url not in database"
 
 
     def add(self, name: str, course_website: str) -> None:

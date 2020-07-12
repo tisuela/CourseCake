@@ -8,8 +8,11 @@ import requests
 
 class UCIrvineScraper:
     def __init__(self):
+        self.universityName = "UCIrvine"
+
         # get the course website url
-        self.url = Universities().getUniversity("UCIrvine")
+        universities = Universities()
+        self.url = universities.getUniversity(self.universityName)
 
         # used to specify which term / tear
         self.yearTerm = "2020-92"
@@ -38,6 +41,10 @@ class UCIrvineScraper:
 
         self.getDepartments()
         print("UCIrvineScraper -- initialized")
+
+
+
+
 
 
     def getDepartments(self):
