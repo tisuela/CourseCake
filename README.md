@@ -18,7 +18,9 @@ UCI's WebSoc is kinda... ugly. With the course information, I plan to make somet
 For Linux and Mac:
 
 `export FLASK_APP=coursecake/flaskapp`
+
 `export FLASK_ENV=development`
+
 `flask run`
 
 
