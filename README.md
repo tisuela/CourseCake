@@ -17,41 +17,32 @@ UCI's WebSoc is kinda... ugly. With the course information, I plan to make somet
 #### Run flask
 For Linux and Mac:
 
-`export FLASK_APP=coursecake/flaskapp`
-
-`export FLASK_ENV=development`
-
-`flask run`
-
+```export FLASK_APP=coursecake/flaskapp
+export FLASK_ENV=development
+flask run
+```
 
 For Windows cmd, use set instead of export:
 
-`set FLASK_APP=coursecake/flaskapp`
-
-`set FLASK_ENV=development`
-
-`flask run`
+```set FLASK_APP=coursecake/flaskapp
+set FLASK_ENV=development
+flask run
+```
 
 For Windows PowerShell, use $env: instead of export:
 
-`$env:FLASK_APP = "coursecake/flaskapp"`
-
-`$env:FLASK_ENV = "development"`
-
-`flask run`
+```$env:FLASK_APP = "coursecake/flaskapp"
+$env:FLASK_ENV = "development"
+flask run
+```
 
 You’ll see output similar to this:
 
-`* Serving Flask app "coursecake/flaskapp"`
-
-`* Environment: development`
-
-`* Debug mode: on`
-
-`* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)`
-
-`* Restarting with stat`
-
-`* Debugger is active!`
-
-`* Debugger PIN: 855-212-761`
+```* Serving Flask app "coursecake/flaskapp"
+* Environment: development
+* Debug mode: on
+* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+* Restarting with stat
+* Debugger is active!
+* Debugger PIN: 855-212-761
+```
