@@ -8,13 +8,13 @@ UCI's WebSoc is kinda... ugly. With the course information, I plan to make somet
 
 
 ## Deploy Flask Application locally
-# Clone repository
+#### Clone repository
 `git clone https://github.com/nananananate/CourseScraper`
 
-# Navigate to the repository folder and install packages
+#### Navigate to the repository folder and install packages
 `pip install -r requirements.txt`
 
-# Run flask
+#### Run flask
 For Linux and Mac:
 `$ export FLASK_APP=coursecake/flaskapp
 $ export FLASK_ENV=development
