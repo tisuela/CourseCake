@@ -1,4 +1,4 @@
-from scraper.course_scraper import CourseScraper
+from ..scraper.course_scraper import CourseScraper
 
 
 

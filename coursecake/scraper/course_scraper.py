@@ -1,4 +1,4 @@
-from .ucirvine_scraper import Scraper
+from .ucirvine_scraper import UCIrvineScraper
 from .course import Course
 
 import json
@@ -8,7 +8,7 @@ class CourseScraper:
         pass
 
     def downloadUCIrvineCourses(self):
-        courses = Scraper().scrape()
+        courses = UCIrvineScraper().scrape()
         self.downloadCoursesAsJson(courses, "UCIrvineCourses.json")
 
 
@@ -18,6 +18,11 @@ class CourseScraper:
 
 
         jsonFile.close()
+
+
+    def getAllUcIrvineCourses(self) -> str:
+        courses = UCIrvineScraper().getDepartmentCourses("COMPSCI")
+        return {"courses": list(course.__dict__ for course in courses)}
 
 
 

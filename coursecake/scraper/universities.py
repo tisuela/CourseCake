@@ -4,7 +4,7 @@ import json
 
 class Universities:
     def __init__(self):
-        self.jsonFileName = "universities.json"
+        self.jsonFileName = "./coursecake/scraper/universities.json"
 
 
     def getData(self) -> dict:

@@ -6,13 +6,17 @@ import requests
 
 
 
-class Scraper:
+class UCIrvineScraper:
     def __init__(self):
         # get the course website url
         self.url = Universities().getUniversity("UCIrvine")
 
         # used to specify which term / tear
         self.yearTerm = "2020-92"
+
+        # used for requests to WebSoc
+        self.params = {"YearTerm": self.yearTerm, "ShowFinals": 1,
+                        "ShowComments": 0}
 
         # list of department codes (str) for the queries
         self.deptCodes = list()
@@ -60,7 +64,10 @@ class Scraper:
 
         # use params to "submit" the form data
         # (but for simplicity, we aren't using the form)
-        params = {"YearTerm": self.yearTerm, "Dept": dept}
+        params = {"Dept": dept}
+
+        # add the base params
+        params.update(self.params)
         page = self.session.get(self.url, params = params)
         courses = self.scrapePage(page)
 
@@ -73,7 +80,10 @@ class Scraper:
         Retrieves list of courses by querying course codes
         i.e. 30000-35000 or 32140
         '''
-        params = {"YearTerm": self.yearTerm, "CourseCodes": courseCodes}
+        params = {"CourseCodes": courseCodes}
+
+        # add the base params
+        params.update(self.params)
         page = self.session.get(self.url, params = params)
         courses = self.scrapePage(page)
 
@@ -116,6 +126,7 @@ class Scraper:
         # make sure this is a valid row
         if (len(cells) > 10):
             if self.isCourse:
+
                 course = self.scrapeCells(cells, self.courseLabel)
                 courses.append(course)
 
@@ -159,13 +170,15 @@ class Scraper:
         course.type = cells[1].text
         course.units = self.toInt(cells[3].text)
         course.instructor = cells[4].text
-        course.time = cells[5].text.strip()
+        course.time = " ".join(cells[5].text.strip().split())
         course.location = cells[6].text.strip()
         course.final = cells[7].text.strip()
         course.max = self.toInt(cells[8].text)
         course.enrolled = self.toInt(cells[9].text)
+        course.waitlisted = self.toInt(cells[10].text)
+        course.requestedwaitlisted = self.toInt(cells[11].text)
+        course.status = cells[-1].text
 
-        # need to do waitlisted and others
 
         print("UCIrvineScraper -- scrapeCells --", "added course", course)
 
@@ -252,8 +265,7 @@ class Scraper:
 
 
 def main():
-    scraper = Scraper()
-    scraper.scrape()
+
     '''
     for course in scraper.courses:
         print(course)
