@@ -4,6 +4,22 @@ At the end of the day all courses are... Courses. Every college course shares si
 Therefore, we aim to scrape college course website to create an API where all course data can be accessed, where each college course shares the same basic, expected data.
 
 
+## What is a Course?
+Our API defines a course as:
+```
+{
+  code: String
+  name: String        # formal name, like CS 121
+  title: String       # more readable name, like Intro to Informatics
+  department: String
+  instructor: String
+  location: String
+  units: int
+
+}
+```
+
+
 ## UC Irvine -- Zot your courses easier and responsibly
 To avoid congesting UCI's WebSoc, all queries are directed to a local database, not WebSoc. We scrape the latest data for you!
 
