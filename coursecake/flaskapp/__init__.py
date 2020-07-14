@@ -35,7 +35,7 @@ def create_app(test_config=None):
         courseScraper = CourseScraper()
         courses = courseScraper.getAllUcIrvineCourses()
 
-        for course in courses:
+        for course in courses.values():
             newCourse = Courses(course)
             db.session.add(newCourse)
 

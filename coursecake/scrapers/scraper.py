@@ -9,8 +9,8 @@ class Scraper:
         universities = Universities()
         self.url = universities.getUniversity(self.universityName)
 
-        # list of course
-        self.courses = list()
+        # dictionary of course
+        self.courses = dict()
 
         # flag to identify a course in a table
         self.isCourse = False

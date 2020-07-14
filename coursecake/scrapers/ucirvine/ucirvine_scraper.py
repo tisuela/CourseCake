@@ -55,7 +55,7 @@ class UCIrvineScraper(Scraper):
 
 
 
-    def getDepartmentCourses(self, dept: str) -> list:
+    def getDepartmentCourses(self, dept: str) -> dict:
         '''
         Retrieves list of courses by querying department name
         '''
@@ -73,7 +73,7 @@ class UCIrvineScraper(Scraper):
 
 
 
-    def getCourseCodeCourses(self, courseCodes: str) -> list:
+    def getCourseCodeCourses(self, courseCodes: str) -> dict:
         '''
         Retrieves list of courses by querying course codes
         i.e. 30000-35000 or 32140
@@ -89,9 +89,9 @@ class UCIrvineScraper(Scraper):
 
 
 
-    def scrapePage(self, page) -> list:
+    def scrapePage(self, page) -> dict:
         # Get course table
-        courses = list()
+        courses = dict()
         soup = BeautifulSoup(page.content, "lxml")
 
         try:
@@ -105,7 +105,7 @@ class UCIrvineScraper(Scraper):
             # stores previous row so we can refer back to it
             prevRow = rows[0]
             for row in rows:
-                courses.extend(self.scrapeRow(row, prevRow))
+                courses.update(self.scrapeRow(row, prevRow))
                 prevRow = row
 
 
@@ -118,7 +118,7 @@ class UCIrvineScraper(Scraper):
 
 
     def scrapeRow(self, row, prevRow) -> list:
-        courses = list()
+        courses = dict()
         cells = row.findChildren(["th", "td"])
 
         # make sure this is a valid row
@@ -126,7 +126,7 @@ class UCIrvineScraper(Scraper):
             if self.isCourse:
 
                 course = self.scrapeCells(cells, self.courseLabel)
-                courses.append(course)
+                courses[course.code] = course
 
             else:
                 for cell in cells:
@@ -185,11 +185,11 @@ class UCIrvineScraper(Scraper):
 
 
     def getCoursesByDepartment(self) -> list:
-        courses = list()
+        courses = dict()
         for dept in self.deptCodes:
             print("UCIrvineScraper -- getCoursesByDepartment --", "scraping", dept)
 
-            courses.extend(self.getDepartmentCourses(dept))
+            courses.update(self.getDepartmentCourses(dept))
 
         return courses
 
@@ -204,7 +204,7 @@ class UCIrvineScraper(Scraper):
         For efficiency, we query codes in predefined increments.
         WebSoc throws an error when a query has > 900 courses
         '''
-        courses = list()
+        courses = dict()
 
         # define the course code range to search
         lowerBound = 0
@@ -222,7 +222,7 @@ class UCIrvineScraper(Scraper):
             courseCodes = f"{lowerBound}-{upperBound}"
             print("UCIrvineScraper -- getCoursesByCourseCodes --", "scraping", courseCodes)
 
-            courses.extend(self.getCourseCodeCourses(courseCodes))
+            courses.update(self.getCourseCodeCourses(courseCodes))
 
             lowerBound = upperBound + 1
             upperBound += increment
