@@ -20,9 +20,9 @@ Our API defines a course as:
 
 
 ## UC Irvine -- Zot your courses easier and responsibly
-CourseCake was inspired to make it easier to develop tools like AntPlanner and Antscoper. 
+CourseCake was inspired to make it easier to develop tools like AntPlanner and Antscoper.
 
-To avoid congesting UCI's WebSoc, all queries are directed to a local database, not WebSoc. We scrape the latest data for you!
+All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and does not 
 
 Also, UCI's WebSoc is kinda... ugly. With the course information, I plan to make something useful. Idk what that is yet lol
 
