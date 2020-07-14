@@ -1,4 +1,4 @@
-from .ucirvine_scraper import UCIrvineScraper
+from .ucirvine.ucirvine_scraper import UCIrvineScraper
 from .course import Course
 
 import json

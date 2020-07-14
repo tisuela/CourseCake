@@ -4,7 +4,7 @@ import json
 
 class Universities:
     def __init__(self):
-        self.jsonFileName = "./coursecake/scraper/universities.json"
+        self.jsonFileName = "./coursecake/scrapers/universities.json"
 
 
     def getData(self) -> dict:
@@ -13,12 +13,11 @@ class Universities:
         Returns empty dict if file does not exist
         '''
         data = dict()
-        try:
-            with open(self.jsonFileName, "r") as jsonFile:
-                data = json.load(jsonFile)
-            jsonFile.close()
-        except:
-            pass
+
+        with open(self.jsonFileName, "r") as jsonFile:
+            data = json.load(jsonFile)
+        jsonFile.close()
+
         return data
 
 
@@ -28,6 +27,8 @@ class Universities:
             return self.getData()[name]
         except KeyError:
             return "university name and url not in database"
+        except FileNotFoundError as e:
+            return f"file not found, message: \n {e}"
 
 
     def add(self, name: str, course_website: str) -> None:
@@ -35,8 +36,12 @@ class Universities:
         Add a new university to the json file
         '''
         newUniversity = {name: course_website}
-        data = self.getData()
-        data.update(newUniversity)
+
+        try:
+            data = self.getData()
+            data.update(newUniversity)
+        except FileNotFoundError as e:
+            data = dict()
 
         with open(self.jsonFileName, "w+") as jsonFile:
             json.dump(data, jsonFile)

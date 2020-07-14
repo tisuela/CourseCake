@@ -4,7 +4,7 @@ from flask import Flask
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-from ..scraper.course_scraper import CourseScraper
+from ..scrapers.course_scraper import CourseScraper
 
 # create the database
 db = SQLAlchemy()
@@ -43,7 +43,13 @@ def create_app(test_config=None):
         return str(Courses.query.all())
 
 
+
+
+
     return app
+
+
+
 
 
 
@@ -77,6 +83,7 @@ class Courses(db.Model):
         self.code = course.code
         self.name = course.name
         self.title = course.title
+        self.department = course.department
         self.instructor = course.instructor
         self.time = course.time
         self.location = course.location

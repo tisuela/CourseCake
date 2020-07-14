@@ -11,6 +11,8 @@ class Course:
         # The Course Code, often used in registration
         self.code = ""
 
+        self.department = ""
+
         # Lecture / discussion / lab
         self.type = ""
 

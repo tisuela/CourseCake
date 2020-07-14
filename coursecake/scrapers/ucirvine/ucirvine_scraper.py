@@ -1,18 +1,13 @@
-from .universities import Universities
-from .course import Course
-
+from ..scraper import Scraper
+from ..course import Course
 from bs4 import BeautifulSoup
 import requests
 
 
 
-class UCIrvineScraper:
+class UCIrvineScraper(Scraper):
     def __init__(self):
-        self.universityName = "UCIrvine"
-
-        # get the course website url
-        universities = Universities()
-        self.url = universities.getUniversity(self.universityName)
+        Scraper.__init__(self, "UCIrvine")
 
         # used to specify which term / tear
         self.yearTerm = "2020-92"
@@ -24,15 +19,10 @@ class UCIrvineScraper:
         # list of department codes (str) for the queries
         self.deptCodes = list()
 
-        # flag to identify a course in a table
-        self.isCourse = False
-
         # keeps track of the current name and title of the courses
         # Stored as HTML
         self.courseLabel = None
 
-        # A list of Course
-        self.courses = list()
 
         # UCI's WebSoc requires that we identify ourselves (User-Agent)
         # The use of session will help for form submissions
@@ -41,7 +31,7 @@ class UCIrvineScraper:
 
         self.getDepartments()
         print("UCIrvineScraper -- initialized")
-        
+
 
 
 
