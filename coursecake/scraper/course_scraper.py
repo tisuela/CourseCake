@@ -20,9 +20,9 @@ class CourseScraper:
         jsonFile.close()
 
 
-    def getAllUcIrvineCourses(self) -> str:
+    def getAllUcIrvineCourses(self) -> list:
         courses = UCIrvineScraper().getDepartmentCourses("COMPSCI")
-        return {"courses": list(course.__dict__ for course in courses)}
+        return courses
 
 
 

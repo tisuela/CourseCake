@@ -18,8 +18,8 @@ def create_app(test_config=None):
     )
 
     db.init_app(app)
+    db.drop_all(app = app)
     db.create_all(app = app)
-
 
 
 
@@ -29,18 +29,38 @@ def create_app(test_config=None):
         return jsonify(courseScraper.getAllUcIrvineCourses())
 
 
+
     @app.route("/test")
     def testdb():
-        test = Test(name = "sup")
-        db.session.add(test)
+        courseScraper = CourseScraper()
+        courses = courseScraper.getAllUcIrvineCourses()
+
+        for course in courses:
+            newCourse = Courses(course)
+            db.session.add(newCourse)
+
         db.session.commit()
-        print(Test.query.all())
-        return "test success"
+        return str(Courses.query.all())
 
 
     return app
 
 
+
 class Test(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(80), nullable = False)
+
+
+
+class Courses(db.Model):
+    code = db.Column(db.String(20), primary_key=True, nullable = False)
+    name = db.Column(db.String(50), nullable = False)
+
+
+    def __init__(self, course):
+        self.code = course.code
+        self.name = course.name
+
+    def __repr__(self):
+        return f"{self.code} {self.name}"

@@ -3,8 +3,11 @@ Scrapes course information from universities and stores them as a consistent dat
 
 Planning to mongodb or SQLAlchemy
 
-## Gathering course information from UC Irvine
-UCI's WebSoc is kinda... ugly. With the course information, I plan to make something useful. Idk what that is yet lol
+
+## UC Irvine -- Zot your courses easier and responsibly
+To avoid congesting UCI's WebSoc, all queries are directed to a local database, not WebSoc. We scrape the latest data for you! 
+
+Also, UCI's WebSoc is kinda... ugly. With the course information, I plan to make something useful. Idk what that is yet lol
 
 
 ## Deploy Flask Application locally
