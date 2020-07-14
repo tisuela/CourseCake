@@ -41,6 +41,7 @@ class UCIrvineScraper:
 
         self.getDepartments()
         print("UCIrvineScraper -- initialized")
+        
 
 
 
