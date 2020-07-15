@@ -1,25 +1,39 @@
 
 class Course:
-    def __init__(self):
+    '''
+    All information needed to be collected about a course
+    '''
+    def __init__(self, courseDict = None):
+        '''
+        All None attributes must be provided
+        Can be constructed as empty, from a dictionary
+        '''
+        ### Mandatory attributes ###
+
+        ### Strings
 
         # The formal name of the course
-        self.name = ""
+        self.name = None
 
         # The Title of the course; more human readable
-        self.title = ""
+        self.title = None
 
         # The Course Code, often used in registration
-        self.code = ""
+        self.code = None
 
-        self.department = ""
-
+        self.department = None
         # Lecture / discussion / lab
-        self.type = ""
+        self.type = None
+        self.instructor = None
+        self.time = None
+        self.location = None
+        self.status = None
 
-        self.units = -1
-        self.instructor = ""
-        self.time = ""
-        self.location = ""
+        ### Integers
+
+        self.units = None
+
+        ### Optional Attributes ###
 
         # time of final
         self.final = ""
@@ -29,11 +43,24 @@ class Course:
         self.waitlisted = 0
         self.requested = 0
         self.restrictions = ""
-        self.status = ""
+
+        if (courseDict != None):
+            self.__initFromDict(courseDict)
+
+
+    def __initFromDict(self, courseDict: dict):
+        self.__dict__.update(courseDict)
+
+
+
 
 
     def isOpen(self) -> bool:
+        '''
+        Checks if course is open for registration
+        '''
         return (self.status.lower().strip() == "open")
+
 
 
     def __str__(self) -> str:

@@ -5,9 +5,9 @@ import requests
 
 
 
-class UCIrvineScraper(Scraper):
+class UCIScraper(Scraper):
     def __init__(self):
-        Scraper.__init__(self, "UCIrvine")
+        Scraper.__init__(self, "UCI")
 
         # used to specify which term / tear
         self.yearTerm = "2020-92"
@@ -30,7 +30,7 @@ class UCIrvineScraper(Scraper):
         self.session.headers.update({"User-Agent": "User"})
 
         self.getDepartments()
-        print("UCIrvineScraper -- initialized")
+        print("UCIScraper -- initialized")
 
 
 
@@ -45,13 +45,13 @@ class UCIrvineScraper(Scraper):
         # find departments (in the form)
         departments = soup.find("select", {"name": "Dept"}).findChildren("option")
         for dept in departments:
-            # print("UCIrvineScraper -- getDepartments --", dept["value"])
+            # print("UCIScraper -- getDepartments --", dept["value"])
 
             # getting ALL as a dept will lead to an error
             if (dept["value"].strip() != "ALL"):
                 self.deptCodes.append(dept["value"])
 
-        print("UCIrvineScraper -- getDepartments --","Departments initialized")
+        print("UCIScraper -- getDepartments --","Departments initialized")
 
 
 
@@ -112,7 +112,7 @@ class UCIrvineScraper(Scraper):
         except IndexError:
             # index error means no course list was in the page
             # We want to print out the error message
-            print("UCIrvineScraper -- scrapePage --","ERROR:", soup.find("div", {"style":"color: red; font-weight: bold;"}).text.strip())
+            print("UCIScraper -- scrapePage --","ERROR:", soup.find("div", {"style":"color: red; font-weight: bold;"}).text.strip())
         return courses
 
 
@@ -136,7 +136,7 @@ class UCIrvineScraper(Scraper):
                         self.isCourse = True
 
                         self.courseLabel = prevRow.findChildren("td")[0]
-                        print("UCIrvineScraper -- scrapeRow --", "label found:", self.courseLabel.find(text=True, recursive = False))
+                        print("UCIScraper -- scrapeRow --", "label found:", self.courseLabel.find(text=True, recursive = False))
 
         elif (len(cells) > 4):
             # if this row doesn't contain a course and has more than four cells
@@ -178,7 +178,7 @@ class UCIrvineScraper(Scraper):
         course.status = cells[-1].text
 
 
-        print("UCIrvineScraper -- scrapeCells --", "added course", course)
+        print("UCIScraper -- scrapeCells --", "added course", course)
 
         return course
 
@@ -187,7 +187,7 @@ class UCIrvineScraper(Scraper):
     def getCoursesByDepartment(self) -> list:
         courses = dict()
         for dept in self.deptCodes:
-            print("UCIrvineScraper -- getCoursesByDepartment --", "scraping", dept)
+            print("UCIScraper -- getCoursesByDepartment --", "scraping", dept)
 
             courses.update(self.getDepartmentCourses(dept))
 
@@ -220,7 +220,7 @@ class UCIrvineScraper(Scraper):
                 upperBound = max
 
             courseCodes = f"{lowerBound}-{upperBound}"
-            print("UCIrvineScraper -- getCoursesByCourseCodes --", "scraping", courseCodes)
+            print("UCIScraper -- getCoursesByCourseCodes --", "scraping", courseCodes)
 
             courses.update(self.getCourseCodeCourses(courseCodes))
 
@@ -234,7 +234,7 @@ class UCIrvineScraper(Scraper):
 
     def scrape(self) -> list:
         '''
-        Gets all UCIrvine courses
+        Gets all UCI courses
         '''
         # self.getCoursesByDepartment()
         self.courses = self.getCoursesByCourseCodes()

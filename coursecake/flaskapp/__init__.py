@@ -26,14 +26,14 @@ def create_app(test_config=None):
     @app.route("/hello")
     def hello():
         courseScraper = CourseScraper()
-        return jsonify(courseScraper.getAllUcIrvineCourses())
+        return jsonify(courseScraper.getAllUCICourses())
 
 
 
     @app.route("/test")
     def testdb():
         courseScraper = CourseScraper()
-        courses = courseScraper.getAllUcIrvineCourses()
+        courses = courseScraper.getAllUCICourses()
 
         for course in courses.values():
             newCourse = Courses(course)

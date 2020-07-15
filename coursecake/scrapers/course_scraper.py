@@ -1,15 +1,22 @@
-from .ucirvine.ucirvine_scraper import UCIrvineScraper
+from .uci.uci_scraper import UCIScraper
 from .course import Course
 
 import json
 
 class CourseScraper:
+    '''
+    All courses can be scraped from here
+    '''
     def __init__(self):
-        pass
 
-    def downloadUCIrvineCourses(self):
-        courses = UCIrvineScraper().scrape()
-        self.downloadCoursesAsJson(courses, "UCIrvineCourses.json")
+        # Useful to construct other courses using the existing populated
+        # attributes from this template
+        # Ex: newCourse = Course(self.templateCourse.__dict__)
+        self.templateCourse = Course()
+
+    def downloadUCICourses(self):
+        courses = UCIScraper().scrape()
+        self.downloadCoursesAsJson(courses, "UCICourses.json")
 
 
     def downloadCoursesAsJson(self, courses, fileName):
@@ -20,8 +27,8 @@ class CourseScraper:
         jsonFile.close()
 
 
-    def getAllUcIrvineCourses(self) -> list:
-        courses = UCIrvineScraper().getDepartmentCourses("COMPSCI")
+    def getAllUCICourses(self) -> list:
+        courses = UCIScraper().getDepartmentCourses("COMPSCI")
         return courses
 
 
@@ -37,7 +44,7 @@ def main():
     course.code = "1223"
     courses = [course]
 
-    courseScraper.downloadUCIrvineCourses()
+    courseScraper.downloadUCICourses()
     # courseScraper.downloadCoursesAsJson(courses, "test.json")
 
 
