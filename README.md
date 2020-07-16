@@ -75,7 +75,7 @@ Also, UCI's WebSoc is kinda... ugly. With the course information, I plan to make
 
 
 ## Using the Scrapers Package
-Within the cloned repository:
+Within the repository folder:
 ```
 from coursecake.scrapers.course_scraper import CourseScraper
 ```
