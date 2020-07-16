@@ -43,6 +43,7 @@ class Course:
         self.waitlisted = 0
         self.requested = 0
         self.restrictions = ""
+        self.school = ""
 
         if (courseDict != None):
             self.__initFromDict(courseDict)
@@ -60,6 +61,13 @@ class Course:
         Checks if course is open for registration
         '''
         return (self.status.lower().strip() == "open")
+
+
+    def toInt(self, s: str) -> int:
+        try:
+            return int(s)
+        except ValueError:
+            return -1
 
 
 

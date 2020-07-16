@@ -27,8 +27,10 @@ class CourseScraper:
         jsonFile.close()
 
 
-    def getAllUCICourses(self) -> list:
-        courses = UCIScraper().getDepartmentCourses("COMPSCI")
+    def getAllUCICourses(self) -> dict:
+        courses = UCIScraper().scrape()
+
+        # courses = UCIScraper().getDepartmentCourses("COMPSCI")
         return courses
 
 
@@ -39,10 +41,6 @@ class CourseScraper:
 def main():
     courseScraper = CourseScraper()
 
-    course = Course()
-    course.name = "yeet"
-    course.code = "1223"
-    courses = [course]
 
     courseScraper.downloadUCICourses()
     # courseScraper.downloadCoursesAsJson(courses, "test.json")

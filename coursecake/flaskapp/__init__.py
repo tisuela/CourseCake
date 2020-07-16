@@ -3,11 +3,14 @@ import os
 from flask import Flask
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 
 from ..scrapers.course_scraper import CourseScraper
 
 # create the database
 db = SQLAlchemy()
+ma = Marshmallow()
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config = True)
@@ -18,29 +21,37 @@ def create_app(test_config=None):
     )
 
     db.init_app(app)
-    db.drop_all(app = app)
+    ma.init_app(app)
+    # db.drop_all(app = app)
     db.create_all(app = app)
 
 
 
     @app.route("/hello")
     def hello():
-        courseScraper = CourseScraper()
-        return jsonify(courseScraper.getAllUCICourses())
+        return jsonify({"hello": "world"})
 
 
 
-    @app.route("/test")
+    @app.route("/api/uci/all")
     def testdb():
-        courseScraper = CourseScraper()
-        courses = courseScraper.getAllUCICourses()
+        update = False
+        if update:
+            courseScraper = CourseScraper()
+            courses = courseScraper.getAllUCICourses()
 
-        for course in courses.values():
-            newCourse = Courses(course)
-            db.session.add(newCourse)
+            for course in courses.values():
+                newCourse = Courses(course)
+                db.session.add(newCourse)
 
-        db.session.commit()
-        return str(Courses.query.all())
+            db.session.commit()
+
+        results = Courses.query.all()
+
+        # make query results json seriazable via marshmallow
+        coursesSchema = CoursesSchema(many = True)
+        toJson = coursesSchema.dump(results)
+        return jsonify(toJson)
 
 
 
@@ -96,3 +107,9 @@ class Courses(db.Model):
 
     def __repr__(self):
         return f"{self.code} | {self.name} | {self.instructor} | {self.units} | {self.status} \n"
+
+
+
+class CoursesSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Courses

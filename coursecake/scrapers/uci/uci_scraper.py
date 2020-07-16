@@ -1,5 +1,6 @@
 from ..scraper import Scraper
 from ..course import Course
+from .scraperows import UCIScrapeRows
 from bs4 import BeautifulSoup
 import requests
 
@@ -98,15 +99,11 @@ class UCIScraper(Scraper):
             courseTable = soup.find("div", {"class": "course-list"}).findChildren("table")[0]
             rows = courseTable.findChildren("tr")
 
+            rowsScraper = UCIScrapeRows(rows)
+            rowsScraper.scrape()
+            courses = rowsScraper.courses
 
-            # flag to identify a valid course row
-            rowIsCourse = False
 
-            # stores previous row so we can refer back to it
-            prevRow = rows[0]
-            for row in rows:
-                courses.update(self.scrapeRow(row, prevRow))
-                prevRow = row
 
 
         except IndexError:
@@ -116,71 +113,6 @@ class UCIScraper(Scraper):
         return courses
 
 
-
-    def scrapeRow(self, row, prevRow) -> list:
-        courses = dict()
-        cells = row.findChildren(["th", "td"])
-
-        # make sure this is a valid row
-        if (len(cells) > 10):
-            if self.isCourse:
-
-                course = self.scrapeCells(cells, self.courseLabel)
-                courses[course.code] = course
-
-            else:
-                for cell in cells:
-                    if (cell.text.strip().lower() == "code"):
-                        # If this row has the word "Code",
-                        # then the next row is a course
-                        self.isCourse = True
-
-                        self.courseLabel = prevRow.findChildren("td")[0]
-                        print("UCIScraper -- scrapeRow --", "label found:", self.courseLabel.find(text=True, recursive = False))
-
-        elif (len(cells) > 4):
-            # if this row doesn't contain a course and has more than four cells
-            # It usually contains data about the course from the previous row
-            # But we'll ignore it for now
-            pass
-
-        elif (len(cells) < 2):
-            # if this row is invalid (less than 2 cells), the next row is not a course
-            self.isCourse = False
-
-        return courses
-
-
-
-    def scrapeCells(self, cells, courseLabel) -> Course:
-        '''
-        Scrapes the cells where Course information is located
-
-        Course Label has both the course name and title
-        '''
-        course = Course()
-
-        # remove extra spaces
-        course.name = " ".join(courseLabel.find(text = True, recursive = False).strip().split())
-
-        course.title = courseLabel.find("b").text
-        course.code = cells[0].text
-        course.type = cells[1].text
-        course.units = self.toInt(cells[3].text)
-        course.instructor = cells[4].text
-        course.time = " ".join(cells[5].text.strip().split())
-        course.location = cells[6].text.strip()
-        course.final = cells[7].text.strip()
-        course.max = self.toInt(cells[8].text)
-        course.enrolled = self.toInt(cells[9].text)
-        course.waitlisted = self.toInt(cells[10].text)
-        course.requestedwaitlisted = self.toInt(cells[11].text)
-        course.status = cells[-1].text
-
-
-        print("UCIScraper -- scrapeCells --", "added course", course)
-
-        return course
 
 
 
