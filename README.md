@@ -32,7 +32,7 @@ Here is an example response from our online Flask API endpoint
 ```
 
 The breakdown of a course from the JSON response is analogous to the definition of a `Course` in `coursecake/scrapers/course.py`:
-```
+
 Key/Attribute | Value
 --- | ---
 "code" | String
@@ -54,7 +54,7 @@ Key/Attribute | Value
 "waitlisted" | int`
 
 
-```
+
 
 
 ## UC Irvine -- Zot your courses easier and responsibly
