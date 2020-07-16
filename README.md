@@ -4,35 +4,113 @@ At the end of the day all courses are... Courses. Every college course shares si
 By making course data easier to access and more "edible" for programs, we hope CourseCake gives a smoother approach build useful tools for students.
 
 ## What is a Course?
-Our API defines a course as:
+Here is an example response from our online Flask API endpoint
 ```
 {
-  code: String
-  name: String        # formal name, like CS 121
-  title: String       # more readable name, like Intro to Informatics
-  department: String
-  instructor: String
-  location: String
-  units: int
-
+  "courses": [
+    {
+      "code": "01020",
+      "department": "Art",
+      "departmentTitle": "Art",
+      "enrolled": 72,
+      "instructor": "MAJOLI, M.BORNSTEIN, J.",
+      "location": "VRTL REMOTE",
+      "max": 160,
+      "name": "Art 1A",
+      "requested": 0,
+      "restrictions": "",
+      "school": "Claire Trevor School of the Arts",
+      "status": "NewOnly",
+      "time": "TBA",
+      "title": "ART IN CONTEXT",
+      "type": "Lec",
+      "units": 4,
+      "waitlisted": 0
+    }
+  ]
 }
+```
+
+The breakdown of a course from the JSON response is analogous to the definition of a `Course` in `coursecake/scrapers/course.py`:
+```
+Key/Attribute | Value
+--- | ---
+"code" | String
+"department" | String       
+"departmentTitle" | String
+"enrolled" | String
+"instructor" | String
+"location" | String
+"max" | int
+"name" | String
+"requested" | int
+"restrictions" | String
+"school" | String
+"status" | String
+"time" | String
+"title" | String
+"type" | String
+"units" | int
+"waitlisted" | int`
+
+
 ```
 
 
 ## UC Irvine -- Zot your courses easier and responsibly
 CourseCake was inspired to make it easier to develop tools like AntPlanner and Antscoper.
 
-All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and does not 
+All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and does not
 
 Also, UCI's WebSoc is kinda... ugly. With the course information, I plan to make something useful. Idk what that is yet lol
 
 
-## Deploy Flask Application locally
+## Installation
+
 #### Clone repository
 `git clone https://github.com/nananananate/CourseScraper`
 
 #### Navigate to the repository folder and install packages
 `pip install -r requirements.txt`
+
+
+## Using the Scrapers Package
+Within the cloned repository:
+```
+from coursecake.scrapers.course_scraper import CourseScraper
+```
+
+From CourseScraper, you can load all UCI courses
+```
+scraper = CourseScraper()
+courses = scraper.getAllUCICourses()
+```
+Courses are loaded in chunks; it will take a minute for all courses to be collected.
+
+`courses` is a list of `Course` objects, ad defined in `coursecake/scrapers/course.py`. From the `Course` object, you can get obtain the course's data.
+
+Here is an example of printing some course data from `courses`
+```
+for course in courses:
+
+  # This does not print out all attributes, just a select few to avoid clutter
+  # see more in Course.__str__(self)
+  print(course)
+
+  # print the status of the course; if it is open, closed, full, etc.
+  print(course.status)
+```
+
+To save all UCI courses into a JSON file:
+```
+scraper.downloadUCICourses()
+```
+
+The format of data within the JSON file is close to identical with the online endpoint of CourseCake; see the above heading `What is a Course` for an example.
+
+
+## Deploy Flask Application locally
+
 
 #### Run flask
 For Linux and Mac:

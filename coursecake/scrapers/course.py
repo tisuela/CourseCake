@@ -89,6 +89,7 @@ class Course:
         {self.final}
         {self.max}
         {self.enrolled}
+        {self.status}
         '''
 
 
