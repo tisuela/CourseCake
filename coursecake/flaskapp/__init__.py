@@ -36,26 +36,14 @@ def create_app(test_config=None):
 
 
 
-    @app.route("/hello")
+    @app.route("/hello", methods=["GET"])
     def hello():
         return jsonify({"hello": "world"})
 
 
 
-    @app.route("/api/uci/all")
+    @app.route("/api/uci/all", methods=["GET"])
     def uciAllCourses():
-        update = False
-        if update:
-            courseScraper = CourseScraper()
-            courses = courseScraper.getAllUCICourses()
-
-            for course in courses.values():
-                newCourse = Courses(course)
-                db.session.add(newCourse)
-
-            db.session.commit()
-
-        results = Courses.query.all()
 
         # make query results json seriazable via marshmallow
         coursesSchema = CoursesSchema(many = True)
@@ -63,7 +51,24 @@ def create_app(test_config=None):
         return jsonify(toJson)
 
 
-    @app.route("/api/uci/zadmin")
+
+    @app.route("/api/admin/update-uci", methods=["GET"])
+    @limiter.limit("1/minute;5/hour")
+    def updateAllUCICourses():
+        # result stores success/failure of update
+        result = dict()
+        courseScraper = CourseScraper()
+        courses = courseScraper.getAllUCICourses()
+
+        for course in courses.values():
+            newCourse = Courses(course)
+            db.session.add(newCourse)
+
+        db.session.commit()
+        result["result"] = success
+
+        return jsonify(result)
+
 
 
 
