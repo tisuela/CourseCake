@@ -1,4 +1,6 @@
-# packaging for flaskapp
+'''
+Runs flask app
+'''
 import os
 
 from flask import Flask
@@ -41,7 +43,7 @@ def create_app(test_config=None):
 
 
     @app.route("/api/uci/all")
-    def testdb():
+    def uciAllCourses():
         update = False
         if update:
             courseScraper = CourseScraper()
@@ -59,6 +61,11 @@ def create_app(test_config=None):
         coursesSchema = CoursesSchema(many = True)
         toJson = coursesSchema.dump(results)
         return jsonify(toJson)
+
+
+    @app.route("/api/uci/zadmin")
+
+
 
 
 
