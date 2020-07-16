@@ -34,11 +34,6 @@ class UCIScraper(Scraper):
         print("UCIScraper -- initialized")
 
 
-
-
-
-
-
     def getDepartments(self):
         page = self.session.get(self.url)
         soup = BeautifulSoup(page.content, "lxml")

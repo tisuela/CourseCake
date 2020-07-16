@@ -14,8 +14,15 @@ class CourseScraper:
         # Ex: newCourse = Course(self.templateCourse.__dict__)
         self.templateCourse = Course()
 
-    def downloadUCICourses(self):
+    def getAllUCICourses(self) -> dict:
         courses = UCIScraper().scrape()
+
+        # courses = UCIScraper().getDepartmentCourses("COMPSCI")
+        return courses
+
+
+    def downloadUCICourses(self):
+        courses = self.getAllUCICourses()
         self.downloadCoursesAsJson(courses, "UCICourses.json")
 
 
@@ -27,11 +34,6 @@ class CourseScraper:
         jsonFile.close()
 
 
-    def getAllUCICourses(self) -> dict:
-        courses = UCIScraper().scrape()
-
-        # courses = UCIScraper().getDepartmentCourses("COMPSCI")
-        return courses
 
 
 

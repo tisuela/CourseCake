@@ -34,6 +34,7 @@ class Course:
         self.units = None
 
         ### Optional Attributes ###
+        # not necessarily nullable in our db models
 
         # time of final
         self.final = ""
@@ -44,6 +45,10 @@ class Course:
         self.requested = 0
         self.restrictions = ""
         self.school = ""
+
+        # a more readable department name
+        # Ex: COMSPSCI -> Computer Science
+        self.departmentTitle = ""
 
         if (courseDict != None):
             self.__initFromDict(courseDict)

@@ -15,12 +15,6 @@ class UCICourse(Course):
 
 
 
-
-
-
-
-
-
     def __initFromCells(self, cells):
         self.code = cells[0].text
         self.type = cells[1].text
@@ -30,7 +24,7 @@ class UCICourse(Course):
         self.location = cells[6].text.strip()
         self.final = cells[7].text.strip()
         self.max = self.toInt(cells[8].text)
-        self.enrolled = self.toInt(cells[9].text)
+        self.enrolled = self.toInt(cells[9].text.split("/")[-1])
         self.waitlisted = self.toInt(cells[10].text)
         self.requestedwaitlisted = self.toInt(cells[11].text)
         self.status = cells[-1].text

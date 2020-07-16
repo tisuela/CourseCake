@@ -18,7 +18,7 @@ db = SQLAlchemy()
 ma = Marshmallow()
 limiter = Limiter(
     key_func = get_remote_address,
-    default_limits = ["30 per minute"])
+    default_limits = ["1/second; 20/minute"])
 
 
 def create_app(test_config=None):
@@ -31,6 +31,7 @@ def create_app(test_config=None):
 
     db.init_app(app)
     ma.init_app(app)
+    limiter.init_app(app)
     # db.drop_all(app = app)
     db.create_all(app = app)
 
@@ -46,9 +47,10 @@ def create_app(test_config=None):
     def uciAllCourses():
 
         # make query results json seriazable via marshmallow
+        results = Courses.query.all()
         coursesSchema = CoursesSchema(many = True)
-        toJson = coursesSchema.dump(results)
-        return jsonify(toJson)
+        courseData = coursesSchema.dump(results)
+        return jsonify({"courses": courseData})
 
 
 
@@ -62,10 +64,10 @@ def create_app(test_config=None):
 
         for course in courses.values():
             newCourse = Courses(course)
-            db.session.add(newCourse)
+            db.session.merge(newCourse)
 
         db.session.commit()
-        result["result"] = success
+        result["result"] = "success"
 
         return jsonify(result)
 
@@ -94,14 +96,25 @@ class Courses(db.Model):
     code = db.Column(db.String(20), primary_key=True, nullable = False)
     name = db.Column(db.String(50), nullable = False)
     title = db.Column(db.String(100), nullable = False)
+    department = db.Column(db.String(50), nullable = False)
     instructor = db.Column(db.String(50), nullable = False)
     time = db.Column(db.String(100), nullable = False)
     location = db.Column(db.String(50), nullable = False)
     status = db.Column(db.String(20), nullable = False)
+    type = db.Column(db.String(20), nullable = False)
 
     units = db.Column(db.Integer, nullable = False)
+    max = db.Column(db.Integer, nullable = False)
+    enrolled = db.Column(db.Integer, nullable = False)
+    waitlisted = db.Column(db.Integer, nullable = False)
+    requested = db.Column(db.Integer, nullable = False)
 
-    type = db.Column(db.String(20), nullable = True)
+    # nullable fields
+
+    departmentTitle = db.Column(db.String(50), nullable = False)
+    restrictions = db.Column(db.String(100), nullable = False)
+    school = db.Column(db.String(50), nullable = False)
+
 
 
 
@@ -118,10 +131,18 @@ class Courses(db.Model):
         self.time = course.time
         self.location = course.location
         self.status = course.status
+        self.type = course.type
 
         self.units = course.units
+        self.max = course.max
+        self.enrolled = course.enrolled
+        self.waitlisted = course.waitlisted
+        self.requested = course.requested
 
-        self.type = course.type
+        self.departmentTitle = course.departmentTitle
+        self.restrictions = course.restrictions
+        self.school = course.school
+
 
 
     def __repr__(self):

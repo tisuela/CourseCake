@@ -45,7 +45,7 @@ class UCIScrapeRows:
                 print("ScrapeRows -- getTemplateCourse -- got school", currentRow.text)
 
             elif (not updatedDepartment and self.matchClass(currentRow, "dept-title")):
-                self.templateCourse.department = currentRow.text
+                self.templateCourse.departmentTitle = currentRow.text
                 updatedDepartment = True
                 print("ScrapeRows -- getTemplateCourse -- got dept", currentRow.text)
 
@@ -55,8 +55,12 @@ class UCIScrapeRows:
                 courseNameTitle = currentRow.find("td", {"class":"CourseTitle"})
 
                 if (courseNameTitle != None):
-                    self.templateCourse.name = " ".join(courseNameTitle.find(text = True, recursive = False).strip().split())
+                    courseName = " ".join(courseNameTitle.find(text = True, recursive = False).strip().split())
+                    self.templateCourse.name = courseName
                     self.templateCourse.title = courseNameTitle.find("b").text
+
+                    # Department is the first word in course name
+                    self.templateCourse.department = courseName.split()[0]
                     updatedNameTitle = True
                     print("ScrapeRows -- getTemplateCourse -- got name/title", courseNameTitle.text)
 
