@@ -1,16 +1,23 @@
 # packaging for flaskapp
 import os
+
 from flask import Flask
 from flask import jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 from ..scrapers.course_scraper import CourseScraper
 
 # create the database
 db = SQLAlchemy()
 ma = Marshmallow()
+limiter = Limiter(
+    key_func = get_remote_address,
+    default_limits = ["30 per minute"])
+
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config = True)
