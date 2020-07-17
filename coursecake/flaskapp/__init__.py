@@ -66,7 +66,10 @@ def create_app(test_config=None):
 
     @app.route("/api/uci/courses/search", methods=["GET"])
     def uciSearch():
-        courseData = dict()
+        args = request.args
+        results = handleCourseSearch(args)
+        coursesSchema = CoursesSchema(many = True)
+        courseData = {"courses": coursesSchema.dump(results)}
 
         headers = {"Content-Type": "application/json"}
         return make_response(
@@ -77,7 +80,7 @@ def create_app(test_config=None):
 
 
 
-    @app.route("admin/update-uci", methods=["GET"])
+    @app.route("/admin/update-uci", methods=["GET"])
     @limiter.limit("1/minute;5/hour")
     def updateAllUCICourses():
         # result stores success/failure of update
@@ -101,14 +104,24 @@ def create_app(test_config=None):
 
 
 
-
-
-
-
-
-
     return app
 
+
+
+
+def handleCourseSearch(args: dict) -> list:
+    '''
+    Returns list of Courses rows
+    '''
+    serializedArgs = dict()
+
+    if (args.get("department") != None):
+        serializedArgs["department"] = args["department"].upper()
+
+    print(serializedArgs)
+    results = Courses.query.filter_by(**serializedArgs).all()
+
+    return results
 
 
 

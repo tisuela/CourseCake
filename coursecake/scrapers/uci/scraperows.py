@@ -56,11 +56,11 @@ class UCIScrapeRows:
 
                 if (courseNameTitle != None):
                     courseName = " ".join(courseNameTitle.find(text = True, recursive = False).strip().split())
-                    self.templateCourse.name = courseName
+                    self.templateCourse.name = courseName.upper()
                     self.templateCourse.title = courseNameTitle.find("b").text
 
                     # Department is the first word in course name
-                    self.templateCourse.department = courseName.split()[0]
+                    self.templateCourse.department = courseName.rsplit(" ",1)[0].upper()
                     updatedNameTitle = True
                     print("ScrapeRows -- getTemplateCourse -- got name/title", courseNameTitle.text)
 
