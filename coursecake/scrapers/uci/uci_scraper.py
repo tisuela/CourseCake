@@ -15,7 +15,30 @@ class UCIScraper(Scraper):
 
         # used for requests to WebSoc
         self.params = {"YearTerm": self.yearTerm, "ShowFinals": 1,
-                        "ShowComments": 0}
+                        "ShowComments": 1}
+
+
+        # from our defined query params to WebSoc's params
+        self.paramEncoder ={
+            "days": "Days",
+            "yearterm": "YearTerm",
+            "units": "Units",
+            "title": "CourseTitle",
+            "starttime": "StartTime",
+            "endtime": "EndTime",
+            "breadth": "Breadth",
+            "instructor": "InstrName",
+            "division": "Division",
+            "department": "Dept",
+            "code": "CourseCodes"
+        }
+
+        self.requiredParams = [
+            "breadth",
+            "instructor",
+            "code",
+            "dept"
+        ]
 
         # list of department codes (str) for the queries
         self.deptCodes = list()
@@ -28,6 +51,11 @@ class UCIScraper(Scraper):
 
 
         print("UCIScraper -- initialized")
+
+
+    def setYearTerm(self, yearTerm: str) -> None:
+        self.yearTerm = yearTerm
+        self.params["YearTerm"] = self.yearTerm
 
 
     def getDepartments(self):
@@ -44,6 +72,26 @@ class UCIScraper(Scraper):
                 self.deptCodes.append(dept["value"])
 
         print("UCIScraper -- getDepartments --","Departments initialized")
+
+
+    def getCourses(self, args: dict) -> dict:
+        '''
+        Retrieves list of courses by dynamically
+        building the request params
+        '''
+        params = dict()
+        for arg in args:
+            try:
+                encodedParam = self.paramEncoder[arg]
+                params[encodedParam] = args[arg].upper()
+            except KeyError:
+                print(f"uci_scraper -- getCourses -- invalid arg {arg}")
+
+        params.update(self.params)
+        page = self.session.get(self.url, params = params)
+        courses = self.scrapePage(page)
+
+        return courses
 
 
 

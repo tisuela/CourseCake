@@ -2,7 +2,7 @@
 This module handles all queries made to the API
 '''
 from .models import Courses, CoursesSchema
-
+from ..scrapers.course_scraper import CourseScraper
 
 def packageResults(results: list) -> dict:
     '''
@@ -18,6 +18,16 @@ def packageResults(results: list) -> dict:
 def queryAllUCICourses() -> list:
     return Courses.query.all()
 
+def handleUCILiveSearch(args: dict) -> dict:
+    '''
+    Gets the latest (hence live) courses by directly
+    access the UCI course schedule (uses scraper)
+    '''
+    scraper = CourseScraper().getUciScraper()
+    courses = scraper.getCourses(args)
+    courseData = {"courses": list(course.__dict__ for course in courses.values())}
+
+    return courseData
 
 def handleUCICourseSearch(args: dict) -> list:
     '''

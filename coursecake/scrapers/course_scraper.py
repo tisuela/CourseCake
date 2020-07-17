@@ -14,6 +14,10 @@ class CourseScraper:
         # Ex: newCourse = Course(self.templateCourse.__dict__)
         self.templateCourse = Course()
 
+
+    def getUciScraper(self) -> UCIScraper:
+        return UCIScraper()
+
     def getAllUCICourses(self) -> dict:
         courses = UCIScraper().scrape()
 
@@ -44,9 +48,22 @@ def main():
     courseScraper = CourseScraper()
 
 
-    courseScraper.downloadUCICourses()
-    # courseScraper.downloadCoursesAsJson(courses, "test.json")
+    scraper = courseScraper.getUciScraper()
 
+    args = dict()
+    while (True):
+        searchParam = input("search parameter: ")
+        if (searchParam.strip().lower() == "d"):
+            break
+        searchValue = input("search value: ")
+        args[searchParam] = searchValue
+
+    courses = scraper.getCourses(args)
+
+    for course in courses.values():
+        print(course)
+    # courseScraper.downloadCoursesAsJson(courses, "test.json")
+    print(f"# of results = {len(courses)}")
 
 
 if __name__ == '__main__':
