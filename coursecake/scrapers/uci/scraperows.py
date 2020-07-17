@@ -42,12 +42,12 @@ class UCIScrapeRows:
             if (not updatedSchool and self.matchClass(currentRow, "college-title")):
                 self.templateCourse.school = currentRow.text
                 updatedSchool = True
-                print("ScrapeRows -- getTemplateCourse -- got school", currentRow.text)
+                # print("ScrapeRows -- getTemplateCourse -- got school", currentRow.text)
 
             elif (not updatedDepartment and self.matchClass(currentRow, "dept-title")):
                 self.templateCourse.departmentTitle = currentRow.text
                 updatedDepartment = True
-                print("ScrapeRows -- getTemplateCourse -- got dept", currentRow.text)
+                # print("ScrapeRows -- getTemplateCourse -- got dept", currentRow.text)
 
 
             elif (not updatedNameTitle) :
@@ -62,7 +62,7 @@ class UCIScrapeRows:
                     # Department is the first word in course name
                     self.templateCourse.department = courseName.rsplit(" ",1)[0].upper()
                     updatedNameTitle = True
-                    print("ScrapeRows -- getTemplateCourse -- got name/title", courseNameTitle.text)
+                    # print("ScrapeRows -- getTemplateCourse -- got name/title", courseNameTitle.text)
 
 
             position -= 1

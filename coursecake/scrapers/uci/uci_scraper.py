@@ -91,12 +91,14 @@ class UCIScraper(Scraper):
         soup = BeautifulSoup(page.content, "lxml")
 
         try:
-            courseTable = soup.find("div", {"class": "course-list"}).findChildren("table")[0]
-            rows = courseTable.findChildren("tr")
+            courseTables = soup.find("div", {"class": "course-list"}).findChildren("table")
 
-            rowsScraper = UCIScrapeRows(rows)
-            rowsScraper.scrape()
-            courses = rowsScraper.courses
+            for table in courseTables:
+                rows = table.findChildren("tr")
+
+                rowsScraper = UCIScrapeRows(rows)
+                rowsScraper.scrape()
+                courses.update(rowsScraper.courses)
 
 
 
