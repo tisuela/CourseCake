@@ -26,7 +26,11 @@ class Course:
         self.type = None
         self.instructor = None
         self.time = None
+
+        # Full location string, with building  + room
         self.location = None
+        self.building = None
+        self.room = None
         self.status = None
 
         ### Integers

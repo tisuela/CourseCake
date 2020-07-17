@@ -20,10 +20,6 @@ class UCIScraper(Scraper):
         # list of department codes (str) for the queries
         self.deptCodes = list()
 
-        # keeps track of the current name and title of the courses
-        # Stored as HTML
-        self.courseLabel = None
-
 
         # UCI's WebSoc requires that we identify ourselves (User-Agent)
         # The use of session will help for form submissions

@@ -11,6 +11,3 @@ class Scraper:
 
         # dictionary of course
         self.courses = dict()
-
-        # flag to identify a course in a table
-        self.isCourse = False

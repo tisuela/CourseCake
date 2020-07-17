@@ -111,15 +111,51 @@ def create_app(test_config=None):
 
 def handleCourseSearch(args: dict) -> list:
     '''
+    Handles search based on request arguments.
+    We check for each arg in order to "clean" the query and prevent
+    malicious queries.
     Returns list of Courses rows
     '''
-    serializedArgs = dict()
+
+    # for arg in query where attribute = arg
+    equalsArgs = dict()
+
+    print(f"handleCourseSearch -- request args -- {args}")
 
     if (args.get("department") != None):
-        serializedArgs["department"] = args["department"].upper()
+        equalsArgs["department"] = args["department"].upper()
 
-    print(serializedArgs)
-    results = Courses.query.filter_by(**serializedArgs).all()
+    if (args.get("building") != None):
+        equalsArgs["building"] = args["building"].upper()
+
+    if (args.get("room") != None):
+        equalsArgs["room"] = args["room"].upper()
+
+    # apply filter for equals args first
+    print(f"handleCourseSearch -- equalsArgs -- {equalsArgs}")
+    query = Courses.query.filter_by(**equalsArgs)
+
+
+    # add arguments for NOT LIKE
+    if(args.get("notlocation") != None):
+        notLocation = args.get("notlocation").upper()
+        query = query.filter(~Courses.location.like(
+            f"%{notLocation}%"))
+
+
+    if(args.get("notinstructor") != None):
+        notinstructor = args.get("notinstructor").upper()
+        query = query.filter(~Courses.instructor.like(
+            f"%{notinstructor}%"))
+
+
+    # add arguments for LIKE
+    if (args.get("instructor") != None):
+        instructor = args.get("instructor").upper()
+        query = query.filter(Courses.instructor.like(
+            f"%{instructor}%"))
+
+    results = query.all()
 
     return results
 
@@ -142,6 +178,8 @@ class Courses(db.Model):
     instructor = db.Column(db.String(50), nullable = False)
     time = db.Column(db.String(100), nullable = False)
     location = db.Column(db.String(50), nullable = False)
+    building = db.Column(db.String(50), nullable = False)
+    room = db.Column(db.String(50), nullable = False)
     status = db.Column(db.String(20), nullable = False)
     type = db.Column(db.String(20), nullable = False)
 
@@ -172,6 +210,8 @@ class Courses(db.Model):
         self.instructor = course.instructor
         self.time = course.time
         self.location = course.location
+        self.building = course.building
+        self.room = course.room
         self.status = course.status
         self.type = course.type
 
