@@ -4,7 +4,7 @@ This module handles all queries made to the API
 from .models import Courses, CoursesSchema
 
 
-def packageResults(results):
+def packageResults(results: list) -> dict:
     '''
     Uses marshmallow to make results JSON seriazable
     Puts list of results in dict
