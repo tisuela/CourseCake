@@ -26,7 +26,7 @@ class UCIScraper(Scraper):
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": "User"})
 
-        self.getDepartments()
+
         print("UCIScraper -- initialized")
 
 
@@ -111,6 +111,7 @@ class UCIScraper(Scraper):
 
     def getCoursesByDepartment(self) -> list:
         courses = dict()
+        self.getDepartments()
         for dept in self.deptCodes:
             print("UCIScraper -- getCoursesByDepartment --", "scraping", dept)
 
