@@ -3,8 +3,7 @@ Runs flask app
 '''
 import os
 
-from flask import Flask
-from flask import jsonify
+from flask import Flask, jsonify, make_response, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
@@ -39,22 +38,46 @@ def create_app(test_config=None):
 
     @app.route("/hello", methods=["GET"])
     def hello():
-        return jsonify({"hello": "world"})
+        headers = {"Content-Type": "application/json"}
+        return make_response(
+            jsonify({"hello": "world"}),
+            200,
+            headers
+        )
 
 
 
-    @app.route("/api/uci/all", methods=["GET"])
-    def uciAllCourses():
+    @app.route("/api/uci/courses/all", methods=["GET"])
+    def uciAll():
 
         # make query results json seriazable via marshmallow
         results = Courses.query.all()
         coursesSchema = CoursesSchema(many = True)
-        courseData = coursesSchema.dump(results)
-        return jsonify({"courses": courseData})
+        courseData = {"courses": coursesSchema.dump(results)}
+
+        headers = {"Content-Type": "application/json"}
+        return make_response(
+            jsonify(courseData),
+            200,
+            headers
+        )
 
 
 
-    @app.route("/api/admin/update-uci", methods=["GET"])
+    @app.route("/api/uci/courses/search", methods=["GET"])
+    def uciSearch():
+        courseData = dict()
+
+        headers = {"Content-Type": "application/json"}
+        return make_response(
+            jsonify(courseData),
+            200,
+            headers
+        )
+
+
+
+    @app.route("admin/update-uci", methods=["GET"])
     @limiter.limit("1/minute;5/hour")
     def updateAllUCICourses():
         # result stores success/failure of update
@@ -69,7 +92,13 @@ def create_app(test_config=None):
         db.session.commit()
         result["result"] = "success"
 
-        return jsonify(result)
+        headers = {"Content-Type": "application/json"}
+        return make_response(
+            jsonify(result),
+            200,
+            headers
+        )
+
 
 
 
