@@ -15,7 +15,30 @@ class UCIScraper(Scraper):
 
         # used for requests to WebSoc
         self.params = {"YearTerm": self.yearTerm, "ShowFinals": 1,
-                        "ShowComments": 0}
+                        "ShowComments": 1}
+
+
+        # from our defined query params to WebSoc's params
+        self.paramEncoder ={
+            "days": "Days",
+            "yearterm": "YearTerm",
+            "units": "Units",
+            "title": "CourseTitle",
+            "starttime": "StartTime",
+            "endtime": "EndTime",
+            "breadth": "Breadth",
+            "instructor": "InstrName",
+            "division": "Division",
+            "dept": "Dept",
+            "code": "CourseCode"
+        }
+
+        self.requiredParams = [
+            "breadth",
+            "instructor",
+            "code",
+            "dept"
+        ]
 
         # list of department codes (str) for the queries
         self.deptCodes = list()
@@ -25,6 +48,8 @@ class UCIScraper(Scraper):
         # The use of session will help for form submissions
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": "User"})
+
+
 
 
         print("UCIScraper -- initialized")
@@ -44,6 +69,23 @@ class UCIScraper(Scraper):
                 self.deptCodes.append(dept["value"])
 
         print("UCIScraper -- getDepartments --","Departments initialized")
+
+
+    def getCourses(self, args: dict) -> dict:
+        '''
+        Retrieves list of courses by dynamically
+        building the request params
+        '''
+        params = dict()
+        for arg in args:
+            encodedParam = self.paramEncoder[arg]
+            params[encodedParam] = args[arg].upper()
+
+        params.update(self.params)
+        page = self.session.get(self.url, params = params)
+        courses = self.scrapePage(page)
+
+        return courses
 
 
 

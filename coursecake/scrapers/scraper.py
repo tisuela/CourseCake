@@ -11,3 +11,6 @@ class Scraper:
 
         # dictionary of course
         self.courses = dict()
+
+        # at least one of these params needed to query scraper
+        self.requiredParams = list()

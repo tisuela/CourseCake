@@ -24,7 +24,7 @@ class UCICourse(Course):
         self.code = cells[0].text
         self.type = cells[1].text
         self.units = self.toInt(cells[3].text.split("/")[-1])
-        self.instructor = cells[4].text
+        self.instructor = cells[4].get_text(separator="; ")
         self.time = " ".join(cells[5].text.strip().split())
 
         # Get location
