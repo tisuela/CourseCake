@@ -80,10 +80,10 @@ Also, UCI's WebSoc is kinda... ugly. With the course information, I plan to make
 Currently not available online. See below for deploying the Flask Web App locally.
 
 
-###`/api/uci/courses/all`
+### `/api/uci/courses/all`
 Returns all UCI courses
 
-###`/api/uci/courses/search`
+### `/api/uci/courses/search`
 Query our database for courses
 
 Usage:
