@@ -74,18 +74,76 @@ Also, UCI's WebSoc is kinda... ugly. With the course information, I plan to make
 `pip install -r requirements.txt`
 
 
-## Using the Scrapers Package
-Within the repository folder:
+# Documentation
+## Web API Endpoint
+
+Currently not available online. See below for deploying the Flask Web App locally.
+
+
+###`/api/uci/courses/all`
+Returns all UCI courses
+
+###`/api/uci/courses/search`
+Query our database for courses
+
+Usage:
+```
+/api/uci/courses/search?instructor=pattis&units=4&department=compsci
+
+/api/uci/courses/search?notinstructor=badprof&notlocation=badlocation
+```
+
+
+## CourseScraper `coursecake.scrapers.course_scraper`
+
+Importing CourseScraper:
 ```
 from coursecake.scrapers.course_scraper import CourseScraper
 ```
 
-From CourseScraper, you can load all UCI courses
+### `CourseScraper.getAllUciCourses() -> dict`
+
+From CourseScraper, you can load all UCI courses as a dictionary of `Course`
+Usage:
 ```
 scraper = CourseScraper()
 courses = scraper.getAllUCICourses()
 ```
 Courses are loaded in chunks; it will take a minute for all courses to be collected.
+
+### `CourseScraper.getCourses(args: dict) -> dict`
+
+Get the latest course information (directly scraped from web) on courses fulfilling search criteria.
+`args` is a `dict` in which you specify search parameters and their values. 
+
+Here are the currently supported arguments: 
+
+Key | Value
+--- | ---
+"code" | String
+"department" | String       
+"instructor" | String
+"breadth" | String
+"starttime" | String (ex: 8:00am)
+"endtime" | String (ex: 8:00am)
+"title" | String
+"units" | int
+
+You must specify one of the following parameters: `code`, `department`, `instructor`, or `breadth`
+
+Example usage:
+```
+args = {
+  "department': "compsci",
+  "units": 4
+  }
+
+courses = scraper.getCourses(args)
+```
+
+## Course `coursecake.scrapers.course`
+A `Course` object holds all information you can get on a course, accessible by attributes (ex: `Course.instructor`).
+You can easily serialize a `Course` using `Course.__dict__`
 
 `courses` is a list of `Course` objects, ad defined in `coursecake/scrapers/course.py`. From the `Course` object, you can get obtain the course's data.
 
