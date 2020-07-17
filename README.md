@@ -106,7 +106,7 @@ To save all UCI courses into a JSON file:
 scraper.downloadUCICourses()
 ```
 
-The format of data within the JSON file is close to identical with the online endpoint of CourseCake; see the above heading `What is a Course` for an example.
+The format of data within the JSON file is a dictionary of `Course.__dict__`, where `Course.code` are the keys.
 
 
 ## Deploy Flask Application locally
