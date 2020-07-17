@@ -29,8 +29,8 @@ class UCIScraper(Scraper):
             "breadth": "Breadth",
             "instructor": "InstrName",
             "division": "Division",
-            "dept": "Dept",
-            "code": "CourseCode"
+            "department": "Dept",
+            "code": "CourseCodes"
         }
 
         self.requiredParams = [
@@ -50,9 +50,12 @@ class UCIScraper(Scraper):
         self.session.headers.update({"User-Agent": "User"})
 
 
-
-
         print("UCIScraper -- initialized")
+
+
+    def setYearTerm(self, yearTerm: str) -> None:
+        self.yearTerm = yearTerm
+        self.params["YearTerm"] = self.yearTerm
 
 
     def getDepartments(self):
@@ -78,8 +81,11 @@ class UCIScraper(Scraper):
         '''
         params = dict()
         for arg in args:
-            encodedParam = self.paramEncoder[arg]
-            params[encodedParam] = args[arg].upper()
+            try:
+                encodedParam = self.paramEncoder[arg]
+                params[encodedParam] = args[arg].upper()
+            except KeyError:
+                print(f"uci_scraper -- getCourses -- invalid arg {arg}")
 
         params.update(self.params)
         page = self.session.get(self.url, params = params)

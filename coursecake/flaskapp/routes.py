@@ -3,7 +3,7 @@ from flask import make_response,jsonify,request,Blueprint
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from .queries import handleUCICourseSearch,\
+from .queries import handleUCICourseSearch,handleUCILiveSearch,\
                         queryAllUCICourses,packageResults
 from .updates import updateAllUCICourses
 
@@ -58,6 +58,28 @@ def uciSearch():
         200,
         headers
     )
+
+
+@route_blueprint.route("/api/uci/courses/live-search", methods=["GET"])
+@limiter.limit("5/minute;60/hour")
+def uciLiveSearch():
+    try:
+        args = request.args
+        courseData = handleUCILiveSearch(args)
+
+        headers = {"Content-Type": "application/json"}
+        return make_response(
+            jsonify(courseData),
+            200,
+            headers
+        )
+    except:
+        headers = {"Content-Type": "application/json"}
+        return make_response(
+            jsonify({"errorMessage": "bad args"}),
+            400,
+            headers
+        )
 
 
 
