@@ -2,8 +2,8 @@
 At the end of the day all courses are... Courses. Every college course shares similar attributes: instructors, course name, units, etc. Therefore, we aim to scrape college course website to create an API where all course data can be accessed, where each college course shares the same basic, expected data. By making course data easier to access and more "edible" for programs, we hope CourseCake gives a smoother approach build useful tools for students. 
 
 There are two main features to CourseCake to accomplish this goal:
-> RESTful API (current not online but in development)
-> Installable Scraper package
+- RESTful API (current not online but in development)
+- Installable Scraper package
 
 ## What is a Course?
 Here is an example response from our online Flask API endpoint
@@ -240,6 +240,6 @@ You’ll see output similar to this:
 donezo
 
 # Future features
-> Public Web REST API
-> Support for more complicated queries
-> More comprehensive university information on departments, course prerequisites, restricts, etc.
+- Public Web REST API
+- Support for more complicated queries
+- More comprehensive university information on departments, course prerequisites, restricts, etc.
