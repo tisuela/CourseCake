@@ -1,5 +1,5 @@
 # CourseCake - Our Aim
-At the end of the day all courses are... Courses. Every college course shares similar attributes: instructors, course name, units, etc. Therefore, we aim to scrape college course website to create an API where all course data can be accessed, where each college course shares the same basic, expected data. By making course data easier to access and more "edible" for programs, we hope CourseCake gives a smoother approach build useful tools for students. 
+At the end of the day all courses are... Courses. Every college course shares similar attributes: instructors, course name, units, etc. Therefore, we aim to create an API to access course data, where each college course shares the same basic, expected data. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a responsible and smooth approach to build useful tools for students. 
 
 There are two main features to CourseCake to accomplish this goal:
 - RESTful API (current not online but in development)
@@ -59,11 +59,11 @@ Key/Attribute | Value
 
 
 ## UC Irvine -- Zot your courses easier and responsibly
-CourseCake was inspired to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
+The motivation of CourseCake is to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
 
 All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and allows successful requests even when WebSoc is down.
 
-Endpoints that do query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
+Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
 
 
 
