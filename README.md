@@ -117,12 +117,12 @@ Here are the supported search parameters:
 Paramaeter | Value | Comments
 --- | --- | ---
 "code" | String | Search by course code (returns one course)
-"department" | Search by department (See department codes on WebSoc)
-"instructor" | String | Search by instructor
+"department" | String | Search by department with matching code (See department codes on WebSoc)
+"instructor" | String | Search by instructor containing this string
 "units" | String or int | Search courses with matching units
 "building" | String | Search by building 
-"notlocation" | String | Excludes courses in particular building/room
-"notinstructor" | String 
+"notlocation" | String | Excludes courses in buildings/room containing this string
+"notinstructor" | String  | Excludes courses whos instructor contains this string
 Usage:
 ```
 /api/uci/courses/search?instructor=pattis&units=4&department=compsci
