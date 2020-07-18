@@ -58,11 +58,12 @@ Key/Attribute | Value
 
 
 ## UC Irvine -- Zot your courses easier and responsibly
-CourseCake was inspired to make it easier to develop tools like AntPlanner and Antscoper.
+CourseCake was inspired to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
 
-All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and does not
+All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and allows successful requests even when WebSoc is down.
 
-Also, UCI's WebSoc is kinda... ugly. With the course information, I plan to make something useful. Idk what that is yet lol
+Endpoints that do query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
+
 
 
 ## Installation
