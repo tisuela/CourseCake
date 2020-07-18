@@ -53,8 +53,7 @@ Key/Attribute | Value
 "title" | String
 "type" | String
 "units" | int
-"waitlisted" | int`
-
+"waitlisted" | int
 
 
 
@@ -73,8 +72,41 @@ Endpoints that do query WebSoc are ratelimited and follow usage rates similar to
 #### Clone repository
 `git clone https://github.com/nananananate/CourseScraper`
 
+#### Create Python virtual environment
+
+There are a good amount of depencies for this project -- it will be good practice to use a virtual environment, albeit not necessary.
+
+On macOS and Linux:
+```
+python3 -m venv env
+```
+
+On Windows:
+```
+py -m venv env
+```
+The second argument is the location to create the virtual environment. Generally, you can just create this in your project and call it env.
+
+
+#### Activate virtual encironment
+On macOS and Linux:
+```
+source env/bin/activate
+```
+On Windows Command Line:
+```
+.\env\Scripts\activate.bat
+```
+One Windows Powershell
+```
+.\env\Scripts\activate.ps1
+```
+
 #### Navigate to the repository folder and install packages
 `pip install -r requirements.txt`
+
+
+
 
 
 # Documentation
@@ -125,6 +157,8 @@ Paramaeter | Value
 You must specify one of the following parameters: `code`, `department`, `instructor`, or `breadth`
 
 
+
+
 ## CourseScraper `coursecake.scrapers.course_scraper`
 
 Importing CourseScraper:
@@ -171,6 +205,9 @@ args = {
 
 courses = scraper.getCourses(args)
 ```
+
+
+
 
 ## Course `coursecake.scrapers.course`
 A `Course` object holds all information you can get on a course, accessible by attributes (ex: `Course.instructor`).
