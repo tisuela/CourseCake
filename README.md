@@ -86,12 +86,40 @@ Returns all UCI courses
 ### `/api/uci/courses/search`
 Query our database for courses
 
+Here are the supported search parameters:
+Paramaeter | Value | Comments
+--- | --- | ---
+"code" | String | Search by course code (returns one course)
+"department" | Search by department (See department codes on WebSoc)
+"instructor" | String | Search by instructor
+"units" | String or int | Search courses with matching units
+"building" | String | Search by building 
+"notlocation" | String | Excludes courses in particular building/room
+"notinstructor" | String 
 Usage:
 ```
 /api/uci/courses/search?instructor=pattis&units=4&department=compsci
 
 /api/uci/courses/search?notinstructor=badprof&notlocation=badlocation
 ```
+
+### `/api/uci/courses/live-search`
+Queries courses retrieved directly from the univerisiy's course scheduling website.
+Same usage as `/api/uci/courses/search`.
+
+Here are the supported search parameters:
+Paramaeter | Value
+--- | ---
+"code" | String
+"department" | String       
+"instructor" | String
+"breadth" | String
+"starttime" | String (ex: 8:00am)
+"endtime" | String (ex: 8:00am)
+"title" | String
+"units" | String or int
+
+You must specify one of the following parameters: `code`, `department`, `instructor`, or `breadth`
 
 
 ## CourseScraper `coursecake.scrapers.course_scraper`
@@ -127,7 +155,7 @@ Key | Value
 "starttime" | String (ex: 8:00am)
 "endtime" | String (ex: 8:00am)
 "title" | String
-"units" | int
+"units" | String or int
 
 You must specify one of the following parameters: `code`, `department`, `instructor`, or `breadth`
 
