@@ -77,30 +77,22 @@ Endpoints that do query WebSoc are ratelimited and follow usage rates similar to
 There are a good amount of depencies for this project -- it will be good practice to use a virtual environment, albeit not necessary.
 
 On macOS and Linux:
-```
-python3 -m venv env
-```
+`python3 -m venv env`
 
 On Windows:
-```
-py -m venv env
-```
+`py -m venv env`
 The second argument is the location to create the virtual environment. Generally, you can just create this in your project and call it env.
 
 
 #### Activate virtual encironment
 On macOS and Linux:
-```
-source env/bin/activate
-```
+`source env/bin/activate`
+
 On Windows Command Line:
-```
-.\env\Scripts\activate.bat
-```
+`.\env\Scripts\activate.bat`
+
 One Windows Powershell
-```
-.\env\Scripts\activate.ps1
-```
+`.\env\Scripts\activate.ps1`
 
 #### Navigate to the repository folder and install packages
 `pip install -r requirements.txt`
