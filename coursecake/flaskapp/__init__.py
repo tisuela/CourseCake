@@ -38,4 +38,7 @@ def create_app(test_config=None):
     from .admin.routes import admin_blueprint
     app.register_blueprint(admin_blueprint)
 
+    from .errors.handlers import errors
+    app.register_blueprint(errors)
+
     return app
