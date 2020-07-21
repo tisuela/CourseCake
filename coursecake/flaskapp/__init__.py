@@ -35,11 +35,11 @@ def create_app(test_config=None):
     limiter.init_app(app)
 
     # import api routes
-    from .routes.api import api_blueprint
+    from .api.routes import api_blueprint
     app.register_blueprint(api_blueprint)
 
     # import admin routes
-    from .routes.admin import admin_blueprint
+    from .admin.routes import admin_blueprint
     app.register_blueprint(admin_blueprint)
 
     return app

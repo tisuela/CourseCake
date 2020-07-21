@@ -1,7 +1,7 @@
 from flask import make_response,jsonify,request,Blueprint
 
 from ..limiter import limiter
-from ..updates import updateAllUCICourses
+from .updates import updateAllUCICourses
 
 
 

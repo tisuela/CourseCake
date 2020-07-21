@@ -1,10 +1,10 @@
 '''
-Handles all updates made to database
+Handles all admin updates made to database
 '''
 
-from .models import Courses,db
+from ..models import Courses,db
 
-from ..scrapers.course_scraper import CourseScraper
+from ...scrapers.course_scraper import CourseScraper
 
 
 def updateAllUCICourses():
