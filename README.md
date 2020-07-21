@@ -55,7 +55,7 @@ Here is an example response from our online Flask API endpoint. Full documentati
 There are a good amount of depencies for this project -- it will be good practice to use a virtual environment, albeit not necessary.
 
 On macOS and Linux:
-`python3 -m venv env`
+`python3 -m virtualenv env`
 
 On Windows:
 `py -m venv env`
@@ -73,7 +73,7 @@ One Windows Powershell
 `.\env\Scripts\activate.ps1`
 
 #### Navigate to the repository folder and install packages
-`pip install -r requirements.txt`
+`python -m pip install -r requirements.txt`
 
 
 
