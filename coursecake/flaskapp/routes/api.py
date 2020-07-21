@@ -1,26 +1,20 @@
 
 from flask import make_response,jsonify,request,Blueprint
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 
-from .queries import handleUCICourseSearch,handleUCILiveSearch,\
+from ..limiter import limiter
+from ..queries import handleUCICourseSearch,handleUCILiveSearch,\
                         queryAllUCICourses,packageResults
-from .updates import updateAllUCICourses
 
 
 
-route_blueprint = Blueprint("route_blueprint", __name__)
+
+api_blueprint = Blueprint("api_blueprint", __name__)
 
 
 
-# enforces rate limits for all endpoints
-limiter = Limiter(
-    key_func = get_remote_address,
-    default_limits = ["1/second; 20/minute"])
 
 
-
-@route_blueprint.route("/hello", methods=["GET"])
+@api_blueprint.route("/api/hello", methods=["GET"])
 def hello():
     headers = {"Content-Type": "application/json"}
     return make_response(
@@ -31,7 +25,7 @@ def hello():
 
 
 
-@route_blueprint.route("/api/uci/courses/all", methods=["GET"])
+@api_blueprint.route("/api/uci/courses/all", methods=["GET"])
 def uciAll():
     results = queryAllUCICourses()
     courseData = packageResults(results)
@@ -46,7 +40,7 @@ def uciAll():
 
 
 
-@route_blueprint.route("/api/uci/courses/search", methods=["GET"])
+@api_blueprint.route("/api/uci/courses/search", methods=["GET"])
 def uciSearch():
     args = request.args
     results = handleUCICourseSearch(args)
@@ -60,7 +54,7 @@ def uciSearch():
     )
 
 
-@route_blueprint.route("/api/uci/courses/live-search", methods=["GET"])
+@api_blueprint.route("/api/uci/courses/live-search", methods=["GET"])
 @limiter.limit("5/minute;60/hour")
 def uciLiveSearch():
     try:
@@ -80,21 +74,3 @@ def uciLiveSearch():
             400,
             headers
         )
-
-
-
-@route_blueprint.route("/admin/update-uci", methods=["GET"])
-@limiter.limit("1/minute;5/hour")
-def updateAllUCI():
-    # result stores success/failure of update
-    result = dict()
-    updateAllUCI()
-
-    result["result"] = "success"
-
-    headers = {"Content-Type": "application/json"}
-    return make_response(
-        jsonify(result),
-        200,
-        headers
-    )

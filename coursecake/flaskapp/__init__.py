@@ -19,15 +19,27 @@ def create_app(test_config=None):
         SQLALCHEMY_DATABASE_URI = "sqlite:///../db.sqlite"
     )
 
+    # initialize database
     db.init_app(app)
-    ma.init_app(app)
 
-    from .routes import limiter
-    limiter.init_app(app)
     # db.drop_all(app = app)
     db.create_all(app = app)
 
-    from .routes import route_blueprint
-    app.register_blueprint(route_blueprint)
+    # initialize database serializer
+    ma.init_app(app)
+
+    # import API rate limiter
+    from .limiter import limiter
+
+    # initialize API Rate limiter
+    limiter.init_app(app)
+
+    # import api routes
+    from .routes.api import api_blueprint
+    app.register_blueprint(api_blueprint)
+
+    # import admin routes
+    from .routes.admin import admin_blueprint
+    app.register_blueprint(admin_blueprint)
 
     return app

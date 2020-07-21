@@ -1,5 +1,5 @@
 '''
-This module handles all queries made to the API
+This module handles all queries made to the database
 '''
 from .models import Courses, CoursesSchema
 from ..scrapers.course_scraper import CourseScraper
@@ -18,6 +18,8 @@ def packageResults(results: list) -> dict:
 def queryAllUCICourses() -> list:
     return Courses.query.all()
 
+
+
 def handleUCILiveSearch(args: dict) -> dict:
     '''
     Gets the latest (hence live) courses by directly
@@ -28,6 +30,8 @@ def handleUCILiveSearch(args: dict) -> dict:
     courseData = {"courses": list(course.__dict__ for course in courses.values())}
 
     return courseData
+
+
 
 def handleUCICourseSearch(args: dict) -> list:
     '''
