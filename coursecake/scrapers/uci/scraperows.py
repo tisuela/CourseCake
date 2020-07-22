@@ -1,7 +1,7 @@
-from .uci_course import UCICourse
+from .uci_course import UciCourse
 from ..course import Course
 
-class UCIScrapeRows:
+class UciScrapeRows:
     def __init__(self, rows: list):
         # list of rows from course table
         self.rows = rows
@@ -76,7 +76,7 @@ class UCIScrapeRows:
         Scrapes cells for course information
         '''
         if self.rowContainsCourse:
-            course = UCICourse(cells, templateCourse =  self.templateCourse)
+            course = UciCourse(cells, templateCourse =  self.templateCourse)
             self.courses[course.code] = course
 
         else:

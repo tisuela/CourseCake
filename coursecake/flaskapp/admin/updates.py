@@ -7,9 +7,9 @@ from ..models import Courses,db
 from ...scrapers.course_scraper import CourseScraper
 
 
-def updateAllUCICourses():
+def updateAllUciCourses():
     courseScraper = CourseScraper()
-    courses = courseScraper.getAllUCICourses()
+    courses = courseScraper.getAllUciCourses()
 
     for course in courses.values():
         newCourse = Courses(course)

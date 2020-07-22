@@ -15,15 +15,15 @@ def packageResults(results: list) -> dict:
 
 
 
-def queryAllUCICourses() -> list:
+def queryAllUciCourses() -> list:
     return Courses.query.all()
 
 
 
-def handleUCILiveSearch(args: dict) -> dict:
+def handleUciLiveSearch(args: dict) -> dict:
     '''
     Gets the latest (hence live) courses by directly
-    access the UCI course schedule (uses scraper)
+    access the Uci course schedule (uses scraper)
     '''
     scraper = CourseScraper().getUciScraper()
     courses = scraper.getCourses(args)
@@ -33,7 +33,7 @@ def handleUCILiveSearch(args: dict) -> dict:
 
 
 
-def handleUCICourseSearch(args: dict) -> list:
+def handleUciCourseSearch(args: dict) -> list:
     '''
     Handles search based on request arguments.
     We check for each arg in order to "clean" the query and prevent

@@ -1,12 +1,12 @@
 from ..scraper import Scraper
 from ..course import Course
-from .scraperows import UCIScrapeRows
+from .scraperows import UciScrapeRows
 from bs4 import BeautifulSoup
 import requests
 
 
 
-class UCIScraper(Scraper):
+class UciScraper(Scraper):
     def __init__(self):
         Scraper.__init__(self, "UCI")
 
@@ -44,13 +44,13 @@ class UCIScraper(Scraper):
         self.deptCodes = list()
 
 
-        # UCI's WebSoc requires that we identify ourselves (User-Agent)
+        # Uci's WebSoc requires that we identify ourselves (User-Agent)
         # The use of session will help for form submissions
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": "User"})
 
 
-        print("UCIScraper -- initialized")
+        print("UciScraper -- initialized")
 
 
     def setYearTerm(self, yearTerm: str) -> None:
@@ -65,13 +65,13 @@ class UCIScraper(Scraper):
         # find departments (in the form)
         departments = soup.find("select", {"name": "Dept"}).findChildren("option")
         for dept in departments:
-            # print("UCIScraper -- getDepartments --", dept["value"])
+            # print("UciScraper -- getDepartments --", dept["value"])
 
             # getting ALL as a dept will lead to an error
             if (dept["value"].strip() != "ALL"):
                 self.deptCodes.append(dept["value"])
 
-        print("UCIScraper -- getDepartments --","Departments initialized")
+        print("UciScraper -- getDepartments --","Departments initialized")
 
 
     def getCourses(self, args: dict) -> dict:
@@ -140,7 +140,7 @@ class UCIScraper(Scraper):
             for table in courseTables:
                 rows = table.findChildren("tr")
 
-                rowsScraper = UCIScrapeRows(rows)
+                rowsScraper = UciScrapeRows(rows)
                 rowsScraper.scrape()
                 courses.update(rowsScraper.courses)
 
@@ -150,7 +150,7 @@ class UCIScraper(Scraper):
         except IndexError:
             # index error means no course list was in the page
             # We want to print out the error message
-            print("UCIScraper -- scrapePage --","ERROR:", soup.find("div", {"style":"color: red; font-weight: bold;"}).text.strip())
+            print("UciScraper -- scrapePage --","ERROR:", soup.find("div", {"style":"color: red; font-weight: bold;"}).text.strip())
         return courses
 
 
@@ -161,7 +161,7 @@ class UCIScraper(Scraper):
         courses = dict()
         self.getDepartments()
         for dept in self.deptCodes:
-            print("UCIScraper -- getCoursesByDepartment --", "scraping", dept)
+            print("UciScraper -- getCoursesByDepartment --", "scraping", dept)
 
             courses.update(self.getDepartmentCourses(dept))
 
@@ -194,7 +194,7 @@ class UCIScraper(Scraper):
                 upperBound = max
 
             courseCodes = f"{lowerBound}-{upperBound}"
-            print("UCIScraper -- getCoursesByCourseCodes --", "scraping", courseCodes)
+            print("UciScraper -- getCoursesByCourseCodes --", "scraping", courseCodes)
 
             courses.update(self.getCourseCodeCourses(courseCodes))
 
@@ -206,9 +206,9 @@ class UCIScraper(Scraper):
 
 
 
-    def scrape(self) -> list:
+    def scrape(self) -> dict:
         '''
-        Gets all UCI courses
+        Gets all Uci courses
         '''
         # self.getCoursesByDepartment()
         self.courses = self.getCoursesByCourseCodes()

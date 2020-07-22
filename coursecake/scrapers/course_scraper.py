@@ -1,4 +1,4 @@
-from .uci.uci_scraper import UCIScraper
+from .uci.uci_scraper import UciScraper
 from .course import Course
 
 import json
@@ -15,19 +15,19 @@ class CourseScraper:
         self.templateCourse = Course()
 
 
-    def getUciScraper(self) -> UCIScraper:
-        return UCIScraper()
+    def getUciScraper(self) -> UciScraper:
+        return UciScraper()
 
-    def getAllUCICourses(self) -> dict:
-        courses = UCIScraper().scrape()
+    def getAllUciCourses(self) -> dict:
+        courses = UciScraper().scrape()
 
-        # courses = UCIScraper().getDepartmentCourses("COMPSCI")
+        # courses = UciScraper().getDepartmentCourses("COMPSCI")
         return courses
 
 
-    def downloadUCICourses(self):
-        courses = self.getAllUCICourses()
-        self.downloadCoursesAsJson(courses, "UCICourses.json")
+    def downloadUciCourses(self):
+        courses = self.getAllUciCourses()
+        self.downloadCoursesAsJson(courses, "UciCourses.json")
 
 
     def downloadCoursesAsJson(self, courses, fileName):

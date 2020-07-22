@@ -2,8 +2,8 @@
 from flask import make_response,jsonify,request,Blueprint
 
 from ..limiter import limiter
-from ..queries import handleUCICourseSearch,handleUCILiveSearch,\
-                        queryAllUCICourses,packageResults
+from ..queries import handleUciCourseSearch,handleUciLiveSearch,\
+                        queryAllUciCourses,packageResults
 
 
 
@@ -26,8 +26,8 @@ def hello():
 
 
 @api_blueprint.route("/api/uci/courses/all", methods=["GET"])
-def uciAll():
-    results = queryAllUCICourses()
+def UciAll():
+    results = queryAllUciCourses()
     courseData = packageResults(results)
 
 
@@ -41,9 +41,9 @@ def uciAll():
 
 
 @api_blueprint.route("/api/uci/courses/search", methods=["GET"])
-def uciSearch():
+def UciSearch():
     args = request.args
-    results = handleUCICourseSearch(args)
+    results = handleUciCourseSearch(args)
     courseData = packageResults(results)
 
     headers = {"Content-Type": "application/json"}
@@ -56,10 +56,10 @@ def uciSearch():
 
 @api_blueprint.route("/api/uci/courses/live-search", methods=["GET"])
 @limiter.limit("5/minute;60/hour")
-def uciLiveSearch():
+def UciLiveSearch():
     try:
         args = request.args
-        courseData = handleUCILiveSearch(args)
+        courseData = handleUciLiveSearch(args)
 
         headers = {"Content-Type": "application/json"}
         return make_response(

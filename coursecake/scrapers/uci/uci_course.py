@@ -1,9 +1,9 @@
 from ..course import Course
 
 
-class UCICourse(Course):
+class UciCourse(Course):
     '''
-    This class is used to construct Course objects from UCI's course schedule,
+    This class is used to construct Course objects from Uci's course schedule,
     WEBSOC. No attributes are added, but helper methods and __init__ will be
     modified / added to help with construction
     '''
