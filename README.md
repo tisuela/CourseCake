@@ -45,6 +45,14 @@ Here is an example response from our online Flask API endpoint. Full documentati
 ```
 
 
+
+# Documentation
+
+[RESTful API ](https://github.com/nananananate/CourseCake/wiki/RESTful-API-Documentation)
+
+[Scrapers](https://github.com/nananananate/CourseCake/wiki/Scrapers-Documentation)
+
+
 ## Installation
 
 #### Clone repository
@@ -76,14 +84,6 @@ One Windows Powershell
 `python -m pip install -r requirements.txt`
 
 
-
-
-
-# Documentation
-
-[RESTful API ](https://github.com/nananananate/CourseCake/wiki/RESTful-API-Documentation)
-
-[Scrapers](https://github.com/nananananate/CourseCake/wiki/Scrapers-Documentation)
 
 ## Deploy Flask Application locally
 
