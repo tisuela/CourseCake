@@ -24,7 +24,7 @@ class Scraper:
         return courses
 
 
-    def scrape() -> dict:
+    def scrape(self) -> dict:
         '''
         Implemented by child
         '''
