@@ -5,7 +5,7 @@ import os
 
 from flask import Flask
 from .models import db,ma
-
+from ..config import Config
 
 
 
@@ -13,11 +13,7 @@ def create_app(test_config=None):
     # init app
     app = Flask(__name__, instance_relative_config = True)
 
-    app.config.from_mapping(
-        SECRET_KEY = "dev",
-        SQLALCHEMY_TRACK_MODIFICATIONS = False,
-        SQLALCHEMY_DATABASE_URI = "sqlite:///../db.sqlite"
-    )
+    app.config.from_object(Config)
 
     # initialize database
     db.init_app(app)
@@ -41,5 +37,8 @@ def create_app(test_config=None):
     # import admin routes
     from .admin.routes import admin_blueprint
     app.register_blueprint(admin_blueprint)
+
+    from .errors.handlers import errors
+    app.register_blueprint(errors)
 
     return app
