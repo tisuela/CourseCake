@@ -48,9 +48,9 @@ Here is an example response from our online Flask API endpoint. Full documentati
 
 # Documentation
 
-[RESTful API ](https://github.com/nananananate/CourseCake/wiki/RESTful-API-Documentation)
+[RESTful API ](/RESTful-API)
 
-[Scrapers](https://github.com/nananananate/CourseCake/wiki/Scrapers-Documentation)
+[Scrapers](/Scrapers)
 
 
 ## Installation
