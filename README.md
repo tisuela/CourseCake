@@ -130,4 +130,4 @@ donezo
 - Support for more complicated queries
 - More comprehensive university information on departments, course prerequisites, restricts, etc.
 - HTTPS only
-- IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS
+- IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS ty
