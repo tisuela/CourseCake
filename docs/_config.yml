@@ -1,5 +1,5 @@
 theme: jekyll-theme-cayman
 
 
-plugins:
-  - jekyll-sitemap
+github:
+  sup: sup
