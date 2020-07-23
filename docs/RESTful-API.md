@@ -1,6 +1,6 @@
-```
+---
 title: RESTful API
-```
+---
 ## [coursecake.tisuela.com/api](https://coursecake.tisuela.com/api)
 We are now online! For the next several days, we will be making revisions continuously, so we apologize if the service is down. Do be sure to refresh this page daily as needed -- API improvements will be posted.
 
