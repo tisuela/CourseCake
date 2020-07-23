@@ -1,5 +1,6 @@
 
-from flask import make_response,jsonify,request,Blueprint
+import logging
+from flask import make_response,jsonify,request,Blueprint,current_app
 
 from ..limiter import limiter
 from ..queries import handleUciCourseSearch,handleUciLiveSearch,\
@@ -7,7 +8,7 @@ from ..queries import handleUciCourseSearch,handleUciLiveSearch,\
 
 
 
-
+logging.basicConfig(filename="api.log",level=logging.DEBUG)
 api_blueprint = Blueprint("api_blueprint", __name__)
 
 
@@ -17,6 +18,7 @@ api_blueprint = Blueprint("api_blueprint", __name__)
 @api_blueprint.route("/api/hello", methods=["GET"])
 def hello():
     headers = {"Content-Type": "application/json"}
+    current_app.logger.info("hello requested")
     return make_response(
         jsonify({"hello": "world"}),
         200,

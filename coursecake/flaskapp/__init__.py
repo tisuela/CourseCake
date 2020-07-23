@@ -30,6 +30,10 @@ def create_app(test_config=None):
     # initialize API Rate limiter
     limiter.init_app(app)
 
+    # import home pages routes
+    from .home.routes import home_blueprint
+    app.register_blueprint(home_blueprint)
+
     # import api routes
     from .api.routes import api_blueprint
     app.register_blueprint(api_blueprint)
@@ -38,6 +42,7 @@ def create_app(test_config=None):
     from .admin.routes import admin_blueprint
     app.register_blueprint(admin_blueprint)
 
+    # import error handlers
     from .errors.handlers import errors
     app.register_blueprint(errors)
 
