@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Coursework
+title: otherREADME
 ---
 
 # CourseCake - Our Aim
