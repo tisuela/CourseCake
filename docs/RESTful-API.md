@@ -98,15 +98,6 @@ Parameter | Value | Comments
 "title" | String | alternative to course name
 "units" | String or int | We show the highest units possible for a course
 
-Parameter | Value | Comments
---- | --- | ---
-"code" | String | Search by course code (returns one course)
-"department" | String | Search by department with matching code (See department codes on WebSoc)
-"instructor" | String | Search by instructor containing this string
-"units" | String or int | Search courses with matching units
-"building" | String | Search by building 
-"notlocation" | String | Excludes courses in buildings/room containing this string
-"notinstructor" | String  | Excludes courses whos instructor contains this string
 
 You must specify one of the following parameters: `code`, `department`, `instructor`, or `breadth`.
 
