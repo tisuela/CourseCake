@@ -88,14 +88,14 @@ Same usage as `/uci/courses/search`.
 Here are the supported search parameters:
 Parameter | Value | comment
 --- | --- | ---
-"code" | String |
-"department" | String |       
-"instructor" | String |
+"code" | String | Unique to every `Course`
+"department" | String | Check your university's department codes      
+"instructor" | String | Staff/professors/teachers
 "breadth" | String | GE requirement (ex: GE-2)
 "starttime" | String | (ex: 8:00am)
 "endtime" | String | (ex: 8:00am)
-"title" | String | 
-"units" | String or int | 
+"title" | String | alternative to course name
+"units" | String or int | We show the highest units possible for a course
 
 You must specify one of the following parameters: `code`, `department`, `instructor`, or `breadth`.
 
