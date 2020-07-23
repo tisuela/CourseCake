@@ -1,5 +1,5 @@
 ---
-title: index
+title: CourseCake
 ---
 
 # CourseCake - Our Aim
