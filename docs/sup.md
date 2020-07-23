@@ -1,6 +1,6 @@
 ---
 layout: page
-title: otherREADME
+title: sup
 ---
 
 # CourseCake - Our Aim
