@@ -2,12 +2,15 @@
 Runs flask app
 '''
 import os
+import logging
 
 from flask import Flask
+
 from .models import db,ma
 from ..config import Config
 
 
+logging.basicConfig(filename="flaskapp.log",level=logging.DEBUG)
 
 def create_app(test_config=None):
     # init app

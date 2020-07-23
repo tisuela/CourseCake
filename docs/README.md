@@ -1,5 +1,5 @@
 # CourseCake - Our Aim
-At the end of the day all courses are... Courses. Every college course shares similar attributes: instructors, course name, units, etc. Therefore, we aim to create an API to access course data, where each college course shares the same basic, expected data. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a responsible and smooth approach to build useful tools for students. 
+At the end of the day all courses are... Courses. Every college course shares similar attributes: instructors, course name, units, etc. Therefore, we aim to create an API to access course data, where each college course shares the same basic, expected data. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a responsible and smooth approach to build useful tools for students.
 
 There are two main features to CourseCake to accomplish this goal:
 - RESTful API [coursecake.tisuela.com](http://coursecake.tisuela.com)
@@ -48,9 +48,9 @@ Here is an example response from our online Flask API endpoint. Full documentati
 
 # Documentation
 
-[RESTful API ](https://github.com/nananananate/CourseCake/wiki/RESTful-API-Documentation)
+[RESTful API ](http://docs.coursecake.tisuela.com/RESTful-API)
 
-[Scrapers](https://github.com/nananananate/CourseCake/wiki/Scrapers-Documentation)
+[Scrapers](http://docs.coursecake.tisuela.com/Scrapers)
 
 
 ## Installation
@@ -126,7 +126,7 @@ You’ll see output similar to this:
 ```
 donezo
 
-# Future features 
+# Future features
 - Support for more complicated queries
 - More comprehensive university information on departments, course prerequisites, restricts, etc.
 - HTTPS only
