@@ -17,7 +17,7 @@ Endpoints that do directly query WebSoc are ratelimited and follow usage rates s
 
 ## What is a Course?
 
-Here is an example response from our online Flask API endpoint. Full documentation available [here](https://github.com/nananananate/CourseCake/wiki/RESTful-API-Documentation)
+Here is an example response from our online Flask API endpoint. Full documentation available [here](http://docs.coursecake.tisuela.com/RESTful-API)
 ```
 {
   "courses": [
