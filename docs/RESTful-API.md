@@ -40,7 +40,7 @@ Key/Attribute | Value
 "code" | String
 "department" | String       
 "departmentTitle" | String
-"enrolled" | String
+"enrolled" | int
 "instructor" | String
 "location" | String
 "max" | int
