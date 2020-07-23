@@ -1,10 +1,12 @@
+import logging
+
 from flask import Blueprint
 import markdown
 import markdown.extensions.fenced_code
 
 from ..limiter import limiter
 
-
+logging.basicConfig(filename="home.log",level=logging.DEBUG)
 home_blueprint = Blueprint("home_blueprint", __name__)
 
 

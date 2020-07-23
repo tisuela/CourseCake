@@ -1,5 +1,8 @@
+import logging
 from flask import Blueprint, render_template
 
+
+logging.basicConfig(filename="error.log",level=logging.DEBUG)
 errors = Blueprint('errors', __name__)
 
 

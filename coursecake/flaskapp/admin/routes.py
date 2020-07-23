@@ -1,10 +1,11 @@
+import logging
 from flask import make_response,jsonify,request,Blueprint
 
 from ..limiter import limiter
 from .updates import updateAllUciCourses
 from .utils import verifyAdminToken
 
-
+logging.basicConfig(filename="admin.log",level=logging.DEBUG)
 admin_blueprint = Blueprint("admin_blueprint", __name__)
 
 @admin_blueprint.route("/admin/update-uci", methods=["POST"])
@@ -26,6 +27,7 @@ def updateAllUci():
     else:
         result["result"] = "fail"
         result["reason"] = "bad_token"
+        status = 401
 
 
     return make_response(
