@@ -15,8 +15,6 @@ class Test(db.Model):
     name = db.Column(db.String(80), nullable = False)
 
 
-
-
 class Courses(db.Model):
     code = db.Column(db.String(20), primary_key=True, nullable = False)
     name = db.Column(db.String(50), nullable = False)
