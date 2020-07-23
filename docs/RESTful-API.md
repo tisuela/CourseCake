@@ -57,31 +57,46 @@ Key/Attribute | Value
 
 ## API Endpoints `/api`
 
-### All courses `/uci/courses/all`
+### All courses `GET /uci/courses/all`
 Returns all UCI courses
 
-### Search Courses `/uci/courses/search`
+### Search Courses `GET /uci/courses/search`
 Query our database for courses
 
+You can search for multiple values for a parameter by separating them with commas:
+```
+/uci/courses/search?units=4,8
+```
+
 Here are the supported search parameters:
-Parameter | Value | Comments
+
+Parameter | Matching behavior | Description
 --- | --- | ---
-"code" | String | Search by course code (returns one course)
-"department" | String | Search by department with matching code (See department codes on WebSoc)
-"instructor" | String | Search by instructor containing this string
-"units" | String or int | Search courses with matching units
-"building" | String | Search by building 
-"notlocation" | String | Excludes courses in buildings/room containing this string
-"notinstructor" | String  | Excludes courses whos instructor contains this string
+"code" | Exact | Course Code
+"building" | Exact | 
+"room" | Exact |
+"status" | Exact | full, open, etc.
+"units" | Exact |
+"department" | Exact | See Department codes on your school's Course Schedule
+"notbuilding" | Excludes exact
+"notinstructor" | Excludes exact
+"notroom" | Excludes exact
+"nottunits" | Excludes exact
+"instructor" | Contains 
+"name" | Contains | Formal name, like DANCE 101
+"title" | Contains | Readable name, like Intro to Dance
+"time" | Contains 
+"location" | Contains 
+"nottime" | Excludes contains
+"notlocation" | Excludes contains
 
-Usage:
+
+Here's a request that returns all of UCI's in-person classes taught on Monday, Wednesday, and Friday which are not taught by Professor Badprof
 ```
-/api/uci/courses/search?instructor=pattis&units=4&department=compsci
-
-/api/uci/courses/search?notinstructor=badprof&notlocation=badlocation
+GET coursecake.tisuela.com/api/uci/courses/search?notlocation=line,remote,tba&time=mwf&notinstructor=badprof
 ```
 
-### Live Search Courses `/uci/courses/live-search`
+### Live Search Courses `GET /uci/courses/live-search`
 Queries courses retrieved directly from the university's course scheduling website.
 Same usage as `/uci/courses/search`.
 
