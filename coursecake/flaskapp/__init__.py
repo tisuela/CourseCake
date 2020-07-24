@@ -21,7 +21,7 @@ def create_app(test_config=None):
     # initialize database
     db.init_app(app)
 
-    # db.drop_all(app = app)
+    # create database tables
     db.create_all(app = app)
 
     # initialize database serializer

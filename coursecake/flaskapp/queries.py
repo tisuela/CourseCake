@@ -1,7 +1,7 @@
 '''
 This module handles all queries made to the database
 '''
-from .models import Courses, CoursesSchema
+from .models import University, Courses, CoursesSchema
 from ..scrapers.course_scraper import CourseScraper
 
 def packageResults(results: list) -> dict:
@@ -16,7 +16,7 @@ def packageResults(results: list) -> dict:
 
 
 def queryAllUciCourses() -> list:
-    return Courses.query.all()
+    return University.query.filter_by(name = "UCI").first().courses
 
 
 

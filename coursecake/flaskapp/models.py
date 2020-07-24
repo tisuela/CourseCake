@@ -1,6 +1,8 @@
 '''
 Holds all models for SQLAlchemy and marshmallow
 '''
+from datetime import datetime
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
@@ -16,6 +18,25 @@ class Test(db.Model):
 
 
 class Courses(db.Model):
+    '''
+    This table is very detailed, getting all information we can possibly
+    collect about a Course. It may be better practice to separate it to
+    multiple tables, but we are not worried about database size right now.
+    We want all course information to be easily accessed from one model
+    without having to join multiple tables
+
+    To compensate, other tables will be made (like University) whose
+    information is redundant but will aid in query performance.
+    '''
+
+    # The university where this course is offered
+    # This should be the university's domain name in all CAPS
+    # Ex: UC Irvine's domain is uci.edu, so university = UCI
+    university = db.Column(db.String(20), db.ForeignKey("university.name"), primary_key=True,  nullable = False)
+
+    # Course code which is unique to the univerisity
+    # It is not necessarily unique to the database,
+    # Which is why university + code are primary keys
     code = db.Column(db.String(20), primary_key=True, nullable = False)
     name = db.Column(db.String(50), nullable = False)
     title = db.Column(db.String(100), nullable = False)
@@ -40,14 +61,18 @@ class Courses(db.Model):
     restrictions = db.Column(db.String(100), nullable = False)
     school = db.Column(db.String(50), nullable = False)
 
+    updated = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # relationships
+    prerequisites = db.relationship("Prerequisite", backref = "courses", lazy=True)
 
 
-
-    def __init__(self, course):
+    def __init__(self, course, university: str):
         '''
         Courses uses a course objects
         See ../scraper/course.py
         '''
+        self.university = university
         self.code = course.code
         self.name = course.name
         self.title = course.title
@@ -74,6 +99,38 @@ class Courses(db.Model):
 
     def __repr__(self):
         return f"{self.code} | {self.name} | {self.instructor} | {self.units} | {self.status} \n"
+
+
+class University(db.Model):
+    '''
+    Holds redundant information, but might?? aid in future queries
+    or refactors
+    '''
+
+    # The university where this course is offered
+    # This should be the university's domain name in all CAPS
+    # Ex: UC Irvine's domain is uci.edu, so university = UCI
+    name = db.Column(db.String(20), primary_key=True, nullable = False)
+    courses = db.relationship("Courses", backref = "thisUniversity", lazy=True)
+
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def __repr__(self):
+        return f"{self.name}"
+
+
+
+
+
+
+class Prerequisite(db.Model):
+    '''
+    Stores a prerequisite to a course
+    '''
+    thisCode = db.Column(db.String(20), db.ForeignKey("courses.code"), primary_key=True,  nullable = False)
+    prerequisiteCode = db.Column(db.String(20), primary_key=True, nullable = False)
 
 
 
