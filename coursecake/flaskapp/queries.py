@@ -15,8 +15,8 @@ def packageResults(results: list) -> dict:
 
 
 
-def queryAllUciCourses() -> list:
-    return University.query.filter_by(name = "UCI").first().courses
+def queryAllCourses(university: str) -> list:
+    return University.query.filter_by(name = university).first().courses
 
 
 
@@ -118,7 +118,7 @@ def addNotLikeFilter(args: dict, parameter: str, query):
 
 
 
-def handleUciCourseSearch(args: dict) -> list:
+def handleCourseSearch(university: str, args: dict) -> list:
     '''
     Handles search based on request arguments.
     We check for each arg in order to "clean" the query and prevent
@@ -126,7 +126,7 @@ def handleUciCourseSearch(args: dict) -> list:
     Returns list of Courses rows
     '''
 
-    query = Courses.query
+    query = University.query.filter_by(name = university).first().courses
     print(f"handleCourseSearch -- request args -- {args}")
 
     query = addInFilter(args, "code", query)

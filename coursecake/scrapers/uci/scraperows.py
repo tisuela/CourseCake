@@ -33,7 +33,7 @@ class UciScrapeRows:
         position = self.position - 1
 
         # how far back we should iterate
-        threshold = 9
+        threshold = 12
 
         # iterate over no more than <threshold> previous rows
         while (position >= 0 and position > self.position - threshold):

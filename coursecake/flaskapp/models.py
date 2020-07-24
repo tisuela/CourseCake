@@ -64,7 +64,7 @@ class Courses(db.Model):
     updated = db.Column(db.DateTime, default=datetime.utcnow)
 
     # relationships
-    prerequisites = db.relationship("Prerequisite", backref = "courses", lazy=True)
+    prerequisites = db.relationship("Prerequisite", backref = "courses", lazy="dynamic")
 
 
     def __init__(self, course, university: str):
@@ -111,7 +111,7 @@ class University(db.Model):
     # This should be the university's domain name in all CAPS
     # Ex: UC Irvine's domain is uci.edu, so university = UCI
     name = db.Column(db.String(20), primary_key=True, nullable = False)
-    courses = db.relationship("Courses", backref = "thisUniversity", lazy=True)
+    courses = db.relationship("Courses", backref = "thisUniversity", lazy="dynamic")
 
 
     def __init__(self, name: str):

@@ -3,8 +3,8 @@ import markdown
 import markdown.extensions.fenced_code
 
 from ..limiter import limiter
-from ..queries import handleUciCourseSearch,handleUciLiveSearch,\
-                        queryAllUciCourses,packageResults
+from ..queries import handleCourseSearch,handleUciLiveSearch,\
+                        queryAllCourses,packageResults
 
 
 api_blueprint = Blueprint("api_blueprint", __name__)
@@ -33,10 +33,10 @@ def hello():
 
 
 
-@api_blueprint.route("/api/uci/courses/all", methods=["GET"])
-def UciAll():
+@api_blueprint.route("/api/<university>/courses/all", methods=["GET"])
+def allCourses(university: str):
     current_app.logger.info("all courses requested")
-    results = queryAllUciCourses()
+    results = queryAllCourses(university.upper())
     courseData = packageResults(results)
 
 
@@ -49,11 +49,11 @@ def UciAll():
 
 
 
-@api_blueprint.route("/api/uci/courses/search", methods=["GET"])
-def UciSearch():
+@api_blueprint.route("/api/<university>/courses/search", methods=["GET"])
+def Search(university: str):
     current_app.logger.info("course search requested")
     args = request.args
-    results = handleUciCourseSearch(args)
+    results = handleCourseSearch(university.upper(), args)
     courseData = packageResults(results)
 
     headers = {"Content-Type": "application/json"}
