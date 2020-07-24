@@ -1,19 +1,20 @@
 # [CourseCake](http://docs.coursecake.tisuela.com/) - Our Aim
-At the end of the day all courses are... Courses. Every college course shares similar attributes: instructors, course name, units, etc. Therefore, we aim to create an API to access course data, where each college course shares the same basic, expected data. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a responsible and smooth approach to build useful tools for students.
+From developing a course planner to simply finding in-person classes, there's an easier, responsible, and more powerful way to get your university's course information.
+
+We aim to create an API to access course data, where each college course shares the same basic, expected data. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a smooth approach to build useful tools for students.
 
 There are two main features to CourseCake to accomplish this goal:
-- RESTful API [coursecake.tisuela.com](http://coursecake.tisuela.com)
-- Installable Scraper package
+- RESTful API [coursecake.tisuela.com](http://coursecake.tisuela.com) - [docs](https://docs.coursecake.tisuela.com/RESTful-API)
+- Installable Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
 
 
 ## UC Irvine -- Zot your courses easier and responsibly
-The motivation of CourseCake is to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
+Currently the only supported school in CourseCake, the motivation of CourseCake is to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
 
 All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and allows successful requests even when WebSoc is down.
 
 Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
-
 
 ## What is a Course?
 
