@@ -18,7 +18,7 @@ coursesModel = api.schema_model("Course", jsonSchema.dump(coursesSchema)["defini
 
 @api.route("/all/<string:university>", endpoint = "all")
 class AllCourses(Resource):
-    @api.response(200, "Success")
+    @api.response(200, "Success", model = coursesModel)
     def get(self, university: str):
         current_app.logger.info("all courses requested")
         results = queryAllCourses(university.upper())
@@ -36,7 +36,6 @@ class Search(Resource):
                 "in": "query",
                 "description": "Unique course code"
                 },
-
             "name": {
                 "in": "query",
                 "description": "Formal name of the course"
@@ -49,8 +48,49 @@ class Search(Resource):
 
             "department": {
                 "in": "query",
-                "description": "Unique department code"
-                }
+                "description": "Unique department code (Check your Uni's website)"
+            },
+            "location": {
+                "in": "query",
+                "description": "Includes building and room info"
+            },
+            "building": {
+                "in": "query",
+                "description": "Building name where instruction occurs"
+            },
+            "room": {
+                "in": "query",
+                "description": "Room name/number where instruction occurs"
+            },
+            "status": {
+                "in": "query",
+                "description": "Status of class enrollment (FULL, OPEN, CLOSED, etc.)"
+            },
+            "units": {
+                "in": "query"
+            },
+            "enrolled":{
+                "in": "query",
+                "description": "Number of students currently enrolled in the course"
+            },
+            "waitlisted": {
+                "in": "query"
+            },
+            "requested": {
+                "in": "query"
+            },
+            "max": {
+                "in": "query",
+                "description": "Maximum number of students that can be enrolled"
+            },
+            "instructor": {
+                "in": "query",
+                "description": "Instructor(s) teaching the course"
+            },
+            "time": {
+                "in": "query",
+                "description": "Time of instruction throughout the week. Ex: MWF 10am-11am"
+            }
     })
     def get(self, university: str):
         '''

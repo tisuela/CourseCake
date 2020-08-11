@@ -161,6 +161,7 @@ class CourseSearch:
     QUERY_DELIMITER = ","
 
     # these constants help clean the query from malicious requests
+    # TODO: Fix departmentTitle
     VALID_PARAMETERS = [
         "code",
         "name",
