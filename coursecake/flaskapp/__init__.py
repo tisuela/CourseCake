@@ -5,18 +5,22 @@ import os
 import logging
 
 from flask import Flask
-
+import flask_monitoringdashboard as dashboard
 from .models import db,ma
 from ..config import Config
 
 
 logging.basicConfig(filename="flaskapp.log",level=logging.DEBUG)
-
 def create_app(test_config=None):
     # init app
     app = Flask(__name__, instance_relative_config = True)
 
     app.config.from_object(Config)
+
+    # bind monitoring
+    dashboard.config.init_from(envvar='FLASK_MONITORING_DASHBOARD_CONFIG')
+    dashboard.bind(app)
+
 
     # initialize database
     db.init_app(app)
@@ -57,5 +61,7 @@ def create_app(test_config=None):
     # import error handlers
     from .errors.handlers import errors
     app.register_blueprint(errors)
+
+
 
     return app
