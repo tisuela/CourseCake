@@ -33,13 +33,22 @@ def create_app(test_config=None):
     # initialize API Rate limiter
     limiter.init_app(app)
 
+
+    ### Importing routes ###
+
     # import home pages routes
     from .home.routes import home_blueprint
     app.register_blueprint(home_blueprint)
 
-    # import api routes
+    # import api routes - differemt structure from other routes!
+
+    # deprecated api
     from .api.routes import api_blueprint
     app.register_blueprint(api_blueprint)
+
+    # new api using flask-restx
+    from .api_v1 import blueprint as api1
+    app.register_blueprint(api1)
 
     # import admin routes
     from .admin.routes import admin_blueprint
