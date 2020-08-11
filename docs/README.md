@@ -17,28 +17,33 @@ All of the latest scraped data is stored in a local database, which avoids conge
 Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
 
 ## What is a Course?
+Here is an example response using one of our `courses` endpoints. Full documentation available [here](http://docs.coursecake.tisuela.com/RESTful-API)
+The response is a dictionary containing a list of `course` objects. The schema of a `course` is shown in this example.
 
-Here is an example response from our online Flask API endpoint. Full documentation available [here](http://docs.coursecake.tisuela.com/RESTful-API)
+
 ```
 {
   "courses": [
     {
-      "code": "01020",
-      "department": "Art",
-      "departmentTitle": "Art",
-      "enrolled": 72,
-      "instructor": "MAJOLI, M.BORNSTEIN, J.",
-      "location": "VRTL REMOTE",
-      "max": 160,
-      "name": "Art 1A",
+      "building": "string",
+      "code": "string",
+      "department": "string",
+      "departmentTitle": "string",
+      "enrolled": 0,
+      "instructor": "string",
+      "location": "string",
+      "max": 0,
+      "name": "string",
       "requested": 0,
-      "restrictions": "",
-      "school": "Claire Trevor School of the Arts",
-      "status": "NewOnly",
-      "time": "TBA",
-      "title": "ART IN CONTEXT",
-      "type": "Lec",
-      "units": 4,
+      "restrictions": "string",
+      "room": "string",
+      "school": "string",
+      "status": "string",
+      "time": "string",
+      "title": "string",
+      "type": "string",
+      "units": 0,
+      "updated": "datetime: string,null",
       "waitlisted": 0
     }
   ]
