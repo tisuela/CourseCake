@@ -127,3 +127,63 @@ class Search(Resource):
 
         headers = {"Content-Type": "application/json"}
         return jsonify(courseData)
+
+
+
+@api.route("/live-search/<string:university>", endpoint = "live-search")
+@api.doc(params={"university": "Based on their domain.edu"})
+class LiveSearch(Resource):
+    @api.response(200, "Success",model = coursesModel)
+    @api.doc(params = {
+            "code": {
+                "in": "query",
+                "description": "Unique course code"
+                },
+            "title": {
+                "in": "query",
+                "description": "More readable name of the course"
+            },
+
+            "department": {
+                "in": "query",
+                "description": "Unique department code (Check your Uni's website)"
+            },
+            "units": {
+                "in": "query"
+            },
+            "instructor": {
+                "in": "query",
+                "description": "Instructor(s) teaching the course"
+            },
+            "breadth": {
+                "in": "query",
+                "description": "GE requirement of the course. Ex: GE-2"
+            },
+            "starttime": {
+                "in": "query",
+                "description": "Course must begin daily instruction after this time. Ex: 8:00am"
+            },
+            "endtime": {
+                "in": "query",
+                "description": "Course must end daily instruction after this time. Ex: 9:30pm"
+            }
+    })
+    def get(self, university: str):
+        '''
+        Searches for courses based on the latest data (by accessing the course schedule directly).
+        Because it is live, this resource is ratelimited and making complex queries is not possible.
+
+        You MUST specify AT LEAST ONE of the following parameters:
+        `code`, `department`, `instructor`, or `breadth`
+        '''
+        current_app.logger.info("live search requested")
+        try:
+            args = request.args
+            courseData = dict()
+            if (university.lower() == "uci"):
+                courseData = handleUciLiveSearch(args)
+
+            return jsonify(courseData)
+
+        except:
+            return jsonify({"errorMessage": "bad args"})

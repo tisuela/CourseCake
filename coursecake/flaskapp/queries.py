@@ -274,7 +274,6 @@ class CourseSearch:
             if (parameter in self.VALID_PARAMETERS):
 
                 # add filters
-                print(f"filter = {filter}")
                 if (filter == "like"):
                     self._addLikeFilter(parameter, filter, queryValues)
 
