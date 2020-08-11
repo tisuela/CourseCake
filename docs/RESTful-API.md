@@ -1,8 +1,9 @@
 ---
 title: RESTful API
 ---
-## [coursecake.tisuela.com/api](https://coursecake.tisuela.com/api)
-We are now online! For the next several days, we will be making revisions continuously, so we apologize if the service is down. Do be sure to refresh this page daily as needed -- API improvements will be posted.
+## [coursecake.tisuela.com/api/v1](https://coursecake.tisuela.com/api/v1)
+Released /api/v1
+With the new release, the comprehensive documentation can be found [here](https://coursecake.tisuela.com/api/v1)
 
 
 ## What is a Course?
@@ -55,50 +56,58 @@ Key/Attribute | Value
 "units" | int
 "waitlisted" | int
 
-## API Endpoints `/api`
+## API Endpoints `/api/v1`
 
-### All courses `GET /uci/courses/all`
-Returns all UCI courses
+### All courses `GET /courses/all/<university>`
+Returns all courses from a university.
+`university` is determined by their domain.edu.
 
-### Search Courses `GET /uci/courses/search`
+### Search Courses `GET courses/search/<university>`
 Query our database for courses
+
+
+#### Create complex queries
+All parameter names can be followed by [filter].
+The default filter (applied when no filter is specified) is equals
+
+For example:
+```title[like]=dance```
+
+Here are all valid filters:
+`like`
+`notlike`
+`equals`
+`not`
 
 You can search for multiple values for a parameter by separating them with commas:
 ```
-/uci/courses/search?units=4,8
+/courses/search/<university>?units=4,8
 ```
 
 Here are the supported search parameters:
 
-Parameter | Matching behavior | Description
---- | --- | ---
-"code" | Exact | Course Code
-"building" | Exact | 
-"room" | Exact |
-"status" | Exact | full, open, etc.
-"units" | Exact |
-"department" | Exact | See Department codes on your school's Course Schedule
-"notbuilding" | Excludes exact
-"notinstructor" | Excludes exact
-"notroom" | Excludes exact
-"nottunits" | Excludes exact
-"instructor" | Contains 
-"name" | Contains | Formal name, like DANCE 101
-"title" | Contains | Readable name, like Intro to Dance
-"time" | Contains 
-"location" | Contains 
-"nottime" | Excludes contains
-"notlocation" | Excludes contains
+Parameter |  Description
+--- | ---
+"code" | Course Code
+"building" |
+"room" | 
+"status" | full, open, etc.
+"units" | 
+"department" | See Department codes on your school's Course Schedule
+"name" | Formal name, like DANCE 101
+"title" | Readable name, like Intro to Dance
+"time" | 
+"location" | 
 
 
 Here's a request that returns all of UCI's in-person classes taught on Monday, Wednesday, and Friday which are not taught by Professor Badprof
 ```
-GET coursecake.tisuela.com/api/uci/courses/search?notlocation=line,remote,tba&time=mwf&notinstructor=badprof
+GET coursecake.tisuela.com/api/uci/courses/search?location[notlike]=line,remote,tba&time[like]=mwf&instructor=goodprof
 ```
 
-### Live Search Courses `GET /uci/courses/live-search`
+### Live Search Courses `GET /courses/live-search/<university>`
 Queries courses retrieved directly from the university's course scheduling website.
-Same usage as `/uci/courses/search`.
+Because this endpoint queries the live website directly, this endpoint is ratelimited and does not have the ability to create complex queries. Course data is also less comprehensive, so it is recommended to use the `search` endpoint
 
 Here are the supported search parameters:
 
