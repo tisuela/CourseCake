@@ -97,7 +97,7 @@ class Search(Resource):
         Returns list of courses matching query
 
         # Filters - Make Powerful Queries
-        All parameter names can be followed be [filter].
+        All parameter names can be followed by [filter].
         The default filter (applied when no filter is specified) is `equals`
 
         For example:
@@ -107,7 +107,7 @@ class Search(Resource):
         `like`
         `notlike`
         `equals`
-        `notequals`
+        `not`
 
         # Search for multiple values
         You can add multiple values for each parameter delimited by commas `,`.
