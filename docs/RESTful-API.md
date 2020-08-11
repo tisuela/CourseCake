@@ -1,9 +1,9 @@
 ---
 title: RESTful API
 ---
-## [coursecake.tisuela.com/api/v1](https://coursecake.tisuela.com/api/v1)
+## [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
 Released /api/v1
-With the new release, the comprehensive documentation can be found [here](https://coursecake.tisuela.com/api/v1)
+With the new release, you can try out our API or look at comprehensive documentation [here](http://coursecake.tisuela.com/api/v1)
 
 
 ## What is a Course?
@@ -125,6 +125,12 @@ Parameter | Description
 
 You must specify one of the following parameters: `code`, `department`, `instructor`, or `breadth`.
 
+
+## Can't find what you are looking for?
+The comprehensive documentation (less readable) can be found [here](http://coursecake.tisuela.com/api/v1):
+[coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
+
+
 ## API Examples
 
 ### Python
@@ -132,12 +138,12 @@ You must specify one of the following parameters: `code`, `department`, `instruc
 import requests
 
 # URL to the Search API endpoint
-url = "http://coursecake.tisuela.com/api/uci/courses/search"    
+url = "http://coursecake.tisuela.com/api/v1/courses/search/uci"    
 
 # search parameters for the GET request
 searchParams = {
-    "department": "compsci",
-    "notinstructor": "badprof",
+    "department[like]": "compsci",
+    "instructor[not]": "badprof",
     "units": "4"
 }
 
@@ -147,3 +153,7 @@ response = requests.get(url, params=searchParams)
 # view body of response
 print(response.text)
 ```
+
+## Try it out!
+Try out our API using Swagger UI [here](http://coursecake.tisuela.com/api/v1):
+[coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
