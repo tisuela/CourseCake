@@ -34,6 +34,8 @@ class Courses(db.Model):
     # Ex: UC Irvine's domain is uci.edu, so university = UCI
     university = db.Column(db.String(20), db.ForeignKey("university.name"), primary_key=True,  nullable = False)
 
+    # TODO: Add Term
+
     # Course code which is unique to the univerisity
     # It is not necessarily unique to the database,
     # Which is why university + code are primary keys
@@ -128,9 +130,11 @@ class University(db.Model):
 class Prerequisite(db.Model):
     '''
     Stores a prerequisite to a course
+
+    CourseName can refer to multiple courses, which is what we want.
     '''
-    thisCode = db.Column(db.String(20), db.ForeignKey("courses.code"), primary_key=True,  nullable = False)
-    prerequisiteCode = db.Column(db.String(20), primary_key=True, nullable = False)
+    courseName = db.Column(db.String(20), db.ForeignKey("courses.name"), primary_key=True,  nullable = False)
+    prerequisiteName = db.Column(db.String(20), primary_key=True, nullable = False)
 
 
 
