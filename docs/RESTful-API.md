@@ -7,27 +7,33 @@ With the new release, you can [try out our API](http://coursecake.tisuela.com/ap
 
 
 ## What is a Course?
-Here is an example response from our online Flask API endpoint
+Here is an example response using one of our `courses` endpoints. 
+The response is a dictionary containing a list of `course` objects. The schema of a `course` is shown in this example.
+
+
 ```
 {
   "courses": [
     {
-      "code": "01020",
-      "department": "Art",
-      "departmentTitle": "Art",
-      "enrolled": 72,
-      "instructor": "MAJOLI, M.BORNSTEIN, J.",
-      "location": "VRTL REMOTE",
-      "max": 160,
-      "name": "Art 1A",
+      "building": "string",
+      "code": "string",
+      "department": "string",
+      "departmentTitle": "string",
+      "enrolled": 0,
+      "instructor": "string",
+      "location": "string",
+      "max": 0,
+      "name": "string",
       "requested": 0,
-      "restrictions": "",
-      "school": "Claire Trevor School of the Arts",
-      "status": "NewOnly",
-      "time": "TBA",
-      "title": "ART IN CONTEXT",
-      "type": "Lec",
-      "units": 4,
+      "restrictions": "string",
+      "room": "string",
+      "school": "string",
+      "status": "string",
+      "time": "string",
+      "title": "string",
+      "type": "string",
+      "units": 0,
+      "updated": "datetime: string,null",
       "waitlisted": 0
     }
   ]
@@ -35,26 +41,6 @@ Here is an example response from our online Flask API endpoint
 ```
 
 The breakdown of a course from the JSON response is analogous to the definition of a `Course` in `coursecake/scrapers/course.py`:
-
-Key/Attribute | Value
---- | ---
-"code" | String
-"department" | String       
-"departmentTitle" | String
-"enrolled" | int
-"instructor" | String
-"location" | String
-"max" | int
-"name" | String
-"requested" | int
-"restrictions" | String
-"school" | String
-"status" | String
-"time" | String
-"title" | String
-"type" | String
-"units" | int
-"waitlisted" | int
 
 ## API Endpoints `/api/v1`
 
