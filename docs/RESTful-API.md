@@ -3,7 +3,7 @@ title: RESTful API
 ---
 ## [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
 Released /api/v1
-With the new release, you can try out our API or look at comprehensive documentation [here](http://coursecake.tisuela.com/api/v1)
+With the new release, you can [try out our API](http://coursecake.tisuela.com/api/v1) or look at comprehensive [documentation](http://coursecake.tisuela.com/api/v1) [here](http://coursecake.tisuela.com/api/v1)
 
 
 ## What is a Course?
