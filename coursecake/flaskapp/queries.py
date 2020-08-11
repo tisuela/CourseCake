@@ -166,6 +166,7 @@ class CourseSearch:
         "name",
         "title",
         "department",
+        "departmentTitle"
         "location",
         "building",
         "room",
@@ -174,7 +175,9 @@ class CourseSearch:
         "enrolled",
         "waitlisted",
         "requested",
-        "instructor"
+        "max",
+        "instructor",
+        "time"
     ]
 
     VALID_FILTERS = [
@@ -200,7 +203,8 @@ class CourseSearch:
         returns int when the column is int
         '''
         intColumns = ["units", "enrolled",
-                    "requested", "waitlisted"]
+                    "requested", "waitlisted",
+                    "max"]
 
         if (column in intColumns):
             return int(value)
