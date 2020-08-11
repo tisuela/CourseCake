@@ -129,7 +129,7 @@ class Search(Resource):
         return jsonify(courseData)
 
 
-
+@limiter.limit("5/minute;60/hour")
 @api.route("/live-search/<string:university>", endpoint = "live-search")
 @api.doc(params={"university": "Based on their domain.edu"})
 class LiveSearch(Resource):
