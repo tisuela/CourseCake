@@ -71,7 +71,9 @@ All parameter names can be followed by [filter].
 The default filter (applied when no filter is specified) is equals
 
 For example:
-```title[like]=dance```
+```
+title[like]=dance
+```
 
 Here are all valid filters:
 `like`
