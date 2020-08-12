@@ -133,7 +133,7 @@ You’ll see output similar to this:
 donezo
 
 # Future features
-- Support for more complicated queries
 - More comprehensive university information on departments, course prerequisites, restricts, etc.
+- Prerequisite mapping to create a network of classes (along with a node graph GUI)
 - HTTPS only
 - IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS ty
