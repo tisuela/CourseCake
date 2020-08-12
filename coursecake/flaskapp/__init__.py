@@ -5,23 +5,27 @@ import os
 import logging
 
 from flask import Flask
-
+import flask_monitoringdashboard as dashboard
 from .models import db,ma
 from ..config import Config
 
 
 logging.basicConfig(filename="flaskapp.log",level=logging.DEBUG)
-
 def create_app(test_config=None):
     # init app
     app = Flask(__name__, instance_relative_config = True)
 
     app.config.from_object(Config)
 
+    # bind monitoring
+    dashboard.config.init_from(envvar='FLASK_MONITORING_DASHBOARD_CONFIG')
+    dashboard.bind(app)
+
+
     # initialize database
     db.init_app(app)
 
-    # db.drop_all(app = app)
+    # create database tables
     db.create_all(app = app)
 
     # initialize database serializer
@@ -33,13 +37,22 @@ def create_app(test_config=None):
     # initialize API Rate limiter
     limiter.init_app(app)
 
+
+    ### Importing routes ###
+
     # import home pages routes
     from .home.routes import home_blueprint
     app.register_blueprint(home_blueprint)
 
-    # import api routes
+    # import api routes - differemt structure from other routes!
+
+    # deprecated api
     from .api.routes import api_blueprint
     app.register_blueprint(api_blueprint)
+
+    # new api using flask-restx
+    from .api_v1 import blueprint as api1
+    app.register_blueprint(api1)
 
     # import admin routes
     from .admin.routes import admin_blueprint
@@ -48,5 +61,7 @@ def create_app(test_config=None):
     # import error handlers
     from .errors.handlers import errors
     app.register_blueprint(errors)
+
+
 
     return app
