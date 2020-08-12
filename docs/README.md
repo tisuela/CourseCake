@@ -4,7 +4,7 @@ From developing a course planner to simply finding in-person classes, there's an
 We aim to create an API to access course data, where each college course shares the same basic, expected data. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a smooth approach to build useful tools for students.
 
 There are two main features to CourseCake to accomplish this goal:
-- RESTful API [coursecake.tisuela.com](http://coursecake.tisuela.com) - [docs](https://docs.coursecake.tisuela.com/RESTful-API)
+- RESTful API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/RESTful-API)
 - Installable Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
 
