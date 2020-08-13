@@ -7,7 +7,7 @@ class Scraper:
 
         # get the course website url
         universities = Universities()
-        self.url = universities.getUniversity(self.universityName)
+        self.urls = universities.getUniversity(self.universityName)
 
         # dictionary of course
         self.courses = dict()

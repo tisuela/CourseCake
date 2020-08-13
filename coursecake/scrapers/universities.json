@@ -1,1 +1,1 @@
-{"test2": "test2.com", "test3": "test3.com", "UCI": "https://www.reg.uci.edu/perl/WebSoc", "teest": "test"}
+{"UCI": {"course-schedule": "https://www.reg.uci.edu/perl/WebSoc", "course-requisites": "http://catalogue.uci.edu/allcourses/"}, "TEST": {"course-schedule": "test", "course-requisites": "test"}}
