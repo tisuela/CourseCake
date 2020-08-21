@@ -36,4 +36,5 @@ jobs:
         coverage run --source=CourseCake -m pytest coursecake/scrapers/tests/test.py
     - name: Submit coverage test to Coveralls
       run: coveralls
-      env: GITHUB_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
