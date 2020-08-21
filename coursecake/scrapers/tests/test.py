@@ -13,4 +13,4 @@ def testFunc():
 def testGetCourses():
     scraper = CourseScraper().getUciScraper()
     courses = scraper.getCourses({"department":"compsci"})
-    assert len(courses) > 0
+    assert len(courses) > 1

@@ -2,6 +2,10 @@ from .uci_course import UciCourse
 from ..course import Course
 
 class UciScrapeRows:
+    '''
+    helper class for UciScraper
+    Scrapes rows from uci course schedule website
+    '''
     def __init__(self, rows: list):
         # list of rows from course table
         self.rows = rows
