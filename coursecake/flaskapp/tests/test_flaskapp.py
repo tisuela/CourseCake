@@ -51,3 +51,21 @@ def testCoursesSearch(client):
 
     assert response.status_code == 200
     assert len(response.json["courses"]) > 10
+
+
+def testCoursesAll(client):
+    university = "uci"
+    response = client.get(f"/api/v1/courses/all/{university}")
+
+    assert response.status_code == 200
+    assert len(response.json["courses"]) > 100
+
+
+
+def testCoursesLiveSearch(client):
+    university = "uci"
+    headers = {"department": "compsci"}
+    response = client.get(f"/api/v1/courses/live-search/{university}", headers=headers)
+
+    assert response.status_code == 200
+    # assert len(response.json["courses"]) > 10
