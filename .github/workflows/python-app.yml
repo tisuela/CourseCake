@@ -33,7 +33,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest and submit to Coveralls
       run: |
-        coverage run --source=coursecake -m pytest coursecake/scrapers/tests/test.py
+        coverage run --source=coursecake -m pytest --pyargs coursecake
         coveralls
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

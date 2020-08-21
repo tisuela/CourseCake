@@ -1,10 +1,13 @@
 import pytest
 import os
-
+import collections
 
 from coursecake.flaskapp import create_app
 from coursecake.flaskapp import db
 from coursecake.flaskapp.admin import updates
+
+
+
 @pytest.fixture
 def client():
     app = create_app({"TESTING": True})
@@ -29,6 +32,16 @@ def testHello(client):
     response = client.get("/api/v1/hello/")
     assert response.status_code == 200
     assert response.json["hello"] == "world"
+
+
+def testReloadDb(client):
+    '''
+    Would test routes, but admin token is subject to change
+    '''
+    updates.reloadAllModels()
+    courses = updates.updateAllUciCourses()
+
+    assert len(courses) > 100
 
 
 def testCoursesSearch(client):

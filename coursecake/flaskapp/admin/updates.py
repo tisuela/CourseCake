@@ -20,6 +20,8 @@ def updateAllUciCourses():
 
     db.session.commit()
 
+    return courses
+
 
 def reloadCoursesModel():
     Courses.__table__.drop(db.engine)
