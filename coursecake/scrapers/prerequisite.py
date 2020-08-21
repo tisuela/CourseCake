@@ -1,5 +1,5 @@
 class Prerequisite:
-    def __init__(self, courses: list, prequisiteTo: str):
+    def __init__(self, courses: list, prerequisiteTo: str):
 
         # list of courses that can satisfy this prerequisite
         # courses are course names

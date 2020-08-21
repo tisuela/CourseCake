@@ -1,43 +1,51 @@
-# CourseCake - Our Aim
-At the end of the day all courses are... Courses. Every college course shares similar attributes: instructors, course name, units, etc. Therefore, we aim to create an API to access course data, where each college course shares the same basic, expected data. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a responsible and smooth approach to build useful tools for students.
+# [CourseCake](http://docs.coursecake.tisuela.com/)
+[![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master)
+
+From developing a course planner to simply finding in-person classes, there's an easier, responsible, and more powerful way to get your university's course information.
+
+We aim to create an API to access course data, where each college course shares the same basic, expected data. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a smooth approach to build useful tools for students.
 
 There are two main features to CourseCake to accomplish this goal:
-- RESTful API [coursecake.tisuela.com](http://coursecake.tisuela.com)
-- Installable Scraper package
+- RESTful API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/RESTful-API)
+- Installable Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
 
 
 ## UC Irvine -- Zot your courses easier and responsibly
-The motivation of CourseCake is to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
+Currently the only supported school in CourseCake, the motivation of CourseCake is to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
 
 All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and allows successful requests even when WebSoc is down.
 
 Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
 
-
 ## What is a Course?
+Here is an example response using one of our `courses` endpoints. Full documentation available [here](http://docs.coursecake.tisuela.com/RESTful-API).
+The response is a dictionary containing a list of `course` objects. The schema of a `course` is shown in this example.
 
-Here is an example response from our online Flask API endpoint. Full documentation available [here](https://github.com/nananananate/CourseCake/wiki/RESTful-API-Documentation)
+
 ```
 {
   "courses": [
     {
-      "code": "01020",
-      "department": "Art",
-      "departmentTitle": "Art",
-      "enrolled": 72,
-      "instructor": "MAJOLI, M.BORNSTEIN, J.",
-      "location": "VRTL REMOTE",
-      "max": 160,
-      "name": "Art 1A",
+      "building": "string",
+      "code": "string",
+      "department": "string",
+      "departmentTitle": "string",
+      "enrolled": 0,
+      "instructor": "string",
+      "location": "string",
+      "max": 0,
+      "name": "string",
       "requested": 0,
-      "restrictions": "",
-      "school": "Claire Trevor School of the Arts",
-      "status": "NewOnly",
-      "time": "TBA",
-      "title": "ART IN CONTEXT",
-      "type": "Lec",
-      "units": 4,
+      "restrictions": "string",
+      "room": "string",
+      "school": "string",
+      "status": "string",
+      "time": "string",
+      "title": "string",
+      "type": "string",
+      "units": 0,
+      "updated": "datetime: string,null",
       "waitlisted": 0
     }
   ]
@@ -127,7 +135,7 @@ You’ll see output similar to this:
 donezo
 
 # Future features
-- Support for more complicated queries
 - More comprehensive university information on departments, course prerequisites, restricts, etc.
+- Prerequisite mapping to create a network of classes (along with a node graph GUI)
 - HTTPS only
 - IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS ty
