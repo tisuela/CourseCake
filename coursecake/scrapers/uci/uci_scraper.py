@@ -10,6 +10,8 @@ class UciScraper(Scraper):
     def __init__(self):
         Scraper.__init__(self, "UCI")
 
+        self.url = self.urls["course-schedule"]
+
         # used to specify which term / tear
         self.yearTerm = "2020-92"
 
