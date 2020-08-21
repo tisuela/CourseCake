@@ -180,6 +180,7 @@ class LiveSearch(Resource):
         try:
             args = request.args
             courseData = dict()
+            print(args)
             if (university.lower() == "uci"):
                 courseData = handleUciLiveSearch(args)
 
