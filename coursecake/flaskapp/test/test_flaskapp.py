@@ -1,0 +1,40 @@
+import pytest
+import os
+
+
+from coursecake.flaskapp import create_app
+from coursecake.flaskapp import db
+from coursecake.flaskapp.admin import updates
+@pytest.fixture
+def client():
+    app = create_app({"TESTING": True})
+
+    context = app.app_context()
+    context.push()
+
+    with app.test_client() as client:
+        yield client
+
+
+    context.pop()
+
+
+def testHome(client):
+    response = client.get("/")
+    assert response.status_code == 200
+
+
+
+def testHello(client):
+    response = client.get("/api/v1/hello/")
+    assert response.status_code == 200
+    assert response.json["hello"] == "world"
+
+
+def testCoursesSearch(client):
+    university = "uci"
+    headers = {"department": "compsci"}
+    response = client.get(f"/api/v1/courses/search/{university}", headers=headers)
+
+    assert response.status_code == 200
+    assert len(response.json["courses"]) > 10

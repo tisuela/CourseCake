@@ -17,9 +17,13 @@ def create_app(test_config=None):
 
     app.config.from_object(Config)
 
-    # bind monitoring
-    dashboard.config.init_from(envvar='FLASK_MONITORING_DASHBOARD_CONFIG')
-    dashboard.bind(app)
+    if (test_config == None):
+        # bind monitoring if not testing
+        dashboard.config.init_from(envvar='FLASK_MONITORING_DASHBOARD_CONFIG')
+        dashboard.bind(app)
+    else:
+        # set up testing
+        pass
 
 
     # initialize database
