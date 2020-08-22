@@ -2,6 +2,8 @@ from datetime import datetime
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
+
+from ..scrapers.course import Course
 from .sql import Base
 
 class University(Base):
@@ -15,7 +17,7 @@ class University(Base):
     # This should be the university's domain name in all CAPS
     # Ex: UC Irvine's domain is uci.edu, so university = UCI
     name = Column(String, primary_key=True, nullable = False, index=True)
-    courses = relationship("Course", back_populates = "university")
+    courses = relationship("Course", back_populates = "university", lazy = "dynamic")
 
 
 
@@ -78,6 +80,34 @@ class Course(Base):
     university = relationship("University", back_populates = "courses")
 
 
+
+    def __init__(self, course: Course, university: str):
+        '''
+        Courses uses a course objects
+        See ../scraper/course.py
+        '''
+        self.universityName = university
+        self.code = course.code
+        self.name = course.name
+        self.title = course.title
+        self.department = course.department
+        self.instructor = course.instructor
+        self.time = course.time
+        self.location = course.location
+        self.building = course.building
+        self.room = course.room
+        self.status = course.status
+        self.type = course.type
+
+        self.units = course.units
+        self.max = course.max
+        self.enrolled = course.enrolled
+        self.waitlisted = course.waitlisted
+        self.requested = course.requested
+
+        self.departmentTitle = course.departmentTitle
+        self.restrictions = course.restrictions
+        self.school = course.school
 
 
     def __repr__(self):
