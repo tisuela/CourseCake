@@ -14,6 +14,31 @@ class University:
 
 university = University("test1")
 
+
+course = Course()
+course.name = "test 101"
+course.title = "intro to course"
+course.code = "123456"
+course.department = "test"
+course.type = "lecture"
+course.instructor = "Dr. Test"
+course.time = "time is an illusion"
+
+course.location = "Testing Hall 200"
+course.building = "Testing Hall"
+course.room  = "200"
+course.status = "OPEN"
+
+course.units = 4
+
+course.final = "never"
+
+course.enrolled = 100
+course.school = "School of Test"
+course.departmentTitle = "Test ing"
+
+
+
 @pytest.fixture(scope="module")
 def db():
     models.Base.metadata.create_all(bind=engine)
@@ -32,27 +57,6 @@ def test_add_university(db):
 
 
 def test_add_course(db):
-    course = Course()
-    course.name = "test 101"
-    course.title = "intro to course"
-    course.code = "123456"
-    course.department = "test"
-    course.type = "lecture"
-    course.instructor = "Dr. Test"
-    course.time = "time is an illusion"
-
-    course.location = "Testing Hall 200"
-    course.building = "Testing Hall"
-    course.room  = "200"
-    course.status = "OPEN"
-
-    course.units = 4
-
-    course.final = "never"
-
-    course.enrolled = 100
-    course.school = "School of Test"
-    course.departmentTitle = "Test ing"
     crud.add_course(db, university.name, course)
 
     courseRow = crud.CourseQuery(db, university.name, {"code[equals]": course.code}).search()[0]
@@ -61,3 +65,43 @@ def test_add_course(db):
 
     print("first thing in course", courseRow)
     assert True
+
+
+def test_add_many_course(db):
+    '''
+    Load testing for adding a course
+    '''
+    tempCode = course.code
+    limit = 9000
+    for i in range(limit):
+        newCourse = Course(course.__dict__)
+        newCourse.code = tempCode + str(i)
+        crud.add_course(db, university.name, newCourse, commit = False)
+
+    db.commit()
+    courses = crud.get_courses(db, limit = limit)
+
+    assert len(courses) >= limit
+
+
+def test_bulk_add_course(db):
+    '''
+    tests crud.bulk_add_course(db: Session)
+    '''
+    tempCode = course.code
+    limit = 9000
+    courseList = list()
+
+    for i in range(limit):
+        newCourse = Course(course.__dict__)
+        newCourse.code = str(i) + tempCode
+        courseList.append(newCourse)
+
+    print("created course list, now bulk inserting")
+
+    crud.bulk_add_course(db, university.name, courseList)
+
+
+    courses = crud.get_courses(db, limit = limit)
+
+    assert len(courses) >= limit

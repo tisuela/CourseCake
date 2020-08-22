@@ -26,7 +26,7 @@ def get_courses(db: Session, offset: int = 0, limit: int = 100) -> list:
     return db.query(models.Course).offset(offset).limit(limit).all()
 
 
-def add_course(db: Session, university: str, courseObj: Course) -> models.Course:
+def add_course(db: Session, university: str, courseObj: Course, commit: bool = True) -> models.Course:
     '''
     courseObj is the basic python instance of Course defined in
     scrapers.course
@@ -35,9 +35,21 @@ def add_course(db: Session, university: str, courseObj: Course) -> models.Course
     '''
     courseModel = models.Course(courseObj, university.upper())
     db.add(courseModel)
-    db.commit()
-    db.refresh(courseModel)
+
+    if commit:
+        db.commit()
+        db.refresh(courseModel)
     return courseModel
+
+
+def bulk_add_course(db: Session, university: str, courses: list):
+    toInsert = list()
+    university = university.upper()
+    for courseObj in courses:
+        toInsert.append(models.Course(courseObj, university))
+
+    db.bulk_save_objects(toInsert)
+    db.commit()
 
 
 
