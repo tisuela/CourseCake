@@ -15,7 +15,7 @@ class University(Base):
     # This should be the university's domain name in all CAPS
     # Ex: UC Irvine's domain is uci.edu, so university = UCI
     name = Column(String, primary_key=True, nullable = False, index=True)
-    # courses = relationship("Course", back_populates = "university")
+    courses = relationship("Course", back_populates = "university")
 
 
 
@@ -40,7 +40,7 @@ class Course(Base):
     # The university where this course is offered
     # This should be the university's domain name in all CAPS
     # Ex: UC Irvine's domain is uci.edu, so university = UCI
-    university = Column(String, ForeignKey("university.name"), primary_key=True,  nullable = False)
+    universityName = Column(String, ForeignKey("university.name"), primary_key=True,  nullable = False)
 
     # TODO: Add Term
 
@@ -75,7 +75,7 @@ class Course(Base):
 
     # relationships
     # prerequisites = relationship("Prerequisite", back_populates="courses")
-
+    university = relationship("University", back_populates = "courses")
 
 
 
