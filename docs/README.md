@@ -1,6 +1,5 @@
 # [CourseCake](http://docs.coursecake.tisuela.com/)
-![Python application](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg)[![Coverage Status]
- !(https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master&service=github)](https://coveralls.io/github/nananananate/CourseCake?branch=master)
+![Python application](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master&service=github)](https://coveralls.io/github/nananananate/CourseCake?branch=master)
 
 From developing a course planner to simply finding in-person classes, there's an easier, responsible, and more powerful way to get your university's course information.
 
