@@ -52,7 +52,7 @@ class Course:
 
         # a more readable department name
         # Ex: COMSPSCI -> Computer Science
-        self.departmentTitle = ""
+        self.department_title = ""
 
         if (courseDict != None):
             self.__initFromDict(courseDict)

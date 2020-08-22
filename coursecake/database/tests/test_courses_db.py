@@ -13,7 +13,7 @@ class University:
         self.name = name
 
 university = University("test1")
-
+term_id = "2020-FALL-1"
 
 course = Course()
 course.name = "test 101"
@@ -35,7 +35,7 @@ course.final = "never"
 
 course.enrolled = 100
 course.school = "School of Test"
-course.departmentTitle = "Test ing"
+course.department_title = "Test ing"
 
 
 
@@ -57,7 +57,7 @@ def test_add_university(db):
 
 
 def test_add_course(db):
-    crud.add_course(db, university.name, course)
+    crud.add_course(db, university.name, term_id, course)
 
     courseRow = crud.CourseQuery(db, university.name, {"code[equals]": course.code}).search()[0]
 
@@ -72,11 +72,11 @@ def test_add_many_course(db):
     Load testing for adding a course
     '''
     tempCode = course.code
-    limit = 9000
+    limit = 900
     for i in range(limit):
         newCourse = Course(course.__dict__)
         newCourse.code = tempCode + str(i)
-        crud.add_course(db, university.name, newCourse, commit = False)
+        crud.add_course(db, university.name, term_id, newCourse, commit = False)
 
     db.commit()
     courses = crud.get_courses(db, limit = limit)
@@ -89,7 +89,7 @@ def test_bulk_add_course(db):
     tests crud.bulk_add_course(db: Session)
     '''
     tempCode = course.code
-    limit = 9000
+    limit = 900
     courseList = list()
 
     for i in range(limit):
@@ -99,7 +99,7 @@ def test_bulk_add_course(db):
 
     print("created course list, now bulk inserting")
 
-    crud.bulk_add_course(db, university.name, courseList)
+    crud.bulk_add_course(db, university.name, term_id, courseList)
 
 
     courses = crud.get_courses(db, limit = limit)

@@ -42,8 +42,14 @@ class Course(Base):
     # The university where this course is offered
     # This should be the university's domain name in all CAPS
     # Ex: UC Irvine's domain is uci.edu, so university = UCI
-    universityName = Column(String, ForeignKey("university.name"), primary_key=True,  nullable = False)
+    university_name = Column(String, ForeignKey("university.name"), primary_key=True,  nullable = False)
 
+    # Term ID is: YEAR-SEASON-NUMBER
+    # Ex: Summer session 2 would be 2020-SUMMER-2
+    # Ex: Winter Quarter would be 2020-WINTER-1
+    # Ex: Winter inter-term would also be 2020-WINTER-1 (assuming no winter quarter)
+    # Ex: Spring Semester would be 2020-SPRING-1
+    term_id = Column(String, primary_key=True, nullable = False)
     # TODO: Add Term
 
     # Course code which is unique to the univerisity
@@ -69,7 +75,7 @@ class Course(Base):
 
     # nullable fields
 
-    departmentTitle = Column(String, nullable = False)
+    department_title = Column(String, nullable = False)
     restrictions = Column(String, nullable = False)
     school = Column(String, nullable = False)
 
@@ -81,12 +87,13 @@ class Course(Base):
 
 
 
-    def __init__(self, course: Course, university: str):
+    def __init__(self, course: Course, university: str, term: str):
         '''
         Courses uses a course objects
         See ../scraper/course.py
         '''
-        self.universityName = university
+        self.university_name = university
+        self.term_id = term
         self.code = course.code
         self.name = course.name
         self.title = course.title
@@ -105,7 +112,7 @@ class Course(Base):
         self.waitlisted = course.waitlisted
         self.requested = course.requested
 
-        self.departmentTitle = course.departmentTitle
+        self.department_title = course.department_title
         self.restrictions = course.restrictions
         self.school = course.school
 
