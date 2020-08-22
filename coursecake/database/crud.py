@@ -16,9 +16,8 @@ def get_university(db: Session, name: str) -> models.University:
 
 def add_university(db: Session, name: str) -> models.University:
     university = models.University(name=name.upper())
-    db.add(university)
+    db.merge(university)
     db.commit()
-    db.refresh(university)
     return university
 
 
@@ -34,15 +33,17 @@ def add_course(db: Session, university: str, term: str, courseObj: Course, commi
     courseModelis SQL version
     '''
     courseModel = models.Course(courseObj, university.upper(), term.upper())
-    db.add(courseModel)
+    db.merge(courseModel)
 
     if commit:
         db.commit()
-        db.refresh(courseModel)
     return courseModel
 
 
-def bulk_add_course(db: Session, university: str, term: str, courses: list):
+def bulk_add_courses(db: Session, university: str, term: str, courses: list):
+    '''
+    DOES NOT MERGE
+    '''
     toInsert = list()
     university = university.upper()
     term = term.upper()
@@ -52,6 +53,15 @@ def bulk_add_course(db: Session, university: str, term: str, courses: list):
     db.bulk_save_objects(toInsert)
     db.commit()
 
+
+
+
+def bulk_merge_courses(db: Session, university: str, term: str, courses: list):
+
+    for course in courses:
+        add_course(db, university.upper(), term.upper(), course, commit = False)
+
+    db.commit()
 
 
 class CourseQuery:

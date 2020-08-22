@@ -41,6 +41,7 @@ course.department_title = "Test ing"
 
 @pytest.fixture(scope="module")
 def db():
+    models.Base.metadata.drop_all(bind=engine)
     models.Base.metadata.create_all(bind=engine)
     session = SessionLocal()
     yield session
@@ -84,7 +85,8 @@ def test_add_many_course(db):
     assert len(courses) >= limit
 
 
-def test_bulk_add_course(db):
+
+def test_bulk_add_courses(db):
     '''
     tests crud.bulk_add_course(db: Session)
     '''
@@ -99,8 +101,30 @@ def test_bulk_add_course(db):
 
     print("created course list, now bulk inserting")
 
-    crud.bulk_add_course(db, university.name, term_id, courseList)
+    crud.bulk_add_courses(db, university.name, term_id, courseList)
 
+
+    courses = crud.get_courses(db, limit = limit)
+
+    assert len(courses) >= limit
+
+
+def test_bulk_merge_courses(db):
+    '''
+    Load testing for adding a course
+    '''
+    tempCode = course.code
+    limit = 900
+    courseList = list()
+
+    for i in range(limit):
+        newCourse = Course(course.__dict__)
+        newCourse.code = str(i) + tempCode
+        courseList.append(newCourse)
+
+    print("created course list, now bulk inserting")
+
+    crud.bulk_merge_courses(db, university.name, term_id, courseList)
 
     courses = crud.get_courses(db, limit = limit)
 
