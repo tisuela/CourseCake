@@ -21,3 +21,9 @@ def get_db():
 async def all_courses(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     courses = crud.get_courses(db, offset = offset, limit = limit)
     return courses
+
+
+
+@router.get("/search/{university}")
+async def search_courses(university: str):
+    return []
