@@ -89,7 +89,6 @@ class CourseQuery:
         "max",
         "instructor",
         "time",
-        "term_id"
     ]
 
     VALID_FILTERS = [
@@ -99,11 +98,30 @@ class CourseQuery:
         "notlike"
     ]
 
-    def __init__(self, db: Session, university: str, args: dict):
+    def __init__(self, db: Session, university: str, args: dict = dict(), term_id: str = None, offset: int = 0, limit: int = 500):
+        university = university.upper()
+        term_id = term_id.upper()
 
         # {"parameter[filter]": "value1,value2,etc"}
         self.args = args
-        self.query = db.query(models.University).filter(models.University.name == university.upper()).first().courses
+
+        self.offset = offset
+        self.limit = limit
+
+        if term_id != None:
+            term_args = term_id.split("-")
+
+            # check if term_id is fully specified
+            # if not, fill in assumed values
+            if (len(term_args) < 3):
+                term_id += "-1"
+
+            # print(f"searching {university} for max of {limit} results")
+
+            self.query = db.query(models.University).filter(models.University.name == university).first().courses.filter(models.Course.term_id == term_id)
+        else:
+            self.query = db.query(models.University).filter(models.University.name == university).first().courses
+
 
 
 
@@ -202,6 +220,6 @@ class CourseQuery:
 
     def search(self):
         self._buildQuery()
-        results = self.query.all()
+        results = self.query.offset(self.offset).limit(self.limit).all()
 
         return results

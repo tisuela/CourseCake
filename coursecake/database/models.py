@@ -47,8 +47,9 @@ class Course(Base):
     # Term ID is: YEAR-SEASON-NUMBER
     # Ex: Summer session 2 would be 2020-SUMMER-2
     # Ex: Winter Quarter would be 2020-WINTER-1
-    # Ex: Winter inter-term would also be 2020-WINTER-1 (assuming no winter quarter)
+    # Ex: Winter inter-term would also be 2020-WINTER(assuming no winter quarter)
     # Ex: Spring Semester would be 2020-SPRING-1
+    # Specifying number is optional. If not specified, it is assumed to be 1.
     term_id = Column(String, primary_key=True, nullable = False)
     # TODO: Add Term
 
@@ -118,4 +119,4 @@ class Course(Base):
 
 
     def __repr__(self):
-        return f"{self.code} | {self.name} | {self.instructor} | {self.units} | {self.status} \n"
+        return f"{self.code} | {self.name} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"

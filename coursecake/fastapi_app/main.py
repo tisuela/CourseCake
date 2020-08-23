@@ -22,7 +22,8 @@ tags_metadata= [
 
 app = FastAPI(
         title = "CourseCake",
-        version="v1.0-beta"
+        version="v1.0-beta",
+        openapi_tags=tags_metadata
 )
 
 @app.get("/")

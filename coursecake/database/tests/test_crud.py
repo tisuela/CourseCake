@@ -64,7 +64,6 @@ def test_add_course(db):
 
     # courseRow = crud.get_university(db, university.name.upper()).courses.filter(models.Course.__table__.c["code"].in_([course.code])).all()
 
-    print("first thing in course", courseRow)
     assert True
 
 
@@ -74,15 +73,16 @@ def test_add_many_course(db):
     '''
     tempCode = course.code
     limit = 900
+    new_term_id = "2021-WINTER-1"
     for i in range(limit):
-        newCourse = Course(course.__dict__)
-        newCourse.code = tempCode + str(i)
-        crud.add_course(db, university.name, term_id, newCourse, commit = False)
+        new_course = Course(course.__dict__)
+        new_course.code = tempCode + str(i)
+        crud.add_course(db, university.name, new_term_id, new_course, commit = False)
 
     db.commit()
-    courses = crud.get_courses(db, limit = limit)
+    courses = crud.CourseQuery(db, university.name,  term_id = new_term_id, limit = limit).search()
 
-    assert len(courses) >= limit
+    assert len(courses) == limit
 
 
 
@@ -90,23 +90,20 @@ def test_bulk_add_courses(db):
     '''
     tests crud.bulk_add_course(db: Session)
     '''
-    tempCode = course.code
+    temp_code = course.code
     limit = 900
-    courseList = list()
+    course_list = list()
+    new_term_id = "2021-SPRING-1"
 
     for i in range(limit):
-        newCourse = Course(course.__dict__)
-        newCourse.code = str(i) + tempCode
-        courseList.append(newCourse)
+        new_course = Course(course.__dict__)
+        new_course.code = str(i) + temp_code
+        course_list.append(new_course)
 
-    print("created course list, now bulk inserting")
+    crud.bulk_add_courses(db, university.name, new_term_id, course_list)
+    courses = crud.CourseQuery(db, university.name,  term_id = "2021-SPRING", limit = limit).search()
 
-    crud.bulk_add_courses(db, university.name, term_id, courseList)
-
-
-    courses = crud.get_courses(db, limit = limit)
-
-    assert len(courses) >= limit
+    assert len(courses) == limit
 
 
 def test_bulk_merge_courses(db):
@@ -115,17 +112,15 @@ def test_bulk_merge_courses(db):
     '''
     tempCode = course.code
     limit = 900
-    courseList = list()
+    course_list = list()
+    new_term_id = "2021-SUMMER-2"
 
     for i in range(limit):
-        newCourse = Course(course.__dict__)
-        newCourse.code = str(i) + tempCode
-        courseList.append(newCourse)
+        new_course = Course(course.__dict__)
+        new_course.code = str(i) + tempCode
+        course_list.append(new_course)
 
-    print("created course list, now bulk inserting")
+    crud.bulk_merge_courses(db, university.name, new_term_id, course_list)
+    courses = crud.CourseQuery(db, university.name,  term_id = new_term_id, limit = limit).search()
 
-    crud.bulk_merge_courses(db, university.name, term_id, courseList)
-
-    courses = crud.get_courses(db, limit = limit)
-
-    assert len(courses) >= limit
+    assert len(courses) == limit
