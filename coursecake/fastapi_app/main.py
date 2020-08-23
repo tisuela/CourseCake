@@ -13,14 +13,15 @@ tags_metadata= [
         "name": "courses",
         "description": "Find all course information here",
         "externalDocs": {
-            "description"; "Courses external docs"
+            "description": "Courses external docs",
+            "url": "https://docs.coursecake.tisuela.com/RESTful-API"
         }
     }
 ]
 
 
 app = FastAPI(
-        title = "CourseCake"
+        title = "CourseCake",
         version="v1.0-beta"
 )
 
