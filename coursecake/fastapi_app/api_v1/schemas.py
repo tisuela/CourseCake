@@ -14,6 +14,7 @@ class University(UniversityBase):
     class Config:
         orm_mode = True
 
+
 class CourseBase(BaseModel):
     university_name: str
     term_id: str
