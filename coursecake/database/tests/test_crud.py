@@ -46,7 +46,7 @@ def db():
     session = SessionLocal()
     yield session
     session.close()
-    # models.Base.metadata.drop_all(bind=engine)
+    models.Base.metadata.drop_all(bind=engine)
 
 
 def test_add_university(db):

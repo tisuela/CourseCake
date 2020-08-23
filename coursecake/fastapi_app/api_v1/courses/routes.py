@@ -1,17 +1,16 @@
 # contains all routes for the courses endpoint
 from typing import List
 
-from fastapi import Depends, APIRouter
+from fastapi import Depends, APIRouter, BackgroundTasks
 from sqlalchemy.orm import Session
 
-from ....database import crud, models
-from ....database.sql import SessionLocal
+from ....database import crud, models, sql
 from .. import schemas
 router = APIRouter()
 
 # dependency
 def get_db():
-    db = SessionLocal()
+    db = sql.SessionLocal()
     try:
         yield db
     finally:
