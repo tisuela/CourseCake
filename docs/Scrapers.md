@@ -13,7 +13,7 @@ from coursecake.scrapers.course_scraper import CourseScraper
 scraper = CourseScraper().getUciScraper()
 courses = scraper.scrape()
 
-instructor_of_course_30000 = courses["30000"]["instructor"]
+instructor_of_course_30000 = courses["30000"].instructor
 ```
 
 # Documentation
@@ -50,9 +50,9 @@ scraper = CourseScraper().getUciScraper()
 courses = scraper.scrape()
 ```
 
-All course information is stored as a dictionary of a dictionary, with course codes as their keys.
+All course information is stored as a dictionary of `Course`.
 ```
-instructor_of_course_30000 = courses["30000"]["instructor"]
+instructor_of_course_30000 = courses["30000"].instructor
 ```
 
 ### Search specific courses `Scraper.getCourses(args: dict) -> dict`
@@ -97,7 +97,7 @@ You can easily serialize a `Course` using `Course.__dict__`
 
 Here is an example of printing some course data from `courses`
 ```
-for course in courses:
+for course in courses.values():
 
   # This does not print out all attributes, just a select few to avoid clutter
   # see more in Course.__str__(self)
