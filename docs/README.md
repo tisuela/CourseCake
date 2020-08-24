@@ -7,7 +7,7 @@ We aim to create an API to access course data, where each college's course is un
 
 There are three main features to CourseCake to accomplish this goal:
 - Online RESTful API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/RESTful-API)
-- Database package - Docs coming soon
+- Database package - [docs](http://docs.coursecake.tisuela.com/Database)
 - Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
 
@@ -59,7 +59,7 @@ The response is a dictionary containing a list of `course` objects. The schema o
 
 [RESTful API ](http://docs.coursecake.tisuela.com/RESTful-API)
 
-Database docs coming soon
+[Database](http://docs.coursecake.tisuela.com/Database)
 
 [Scrapers](http://docs.coursecake.tisuela.com/Scrapers)
 
