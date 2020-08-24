@@ -96,7 +96,7 @@ One Windows Powershell
 
 
 
-## Deploy Fast API Application locally
+### Deploy Fast API Application locally
 We are no longer using Flask!
 
 #### Run Fast API using uvicorn
