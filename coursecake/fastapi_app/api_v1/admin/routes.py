@@ -22,8 +22,8 @@ def get_db():
 
 
 
-@limiter.limit("2/minute")
 @router.post("/update/all")
+@limiter.limit("2/minute")
 async def update_all(
     request: Request,
     token: str,

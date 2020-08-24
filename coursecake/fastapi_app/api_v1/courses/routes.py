@@ -34,6 +34,7 @@ def get_db():
 
 
 @router.get("/all", response_model=List[schemas.Course])
+@limiter.limit("5/second;60/minute;300/hour")
 async def all_courses(offset: int = 0, limit: int = 50, db: Session = Depends(get_db)):
     courses = crud.get_courses(db, offset = offset, limit = limit)
     return courses
@@ -41,6 +42,7 @@ async def all_courses(offset: int = 0, limit: int = 50, db: Session = Depends(ge
 
 
 @router.get("/search/{university}", response_model=List[schemas.Course])
+@limiter.limit("5/second;60/minute;300/hour")
 async def search_courses(
     request: Request,
     university: UniversityName,
@@ -131,8 +133,8 @@ async def search_courses(
 
 
 # use CourseBase schema since live search is not as detailed
-@limiter.limit("1/second;10/minute;30/hour")
 @router.get("/live-search/{university}", response_model=List[schemas.CourseBase])
+@limiter.limit("1/second;10/minute;30/hour")
 async def search_courses(
     request: Request,
     university: UniversityName,
