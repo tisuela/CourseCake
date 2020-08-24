@@ -7,40 +7,43 @@ import requests
 
 
 class UciScraper(Scraper):
-    def __init__(self):
-        Scraper.__init__(self, "UCI")
+    # from our defined query params to WebSoc's params
+    PARAM_ENCODER ={
+        "days": "Days",
+        "yearterm": "YearTerm",
+        "units": "Units",
+        "title": "CourseTitle",
+        "starttime": "StartTime",
+        "endtime": "EndTime",
+        "breadth": "Breadth",
+        "instructor": "InstrName",
+        "division": "Division",
+        "department": "Dept",
+        "code": "CourseCodes"
+    }
+
+    REQUIRED_PARAMS = [
+        "breadth",
+        "instructor",
+        "code",
+        "dept"
+    ]
+
+    YEAR_TERM_ENCODER = {
+        "2020-FALL-1": "2020-92"
+    }
+
+    def __init__(self, term_id: str = "2020-FALL-1"):
+        Scraper.__init__(self, "UCI", term_id)
 
         self.url = self.urls["course-schedule"]
 
         # used to specify which term / tear
-        self.yearTerm = "2020-92"
+        self.year_term = self.YEAR_TERM_ENCODER[self.term_id]
 
         # used for requests to WebSoc
-        self.params = {"YearTerm": self.yearTerm, "ShowFinals": 1,
+        self.params = {"YearTerm": self.year_term, "ShowFinals": 1,
                         "ShowComments": 1}
-
-
-        # from our defined query params to WebSoc's params
-        self.paramEncoder ={
-            "days": "Days",
-            "yearterm": "YearTerm",
-            "units": "Units",
-            "title": "CourseTitle",
-            "starttime": "StartTime",
-            "endtime": "EndTime",
-            "breadth": "Breadth",
-            "instructor": "InstrName",
-            "division": "Division",
-            "department": "Dept",
-            "code": "CourseCodes"
-        }
-
-        self.requiredParams = [
-            "breadth",
-            "instructor",
-            "code",
-            "dept"
-        ]
 
         # list of department codes (str) for the queries
         self.deptCodes = list()
@@ -55,9 +58,10 @@ class UciScraper(Scraper):
         print("UciScraper -- initialized")
 
 
-    def setYearTerm(self, yearTerm: str) -> None:
-        self.yearTerm = yearTerm
-        self.params["YearTerm"] = self.yearTerm
+    def set_term_id(self, term_id: str) -> None:
+        self.term_id = term_id.upper()
+        self.year_term = self.YEAR_TERM_ENCODER[self.term_id]
+        self.params["YearTerm"] = self.year_term
 
 
     def getDepartments(self):
@@ -84,7 +88,7 @@ class UciScraper(Scraper):
         params = dict()
         for arg in args:
             try:
-                encodedParam = self.paramEncoder[arg]
+                encodedParam = self.PARAM_ENCODER[arg]
                 params[encodedParam] = args[arg].upper()
             except KeyError:
                 print(f"uci_scraper -- getCourses -- invalid arg {arg}")

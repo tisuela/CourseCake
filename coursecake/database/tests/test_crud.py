@@ -52,7 +52,6 @@ def db():
 def test_add_university(db):
     crud.add_university(db, **university.__dict__)
     universityRow = crud.get_university(db, university.name)
-    print("result", universityRow)
     assert universityRow != None
 
 

@@ -69,6 +69,7 @@ class CourseQuery:
     dynamically builds a query for courses and executes it
     '''
     QUERY_DELIMITER = ","
+    CURRENT_TERM_ID = "2020-FALL-1"
 
     # these constants help clean the query from malicious requests
     # TODO: Fix departmentTitle
@@ -98,7 +99,7 @@ class CourseQuery:
         "notlike"
     ]
 
-    def __init__(self, db: Session, university: str, args: dict = dict(), term_id: str = None, offset: int = 0, limit: int = 500):
+    def __init__(self, db: Session, university: str, args: dict = dict(), term_id: str = CURRENT_TERM_ID, offset: int = 0, limit: int = 500):
         university = university.upper()
         term_id = term_id.upper()
 

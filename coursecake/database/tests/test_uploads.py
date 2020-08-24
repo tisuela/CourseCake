@@ -1,5 +1,5 @@
 import pytest
-from .. import crud, models, updates
+from .. import crud, models, uploads
 from ..sql import SessionLocal, engine
 
 
@@ -14,7 +14,7 @@ def db():
 
 
 def test_update_all(db):
-    updates.update_all(db)
+    uploads.update_all(db)
     courses = crud.get_courses(db)
 
     assert len(courses) >= 10

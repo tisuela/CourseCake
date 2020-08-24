@@ -1,11 +1,13 @@
 # contains all routes for the courses endpoint
 from typing import List, Optional
 
-from fastapi import Depends, APIRouter, BackgroundTasks, Query
+from fastapi import Depends, APIRouter, BackgroundTasks, Query, Request
 from sqlalchemy.orm import Session
 
 from ....database import crud, models, sql
 from .. import schemas
+from . import utils
+
 router = APIRouter()
 
 # dependency
@@ -26,15 +28,32 @@ async def all_courses(offset: int = 0, limit: int = 100, db: Session = Depends(g
 
 @router.get("/search/{university}", response_model=List[schemas.Course])
 async def search_courses(
-    university: str = Query(
-        "uci",
-        title = "university code",
-        description = "university code is the domain name for your university. Ex: <university>.edu"
-    ),
+    request: Request,
+    university: str,
     term_id: Optional[str] = Query(
         "2020-fall",
         title = "Term Code",
         description = "Search for courses in this term; YEAR-SEASON. Ex: Spring Semester = 2021-spring"
+    ),
+    code: Optional[str] = Query(
+        None,
+        title = "Course code",
+        description = "Unique within the term of a University"
+    ),
+    name: Optional[str] = Query(
+        None,
+        title = "Course name",
+        description = "The formal name of a course. Ex: course 101"
+    ),
+    title: Optional[str] = Query(
+        None,
+        title = "Course title",
+        description = "A more readable name of a course. Ex: Intro to course"
+    ),
+    department: Optional[str] = Query(
+        None,
+        title = "Department code",
+        description = "See your university's website for the code. Ex: COMPSCI"
     ),
     offset: Optional[int] = Query(
         0,
@@ -47,5 +66,36 @@ async def search_courses(
     db: Session = Depends(get_db)
 
 ):
-    courses = crud.CourseQuery(db, university, term_id=term_id, offset=offset, limit=limit).search()
+    courses = crud.CourseQuery(db, university, request.query_params, term_id=term_id, offset=offset, limit=limit).search()
+    return courses
+
+
+
+@router.get("/live-search/{university}")
+async def search_courses(
+    request: Request,
+    university: str,
+    term_id: str = Query(
+        "2020-fall",
+        title = "Term Code",
+        description = "Search for courses in this term; YEAR-SEASON. Ex: Spring Semester = 2021-spring"
+    ),
+    code: Optional[str] = Query(
+        None,
+        title = "Course code",
+        description = "Unique within the term of a University"
+    ),
+    title: Optional[str] = Query(
+        None,
+        title = "Course title",
+        description = "A more readable name of a course. Ex: Intro to course"
+    ),
+    department: Optional[str] = Query(
+        None,
+        title = "Department code",
+        description = "See your university's website for the code. Ex: COMPSCI"
+    )
+
+):
+    courses = utils.handleUciLiveSearch(request.query_params, term_id=term_id)
     return courses
