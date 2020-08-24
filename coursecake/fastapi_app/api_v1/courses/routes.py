@@ -1,5 +1,6 @@
 # contains all routes for the courses endpoint
 from typing import List, Optional
+from enum import Enum
 
 from fastapi import Depends, APIRouter, BackgroundTasks, Query, Request
 from sqlalchemy.orm import Session
@@ -9,6 +10,18 @@ from .. import schemas
 from . import utils
 
 router = APIRouter()
+
+class UniversityName(str, Enum):
+    uci = "uci"
+    csus = "csus"
+
+
+class Term(str, Enum):
+    summer_2020_1 = "2020-SUMMER-1"
+    summer_2020_2 = "2020-SUMMER-2"
+    fall_2020_1 = "2020-FALL"
+
+
 
 # dependency
 def get_db():
@@ -29,7 +42,7 @@ async def all_courses(offset: int = 0, limit: int = 100, db: Session = Depends(g
 @router.get("/search/{university}", response_model=List[schemas.Course])
 async def search_courses(
     request: Request,
-    university: str,
+    university: UniversityName,
     term_id: Optional[str] = Query(
         "2020-fall",
         title = "Term Code",
@@ -74,7 +87,7 @@ async def search_courses(
 @router.get("/live-search/{university}")
 async def search_courses(
     request: Request,
-    university: str,
+    university: UniversityName,
     term_id: str = Query(
         "2020-fall",
         title = "Term Code",
