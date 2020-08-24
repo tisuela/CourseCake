@@ -125,5 +125,4 @@ donezo
 # Future features
 - More comprehensive university information on departments, course prerequisites, restricts, etc.
 - Prerequisite mapping to create a network of classes (along with a node graph GUI). Store using GraphQL
-- HTTPS only
 - IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS ty
