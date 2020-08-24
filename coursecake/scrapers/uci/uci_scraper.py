@@ -30,6 +30,8 @@ class UciScraper(Scraper):
     ]
 
     YEAR_TERM_ENCODER = {
+        "2020-SUMMER-1": "2020-51",
+        "2020-SUMMER-2": "2020-76",
         "2020-FALL-1": "2020-92"
     }
 
