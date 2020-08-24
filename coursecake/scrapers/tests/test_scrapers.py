@@ -1,8 +1,4 @@
 # packaging for scrapers.tests
-
-
-import pytest
-
 from coursecake.scrapers.course_scraper import CourseScraper
 
 def testFunc():
