@@ -5,6 +5,17 @@ CourseCake is sliced (haha get it?) into two parts -- a standalone scraper packa
 
 This section will cover the usability of the standalone scraper package.
 
+## Quickstart
+Here's a simple script to get a dictionary of all a university's courses for a specific term (only UC Irvine supported right now). Each course's course code is a key to the course information in this dictionary.
+```
+from coursecake.scrapers.course_scraper import CourseScraper
+
+scraper = CourseScraper().getUciScraper()
+courses = scraper.scrape()
+
+instructor_of_course_30000 = courses["30000"]["instructor"]
+```
+
 ## CourseScraper `coursecake.scrapers.course_scraper`
 `CourseScraper` is the main class in which you can access all scraper classes and their functions -- you should not have to import any of the other scrapers.
 
