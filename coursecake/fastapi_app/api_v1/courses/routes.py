@@ -42,7 +42,7 @@ async def all_courses(request: Request, offset: int = 0, limit: int = 50, db: Se
 
 
 @router.get("/search/{university}", response_model=List[schemas.Course])
-@limiter.limit("5/second;60/minute;300/hour")
+@limiter.limit("20/second;60/minute;300/hour")
 async def search_courses(
     request: Request,
     university: UniversityName,

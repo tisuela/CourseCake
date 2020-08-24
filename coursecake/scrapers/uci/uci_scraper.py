@@ -66,7 +66,7 @@ class UciScraper(Scraper):
         self.params["YearTerm"] = self.year_term
 
 
-    def getDepartments(self):
+    def getDepartments(self) -> list:
         page = self.session.get(self.url)
         soup = BeautifulSoup(page.content, "lxml")
 
@@ -79,7 +79,7 @@ class UciScraper(Scraper):
             if (dept["value"].strip() != "ALL"):
                 self.deptCodes.append(dept["value"])
 
-        print("UciScraper -- getDepartments --","Departments initialized")
+        return self.deptCodes
 
 
     def getCourses(self, args: dict) -> dict:
@@ -95,24 +95,6 @@ class UciScraper(Scraper):
             except KeyError:
                 print(f"uci_scraper -- getCourses -- invalid arg {arg}")
 
-        params.update(self.params)
-        page = self.session.get(self.url, params = params)
-        courses = self.scrapePage(page)
-
-        return courses
-
-
-
-    def getDepartmentCourses(self, dept: str) -> dict:
-        '''
-        Retrieves list of courses by querying department name
-        '''
-
-        # use params to "submit" the form data
-        # (but for simplicity, we aren't using the form)
-        params = {"Dept": dept}
-
-        # add the base params
         params.update(self.params)
         page = self.session.get(self.url, params = params)
         courses = self.scrapePage(page)
@@ -163,21 +145,7 @@ class UciScraper(Scraper):
 
 
 
-
-
-    def getCoursesByDepartment(self) -> list:
-        courses = dict()
-        self.getDepartments()
-        for dept in self.deptCodes:
-            print("UciScraper -- getCoursesByDepartment --", "scraping", dept)
-
-            courses.update(self.getDepartmentCourses(dept))
-
-        return courses
-
-
-
-    def getCoursesByCourseCodes(self) -> list:
+    def getCoursesByCourseCodes(self, max: int = 99999) -> list:
         '''
         Gets courses by searching through ranges of codes
 
@@ -192,7 +160,7 @@ class UciScraper(Scraper):
         lowerBound = 0
         upperBound = 3000
         increment = upperBound - lowerBound
-        max = 99999
+
 
         while (lowerBound < max):
 
@@ -214,12 +182,15 @@ class UciScraper(Scraper):
 
 
 
-    def scrape(self) -> dict:
+    def scrape(self, testing: bool = False) -> dict:
         '''
         Gets all Uci courses
         '''
         # self.getCoursesByDepartment()
-        self.courses = self.getCoursesByCourseCodes()
+        if testing:
+            self.courses = self.getCoursesByCourseCodes(max = 10000)
+        else:
+            self.courses = self.getCoursesByCourseCodes()
 
         return self.courses
 

@@ -95,20 +95,3 @@ class Course:
         {self.enrolled}
         {self.status}
         '''
-
-
-
-
-
-def main():
-    course = Course()
-    course.name = "yeet"
-    course.title = "study of yeet"
-    course.code = "1223"
-    course.instructor = "mr.yeetus"
-
-    print(course)
-
-
-if __name__ == '__main__':
-    main()

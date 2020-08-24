@@ -25,7 +25,8 @@ class Universities:
 
 
 
-    def getUniversity(self, name: str) -> str:
+    def getUniversity(self, name: str):
+        name = name.upper()
         try:
             return self.getData()[name]
         except KeyError:
@@ -60,7 +61,7 @@ class Universities:
         jsonFile.close()
 
 
-
+'''
 def main():
     adder = Universities()
     data = adder.getData()
@@ -101,3 +102,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+'''

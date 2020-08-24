@@ -12,7 +12,7 @@ from . import crud, models
 
 
 
-def update_all(db: Session, term_id: str = "2020-FALL-1"):
+def update_all(db: Session, term_id: str = "2020-FALL-1", testing: bool = True):
     term_args = term_id.split("-")
 
     # check if term_id is fully specified
@@ -22,6 +22,6 @@ def update_all(db: Session, term_id: str = "2020-FALL-1"):
     university = "uci"
     scraper = CourseScraper().getUciScraper()
     scraper.set_term_id(term_id)
-    courses = list(scraper.scrape().values())
+    courses = list(scraper.scrape(testing = testing).values())
     crud.add_university(db, university)
     crud.bulk_merge_courses(db, university, term_id, courses)

@@ -23,24 +23,38 @@ def db():
 
 
 def test_all(db):
-    # client.post("/api/v1/admin/update/all?token=zot")
-    uploads.update_all(db)
+    # need to populate db first
+    uploads.update_all(db, testing = True)
 
     response = client.get("/api/v1/courses/all")
     assert response.status_code == 200
+    assert len(response.json()) >= 50
 
 
 def test_basic_search():
     response = client.get("/api/v1/courses/search/uci")
     assert response.status_code == 200
+    assert len(response.json()) >= 50
 
 
 def test_medium_search():
-    response = client.get("/api/v1/courses/search/uci?department=compsci")
+    response = client.get("/api/v1/courses/search/uci?department=art")
     assert response.status_code == 200
+    assert len(response.json()) >= 10
 
+
+def test_heavy_search():
+    response = client.get("/api/v1/courses/search/uci?department[like]=co&professor[ilike]=pattis&units[not]=8")
+    assert response.status_code == 200
+    assert len(response.json()) >= 5
 
 
 def test_basic_live_search():
-    response = client.get("/api/v1/courses/live-search/uci?department=compsci")
+    response = client.get("/api/v1/courses/live-search/uci?department=compsci&badarg=harmful")
     assert response.status_code == 200
+    assert len(response.json()) >= 50
+
+
+def test_upload_all():
+    response = client.post("/api/v1/admin/update/all?token=bad")
+    assert response.status_code == 401

@@ -14,7 +14,7 @@ def db():
 
 
 def test_update_all(db):
-    uploads.update_all(db)
+    uploads.update_all(db, testing = True)
     courses = crud.get_courses(db)
 
     assert len(courses) >= 10
