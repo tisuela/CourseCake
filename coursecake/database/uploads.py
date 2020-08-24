@@ -12,7 +12,7 @@ from . import crud, models
 
 
 
-def update_all(db: Session, term_id: str = "2020-FALL-1", testing: bool = True):
+def update_all(db: Session, term_id: str = "2020-FALL-1", testing: bool = False):
     term_args = term_id.split("-")
 
     # check if term_id is fully specified
