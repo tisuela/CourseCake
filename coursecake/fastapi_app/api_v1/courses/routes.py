@@ -6,6 +6,7 @@ from fastapi import Depends, APIRouter, BackgroundTasks, Query, Request
 from sqlalchemy.orm import Session
 
 from ....database import crud, models, sql
+from ...limiter import limiter
 from .. import schemas
 from . import utils
 
@@ -33,7 +34,7 @@ def get_db():
 
 
 @router.get("/all", response_model=List[schemas.Course])
-async def all_courses(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+async def all_courses(offset: int = 0, limit: int = 50, db: Session = Depends(get_db)):
     courses = crud.get_courses(db, offset = offset, limit = limit)
     return courses
 
@@ -119,7 +120,7 @@ async def search_courses(
         description = "Use this to see next page of results"
     ),
     limit: Optional[int] = Query(
-        500,
+        50,
         description = "Higher limits can create slower responses"
     ),
     db: Session = Depends(get_db)
@@ -130,6 +131,7 @@ async def search_courses(
 
 
 # use CourseBase schema since live search is not as detailed
+@limiter.limit("1/second;10/minute;30/hour")
 @router.get("/live-search/{university}", response_model=List[schemas.CourseBase])
 async def search_courses(
     request: Request,

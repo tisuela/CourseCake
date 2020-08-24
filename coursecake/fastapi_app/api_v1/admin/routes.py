@@ -1,10 +1,11 @@
 # contains all routes for the courses endpoint
 from typing import List, Optional
 
-from fastapi import Depends, APIRouter, BackgroundTasks, status, HTTPException, Query
+from fastapi import Depends, APIRouter, BackgroundTasks, status, HTTPException, Query, Request
 from sqlalchemy.orm import Session
 
 from ....database import crud, models, sql, uploads
+from ...limiter import limiter
 from .. import schemas
 from . import utils
 
@@ -21,9 +22,10 @@ def get_db():
 
 
 
-
+@limiter.limit("2/minute")
 @router.post("/update/all")
 async def update_all(
+    request: Request,
     token: str,
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
