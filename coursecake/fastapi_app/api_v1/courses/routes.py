@@ -83,8 +83,8 @@ async def search_courses(
     return courses
 
 
-
-@router.get("/live-search/{university}")
+# use CourseBase schema since live search is not as detailed
+@router.get("/live-search/{university}", response_model=List[schemas.CourseBase])
 async def search_courses(
     request: Request,
     university: UniversityName,
