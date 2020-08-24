@@ -195,38 +195,6 @@ class UciScraper(Scraper):
         return self.courses
 
 
-
-    def toInt(self, s: str) -> int:
-        try:
-            return int(s)
-        except ValueError:
-            return -1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def main():
-
-    '''
-    for course in scraper.courses:
-        print(course)
-    '''
-
-if __name__ == '__main__':
-    main()
-
-
-
 '''
 Alternative:
     import urllib.request as urllib
