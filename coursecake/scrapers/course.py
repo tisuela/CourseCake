@@ -52,7 +52,7 @@ class Course:
 
         # a more readable department name
         # Ex: COMSPSCI -> Computer Science
-        self.departmentTitle = ""
+        self.department_title = ""
 
         if (courseDict != None):
             self.__initFromDict(courseDict)
@@ -95,20 +95,3 @@ class Course:
         {self.enrolled}
         {self.status}
         '''
-
-
-
-
-
-def main():
-    course = Course()
-    course.name = "yeet"
-    course.title = "study of yeet"
-    course.code = "1223"
-    course.instructor = "mr.yeetus"
-
-    print(course)
-
-
-if __name__ == '__main__':
-    main()

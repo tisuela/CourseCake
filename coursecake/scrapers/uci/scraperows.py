@@ -49,7 +49,7 @@ class UciScrapeRows:
                 # print("ScrapeRows -- getTemplateCourse -- got school", currentRow.text)
 
             elif (not updatedDepartment and self.matchClass(currentRow, "dept-title")):
-                self.templateCourse.departmentTitle = currentRow.text
+                self.templateCourse.department_title = currentRow.text
                 updatedDepartment = True
                 # print("ScrapeRows -- getTemplateCourse -- got dept", currentRow.text)
 

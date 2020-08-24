@@ -89,9 +89,4 @@ for course in courses:
   print(course.status)
 ```
 
-To save all UCI courses into a JSON file:
-```
-scraper.downloadUCICourses()
-```
 
-The format of data within the JSON file is a dictionary of `Course.__dict__`, where `Course.code` are the keys.
