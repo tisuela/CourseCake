@@ -68,6 +68,52 @@ async def search_courses(
         title = "Department code",
         description = "See your university's website for the code. Ex: COMPSCI"
     ),
+    instructor: Optional[str] = Query(
+        None,
+        title = "Instructor name",
+        description = "Instructor of course. Some courses have multiple instructors"
+    ),
+    location: Optional[str] = Query(
+        None,
+        title = "Location",
+        description = "Includes building and room info"
+    ),
+    building: Optional[str] = Query(
+        None,
+        title = "Building",
+        description = "Unique within university"
+    ),
+    room: Optional[str] = Query(
+        None,
+        title = "Room",
+        description = "Unique within building"
+    ),
+    status: Optional[str] = Query(
+        None,
+        title = "Status",
+        description = "OPEN / FULL / CLOSED / etc..."
+    ),
+    units: Optional[int] = Query(
+        None,
+        title = "Units",
+        description = "Some (few) courses have variable units. The highest possible units in a course is shown."
+    ),
+    enrolled: Optional[int] = Query(
+        None,
+        title = "Students Enrolled",
+    ),
+    waitlisted: Optional[int] = Query(
+        None,
+        title = "Students Waitlisted",
+    ),
+    requested: Optional[int] = Query(
+        None,
+        title = "Students that have Requested",
+    ),
+    max: Optional[int] = Query(
+        None,
+        title = "Maximum students",
+    ),
     offset: Optional[int] = Query(
         0,
         description = "Use this to see next page of results"
@@ -107,6 +153,30 @@ async def search_courses(
         None,
         title = "Department code",
         description = "See your university's website for the code. Ex: COMPSCI"
+    ),
+    units: Optional[str] = Query(
+        None,
+        title = "Units",
+    ),
+    instructor: Optional[str] = Query(
+        None,
+        title = "Instructor",
+        description = "The instructor teaching the course. Some courses have multiple instructors"
+    ),
+    breadth: Optional[str] = Query(
+        None,
+        title = "Breadth / GE Requirement",
+        description = "The GE Requirement of the Course -- see your University website. Ex:GE-2."
+    ),
+    starttime: Optional[str] = Query(
+        None,
+        title = "Start Time",
+        description = "Daily course instruction must begin after this time"
+    ),
+    endtime: Optional[str] = Query(
+        None,
+        title = "End Time",
+        description = "Daily course instruction must end before this time"
     )
 
 ):
