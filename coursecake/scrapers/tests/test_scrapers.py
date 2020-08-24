@@ -1,14 +1,27 @@
 # packaging for scrapers.tests
+from ..course_scraper import CourseScraper
+from ..universities import Universities
 
+def test_add_university():
+    universities = Universities()
+    uni = "testing"
+    course_schedule = "www.google.com"
+    course_requisites = "www.elgoog.com"
 
-import pytest
+    universities.add(
+        uni,
+        **{"course-schedule": course_schedule,
+            "course-requisites": course_requisites
+        }
+    )
+    info = universities.getUniversity(uni)
 
-from coursecake.scrapers.course_scraper import CourseScraper
+    assert info["course-requisites"] == course_requisites
 
-def testFunc():
-    assert True
-
-
+def test_get_departments():
+    scraper = CourseScraper().getUciScraper()
+    departments = scraper.getDepartments()
+    assert len(departments) > 5
 
 def testGetCoursesDept():
     scraper = CourseScraper().getUciScraper()
@@ -24,6 +37,6 @@ def testGetCoursesCode():
 
 def testGetAllCourses():
     scraper = CourseScraper().getUciScraper()
-    courses = scraper.scrape()
+    courses = scraper.scrape(testing = True)
 
     assert len(courses) > 1000

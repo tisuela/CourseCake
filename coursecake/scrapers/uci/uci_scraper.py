@@ -7,40 +7,45 @@ import requests
 
 
 class UciScraper(Scraper):
-    def __init__(self):
-        Scraper.__init__(self, "UCI")
+    # from our defined query params to WebSoc's params
+    PARAM_ENCODER ={
+        "days": "Days",
+        "yearterm": "YearTerm",
+        "units": "Units",
+        "title": "CourseTitle",
+        "starttime": "StartTime",
+        "endtime": "EndTime",
+        "breadth": "Breadth",
+        "instructor": "InstrName",
+        "division": "Division",
+        "department": "Dept",
+        "code": "CourseCodes"
+    }
+
+    REQUIRED_PARAMS = [
+        "breadth",
+        "instructor",
+        "code",
+        "dept"
+    ]
+
+    YEAR_TERM_ENCODER = {
+        "2020-SUMMER-1": "2020-51",
+        "2020-SUMMER-2": "2020-76",
+        "2020-FALL-1": "2020-92"
+    }
+
+    def __init__(self, term_id: str = "2020-FALL-1"):
+        Scraper.__init__(self, "UCI", term_id)
 
         self.url = self.urls["course-schedule"]
 
         # used to specify which term / tear
-        self.yearTerm = "2020-92"
+        self.year_term = self.YEAR_TERM_ENCODER[self.term_id]
 
         # used for requests to WebSoc
-        self.params = {"YearTerm": self.yearTerm, "ShowFinals": 1,
+        self.params = {"YearTerm": self.year_term, "ShowFinals": 1,
                         "ShowComments": 1}
-
-
-        # from our defined query params to WebSoc's params
-        self.paramEncoder ={
-            "days": "Days",
-            "yearterm": "YearTerm",
-            "units": "Units",
-            "title": "CourseTitle",
-            "starttime": "StartTime",
-            "endtime": "EndTime",
-            "breadth": "Breadth",
-            "instructor": "InstrName",
-            "division": "Division",
-            "department": "Dept",
-            "code": "CourseCodes"
-        }
-
-        self.requiredParams = [
-            "breadth",
-            "instructor",
-            "code",
-            "dept"
-        ]
 
         # list of department codes (str) for the queries
         self.deptCodes = list()
@@ -55,12 +60,13 @@ class UciScraper(Scraper):
         print("UciScraper -- initialized")
 
 
-    def setYearTerm(self, yearTerm: str) -> None:
-        self.yearTerm = yearTerm
-        self.params["YearTerm"] = self.yearTerm
+    def set_term_id(self, term_id: str) -> None:
+        self.term_id = term_id.upper()
+        self.year_term = self.YEAR_TERM_ENCODER[self.term_id]
+        self.params["YearTerm"] = self.year_term
 
 
-    def getDepartments(self):
+    def getDepartments(self) -> list:
         page = self.session.get(self.url)
         soup = BeautifulSoup(page.content, "lxml")
 
@@ -73,7 +79,7 @@ class UciScraper(Scraper):
             if (dept["value"].strip() != "ALL"):
                 self.deptCodes.append(dept["value"])
 
-        print("UciScraper -- getDepartments --","Departments initialized")
+        return self.deptCodes
 
 
     def getCourses(self, args: dict) -> dict:
@@ -84,29 +90,11 @@ class UciScraper(Scraper):
         params = dict()
         for arg in args:
             try:
-                encodedParam = self.paramEncoder[arg]
+                encodedParam = self.PARAM_ENCODER[arg]
                 params[encodedParam] = args[arg].upper()
             except KeyError:
                 print(f"uci_scraper -- getCourses -- invalid arg {arg}")
 
-        params.update(self.params)
-        page = self.session.get(self.url, params = params)
-        courses = self.scrapePage(page)
-
-        return courses
-
-
-
-    def getDepartmentCourses(self, dept: str) -> dict:
-        '''
-        Retrieves list of courses by querying department name
-        '''
-
-        # use params to "submit" the form data
-        # (but for simplicity, we aren't using the form)
-        params = {"Dept": dept}
-
-        # add the base params
         params.update(self.params)
         page = self.session.get(self.url, params = params)
         courses = self.scrapePage(page)
@@ -157,21 +145,7 @@ class UciScraper(Scraper):
 
 
 
-
-
-    def getCoursesByDepartment(self) -> list:
-        courses = dict()
-        self.getDepartments()
-        for dept in self.deptCodes:
-            print("UciScraper -- getCoursesByDepartment --", "scraping", dept)
-
-            courses.update(self.getDepartmentCourses(dept))
-
-        return courses
-
-
-
-    def getCoursesByCourseCodes(self) -> list:
+    def getCoursesByCourseCodes(self, max: int = 99999) -> list:
         '''
         Gets courses by searching through ranges of codes
 
@@ -186,7 +160,7 @@ class UciScraper(Scraper):
         lowerBound = 0
         upperBound = 3000
         increment = upperBound - lowerBound
-        max = 99999
+
 
         while (lowerBound < max):
 
@@ -208,46 +182,17 @@ class UciScraper(Scraper):
 
 
 
-    def scrape(self) -> dict:
+    def scrape(self, testing: bool = False) -> dict:
         '''
         Gets all Uci courses
         '''
         # self.getCoursesByDepartment()
-        self.courses = self.getCoursesByCourseCodes()
+        if testing:
+            self.courses = self.getCoursesByCourseCodes(max = 10000)
+        else:
+            self.courses = self.getCoursesByCourseCodes()
 
         return self.courses
-
-
-
-    def toInt(self, s: str) -> int:
-        try:
-            return int(s)
-        except ValueError:
-            return -1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def main():
-
-    '''
-    for course in scraper.courses:
-        print(course)
-    '''
-
-if __name__ == '__main__':
-    main()
-
 
 
 '''

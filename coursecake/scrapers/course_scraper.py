@@ -25,11 +25,6 @@ class CourseScraper:
         return courses
 
 
-    def downloadUciCourses(self):
-        courses = self.getAllUciCourses()
-        self.downloadCoursesAsJson(courses, "UciCourses.json")
-
-
     def downloadCoursesAsJson(self, courses, fileName):
         with open(fileName, "w+") as jsonFile:
             json.dump({"courses": list(course.__dict__ for course in courses.values())}, jsonFile)
@@ -42,8 +37,8 @@ class CourseScraper:
 
 
 
-
-
+'''
+only used for testing
 def main():
     courseScraper = CourseScraper()
 
@@ -68,3 +63,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+'''

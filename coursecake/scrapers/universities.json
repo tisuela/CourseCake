@@ -1,1 +1,1 @@
-{"UCI": {"course-schedule": "https://www.reg.uci.edu/perl/WebSoc", "course-requisites": "http://catalogue.uci.edu/allcourses/"}, "TEST": {"course-schedule": "test", "course-requisites": "test"}}
+{"UCI": {"course-schedule": "https://www.reg.uci.edu/perl/WebSoc", "course-requisites": "http://catalogue.uci.edu/allcourses/"}, "TEST": {"course-schedule": "test", "course-requisites": "test"}, "TESTING": {"course-schedule": "www.google.com", "course-requisites": "www.elgoog.com"}}

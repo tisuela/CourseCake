@@ -2,8 +2,9 @@ from .universities import Universities
 from .course import Course
 
 class Scraper:
-    def __init__(self, universityName: str):
+    def __init__(self, universityName: str, term_id: str):
         self.universityName = universityName
+        self.term_id = term_id.upper()
 
         # get the course website url
         universities = Universities()
