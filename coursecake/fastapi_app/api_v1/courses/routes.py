@@ -134,7 +134,7 @@ async def search_courses(
 
 # use CourseBase schema since live search is not as detailed
 @router.get("/live-search/{university}", response_model=List[schemas.CourseBase])
-@limiter.limit("1/second;10/minute;30/hour")
+@limiter.limit("5/second;10/minute;30/hour")
 async def search_courses(
     request: Request,
     university: UniversityName,
