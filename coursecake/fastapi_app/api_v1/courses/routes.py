@@ -13,7 +13,7 @@ router = APIRouter()
 
 class UniversityName(str, Enum):
     uci = "uci"
-    csus = "csus"
+    # csus = "csus"
 
 
 class Term(str, Enum):
