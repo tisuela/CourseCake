@@ -35,7 +35,7 @@ def get_db():
 
 @router.get("/all", response_model=List[schemas.Course])
 @limiter.limit("5/second;60/minute;300/hour")
-async def all_courses(offset: int = 0, limit: int = 50, db: Session = Depends(get_db)):
+async def all_courses(request: Request, offset: int = 0, limit: int = 50, db: Session = Depends(get_db)):
     courses = crud.get_courses(db, offset = offset, limit = limit)
     return courses
 
