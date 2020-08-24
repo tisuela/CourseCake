@@ -5,9 +5,10 @@ From developing a course planner to simply finding in-person classes, there's an
 
 We aim to create an API to access course data, where each college's course is unified under one schema. By making course data easier to responsibly access and more "edible" for programs, we hope CourseCake gives a smooth approach to build useful tools for students.
 
-There are two main features to CourseCake to accomplish this goal:
-- RESTful API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/RESTful-API)
-- Installable Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
+There are three main features to CourseCake to accomplish this goal:
+- Online RESTful API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/RESTful-API)
+- Database package - Docs coming soon
+- Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
 
 
@@ -58,6 +59,8 @@ The response is a dictionary containing a list of `course` objects. The schema o
 
 [RESTful API ](http://docs.coursecake.tisuela.com/RESTful-API)
 
+Database docs coming soon
+
 [Scrapers](http://docs.coursecake.tisuela.com/Scrapers)
 
 
@@ -74,7 +77,7 @@ On macOS and Linux:
 `python3 -m virtualenv env`
 
 On Windows:
-`py -m venv env`
+`python -m venv env`
 The second argument is the location to create the virtual environment. Generally, you can just create this in your project and call it env.
 
 
@@ -93,44 +96,29 @@ One Windows Powershell
 
 
 
-## Deploy Flask Application locally
+## Deploy Fast API Application locally
+We are no longer using Flask!
 
+#### Run Fast API using uvicorn
 
-#### Run flask
-For Linux and Mac:
-
+Install uvicorn if you haven't already (if you followed the previous step correctly, you should be gucci.
 ```
-export FLASK_APP=coursecake/flaskapp
-export FLASK_ENV=development
-flask run
+python -m pip install uvicorn
 ```
 
-For Windows cmd, use set instead of export:
-
+Run uvicorn.
 ```
-set FLASK_APP=coursecake/flaskapp
-set FLASK_ENV=development
-flask run
-```
-
-For Windows PowerShell, use $env: instead of export:
-
-```
-$env:FLASK_APP = "coursecake/flaskapp"
-$env:FLASK_ENV = "development"
-flask run
+uvicorn coursecake.fastapi_app.main:app --reload
 ```
 
 You’ll see output similar to this:
 
 ```
-* Serving Flask app "coursecake/flaskapp"
-* Environment: development
-* Debug mode: on
-* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-* Restarting with stat
-* Debugger is active!
-* Debugger PIN: 855-212-761
+←[32mINFO←[0m:     Uvicorn running on ←[1mhttp://127.0.0.1:8000←[0m (Press CTRL+C to quit)
+←[32mINFO←[0m:     Started reloader process [←[36m←[1m38240←[0m] using ←[36m←[1mstatreload←[0m
+←[32mINFO←[0m:     Started server process [←[36m13020←[0m]
+←[32mINFO←[0m:     Waiting for application startup.
+←[32mINFO←[0m:     Application startup complete.
 ```
 donezo
 
