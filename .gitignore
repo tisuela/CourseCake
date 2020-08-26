@@ -6,3 +6,4 @@ db.*
 *.log
 .coverage
 *.db
+.pytest_cache
