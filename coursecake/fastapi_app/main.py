@@ -26,7 +26,8 @@ app = FastAPI(
         title = "CourseCake",
         version="v1.0-beta",
         openapi_tags=tags_metadata,
-        redoc_url = "/"
+        redoc_url = "/",
+        docs_url = "/api/v1"
 )
 
 app.state.limiter = limiter

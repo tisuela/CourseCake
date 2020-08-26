@@ -1,9 +1,22 @@
 ---
 title: Scrapers
 ---
-CourseCake is sliced (haha get it?) into two parts -- a standalone scraper package `coursecake.scrapers`, and a web app package `coursecake.flaskapp` built on top of the scraper package.
+CourseCake is sliced (haha get it?) into three parts -- a standalone scraper package `coursecake.scrapers`, a database package `coursecake.database` to store and query what was scraped and a web app package `coursecake.fastapi_app` to make the two former packages accessible on the web.
 
-This section will cover the usability of the standalone scraper package.
+This section will cover the usability of the standalone scraper package `coursecake.scrapers`.
+
+# Quickstart
+Here's a simple script to get a dictionary of all a university's courses for a specific term (only UC Irvine supported right now). Each course's course code is a key to the course information in this dictionary.
+```
+from coursecake.scrapers.course_scraper import CourseScraper
+
+scraper = CourseScraper().getUciScraper()
+courses = scraper.scrape()
+
+instructor_of_course_30000 = courses["30000"].instructor
+```
+
+# Documentation
 
 ## CourseScraper `coursecake.scrapers.course_scraper`
 `CourseScraper` is the main class in which you can access all scraper classes and their functions -- you should not have to import any of the other scrapers.
@@ -35,6 +48,11 @@ Example usage:
 ```
 scraper = CourseScraper().getUciScraper()
 courses = scraper.scrape()
+```
+
+All course information is stored as a dictionary of `Course`.
+```
+instructor_of_course_30000 = courses["30000"].instructor
 ```
 
 ### Search specific courses `Scraper.getCourses(args: dict) -> dict`
@@ -79,7 +97,7 @@ You can easily serialize a `Course` using `Course.__dict__`
 
 Here is an example of printing some course data from `courses`
 ```
-for course in courses:
+for course in courses.values():
 
   # This does not print out all attributes, just a select few to avoid clutter
   # see more in Course.__str__(self)
