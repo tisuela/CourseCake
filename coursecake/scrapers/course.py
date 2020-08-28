@@ -1,52 +1,32 @@
-
 class Course:
     '''
     All information needed to be collected about a course
     '''
-    def __init__(self, courseDict = None):
+    def __init__(self, course_dict = None):
         '''
         All None attributes must be provided
         Can be constructed as empty, from a dictionary
         '''
         ### Mandatory attributes ###
 
+
         ### Strings
 
-        # The formal name of the course
-        self.name = None
+        # The formal name of the course which acts as an ID
+        self.code = None
 
         # The Title of the course; more human readable
         self.title = None
 
-        # The Course Code, often used in registration
-        self.code = None
-
         self.department = None
-        # Lecture / discussion / lab
-        self.type = None
-        self.instructor = None
-        self.time = None
-
-        # Full location string, with building  + room
-        self.location = None
-        self.building = None
-        self.room = None
-        self.status = None
 
         ### Integers
 
         self.units = None
 
         ### Optional Attributes ###
-        # not necessarily nullable in our db models
+        # nullable in our db models
 
-        # time of final
-        self.final = ""
-
-        self.max = -1
-        self.enrolled = -1
-        self.waitlisted = 0
-        self.requested = 0
         self.restrictions = ""
         self.school = ""
 
@@ -54,12 +34,13 @@ class Course:
         # Ex: COMSPSCI -> Computer Science
         self.department_title = ""
 
-        if (courseDict != None):
-            self.__initFromDict(courseDict)
+        if (course_dict != None):
+            self.__init_from_dict(course_dict)
 
 
-    def __initFromDict(self, courseDict: dict):
-        self.__dict__.update(courseDict)
+    def __init_from_dict(self, course_dict: dict):
+        self.__dict__.update(course_dict)
+
 
 
 

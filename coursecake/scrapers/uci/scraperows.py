@@ -1,4 +1,4 @@
-from .uci_course import UciCourse
+from .uci_class import UciClass
 from ..course import Course
 
 class UciScrapeRows:
@@ -14,24 +14,24 @@ class UciScrapeRows:
         self.position = 0
 
         # identifies if a row contains a course
-        self.rowContainsCourse = False
-        self.templateCourse = Course()
+        self.row_contains_class = False
+        self.current_course = Course()
 
 
-        self.courses = dict()
+        self.classes = dict()
 
-    def matchClass(self, htmlTag, s: str):
+    def match_class(self, htmlTag, s: str):
         return (htmlTag.get("class") != None and htmlTag["class"][0] == s)
 
 
-    def getTemplateCourse(self):
-        currentRow = None
+    def get_course(self):
+        current_row = None
 
         # Flags to track updates -- it's possible we iterate over two
         # schools, but we onlu want the closest one to our position
-        updatedSchool = False
-        updatedDepartment = False
-        updatedNameTitle = False
+        updated_school = False
+        updated_department = False
+        updated_name_title = False
 
         # init starting position to iterate over previous rows
         position = self.position - 1
@@ -41,32 +41,32 @@ class UciScrapeRows:
 
         # iterate over no more than <threshold> previous rows
         while (position >= 0 and position > self.position - threshold):
-            currentRow = self.rows[position]
+            current_row = self.rows[position]
 
-            if (not updatedSchool and self.matchClass(currentRow, "college-title")):
-                self.templateCourse.school = currentRow.text
-                updatedSchool = True
-                # print("ScrapeRows -- getTemplateCourse -- got school", currentRow.text)
+            if (not updated_school and self.match_class(current_row, "college-title")):
+                self.current_course.school = current_row.text
+                updated_school = True
+                # print("ScrapeRows -- get_course -- got school", current_row.text)
 
-            elif (not updatedDepartment and self.matchClass(currentRow, "dept-title")):
-                self.templateCourse.department_title = currentRow.text
-                updatedDepartment = True
-                # print("ScrapeRows -- getTemplateCourse -- got dept", currentRow.text)
+            elif (not updated_department and self.match_class(current_row, "dept-title")):
+                self.current_course.department_title = current_row.text
+                updated_department = True
+                # print("ScrapeRows -- get_course -- got dept", current_row.text)
 
 
-            elif (not updatedNameTitle) :
+            elif (not updated_name_title) :
                 # HTML which contains both the course name and course title
-                courseNameTitle = currentRow.find("td", {"class":"CourseTitle"})
+                course_name_title = current_row.find("td", {"class":"CourseTitle"})
 
-                if (courseNameTitle != None):
-                    courseName = " ".join(courseNameTitle.find(text = True, recursive = False).strip().split())
-                    self.templateCourse.name = courseName.upper()
-                    self.templateCourse.title = courseNameTitle.find("b").text
+                if (course_name_title != None):
+                    course_name = " ".join(course_name_title.find(text = True, recursive = False).strip().split())
+                    self.current_course.code = course_name.upper()
+                    self.current_course.title = course_name_title.find("b").text
 
                     # Department is the first word in course name
-                    self.templateCourse.department = courseName.rsplit(" ",1)[0].upper()
-                    updatedNameTitle = True
-                    # print("ScrapeRows -- getTemplateCourse -- got name/title", courseNameTitle.text)
+                    self.current_course.department = course_name.rsplit(" ",1)[0].upper()
+                    updated_name_title = True
+                    # print("ScrapeRows -- get_course -- got name/title", course_name_title.text)
 
 
             position -= 1
@@ -74,14 +74,14 @@ class UciScrapeRows:
 
 
 
-    def scrapeCells(self, cells):
+    def scrape_cells(self, cells):
         '''
         Checks if cells contain course information
         Scrapes cells for course information
         '''
-        if self.rowContainsCourse:
-            course = UciCourse(cells, templateCourse =  self.templateCourse)
-            self.courses[course.code] = course
+        if self.row_contains_class:
+            a_class = UciClass(cells, course =  self.current_course)
+            self.classes[a_class.code] = class
 
         else:
             for cell in cells:
@@ -89,24 +89,24 @@ class UciScrapeRows:
                 if (cell.text.strip().lower() == "code"):
                     # If this row has the word "Code",
                     # then the next row is a course
-                    self.rowContainsCourse = True
+                    self.row_contains_class = True
 
                     # scrape previous rows for the template course info
-                    self.getTemplateCourse()
+                    self.get_course()
 
 
 
 
 
 
-    def scrapeRow(self, row):
+    def scrape_row(self, row):
         cells = row.findChildren(["th", "td"])
 
         if (len(cells) > 10):
-            self.scrapeCells(cells)
+            self.scrape_cells(cells)
 
         else:
-            self.rowContainsCourse = False
+            self.row_contains_class = False
 
 
 
@@ -116,6 +116,6 @@ class UciScrapeRows:
         Scrape rows and return dict of courses
         '''
         for row in self.rows:
-            self.scrapeRow(row)
+            self.scrape_row(row)
 
             self.position += 1

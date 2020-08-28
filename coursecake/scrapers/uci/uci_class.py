@@ -1,26 +1,26 @@
 from ..course import Course
+from ..course_class import CourseClass
 
-
-class UciCourse(Course):
+class UciClass(CourseClass):
     '''
     This class is used to construct Course objects from Uci's course schedule,
     WEBSOC. No attributes are added, but helper methods and __init__ will be
     modified / added to help with construction
     '''
-    def __init__(self, cells = None, templateCourse = None, courseDict = None):
+    def __init__(self, cells = None, template_course = None, course_dict = None):
 
 
-        if (templateCourse != None):
-            Course.__init__(self, templateCourse.__dict__)
+        if (template_course != None):
+            Course.__init__(self, template_course.__dict__)
         else:
-            Course.__init__(self, courseDict)
+            Course.__init__(self, course_dict)
 
         if (cells != None):
             self.__initFromCells(cells)
 
 
 
-    def __initFromCells(self, cells):
+    def __init_from_cells(self, cells):
         self.code = cells[0].text
         self.type = cells[1].text
         self.units = self.toInt(cells[3].text.split("/")[-1])
@@ -38,5 +38,5 @@ class UciCourse(Course):
         self.max = self.toInt(cells[8].text)
         self.enrolled = self.toInt(cells[9].text.split("/")[-1])
         self.waitlisted = self.toInt(cells[10].text)
-        self.requestedwaitlisted = self.toInt(cells[11].text)
+        self.requested_waitlisted = self.toInt(cells[11].text)
         self.status = cells[-1].text
