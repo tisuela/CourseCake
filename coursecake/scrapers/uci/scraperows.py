@@ -18,7 +18,8 @@ class UciScrapeRows:
         self.current_course = Course()
 
 
-        self.classes = dict()
+
+        self.courses = dict()
 
     def match_class(self, htmlTag, s: str):
         return (htmlTag.get("class") != None and htmlTag["class"][0] == s)
@@ -60,7 +61,7 @@ class UciScrapeRows:
 
                 if (course_name_title != None):
                     course_name = " ".join(course_name_title.find(text = True, recursive = False).strip().split())
-                    self.current_course.code = course_name.upper()
+                    self.current_course.id = course_name.upper()
                     self.current_course.title = course_name_title.find("b").text
 
                     # Department is the first word in course name
@@ -80,8 +81,8 @@ class UciScrapeRows:
         Scrapes cells for course information
         '''
         if self.row_contains_class:
-            a_class = UciClass(cells, course =  self.current_course)
-            self.classes[a_class.code] = class
+            a_class = UciClass(self.current_course, cells)
+            self.current_course.classes.append(a_class)
 
         else:
             for cell in cells:
@@ -91,8 +92,14 @@ class UciScrapeRows:
                     # then the next row is a course
                     self.row_contains_class = True
 
+                    new_course = Course(course = self.current_course)
+                    self.courses[new_course.id] = new_course
+
+                    self.current_course.classes.clear()
                     # scrape previous rows for the template course info
                     self.get_course()
+
+
 
 
 
@@ -111,9 +118,9 @@ class UciScrapeRows:
 
 
 
-    def scrape(self) -> dict:
+    def scrape(self):
         '''
-        Scrape rows and return dict of courses
+        Scrape rows
         '''
         for row in self.rows:
             self.scrape_row(row)

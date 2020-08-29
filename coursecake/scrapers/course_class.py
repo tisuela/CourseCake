@@ -17,10 +17,10 @@ class CourseClass:
         ### Strings
 
         # The formal name of the course
-        self.course_code = course.code
+        self.course_id = course.id
 
         # The Class (also sometimes called course by some websites) Code, often used in registration
-        self.code = None
+        self.id = None
 
         self.type = None
         self.instructor = None
@@ -52,10 +52,10 @@ class CourseClass:
 
 
         if (class_dict != None):
-            self.__initFromDict(class_dict)
+            self._initFromDict(class_dict)
 
 
-    def __initFromDict(self, class_dict: dict):
+    def _init_from_dict(self, class_dict: dict):
         self.__dict__.update(class_dict)
 
 
@@ -78,9 +78,9 @@ class CourseClass:
 
 
     def __str__(self) -> str:
-        return f'''Course:
-        {self.code}
-        {self.course_code}
+        return f'''CourseClass:
+        {self.id}
+        {self.course_id}
         {self.type}
         {self.units}
         {self.instructor}

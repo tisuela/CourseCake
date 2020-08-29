@@ -122,6 +122,7 @@ class UciScraper(Scraper):
     def scrapePage(self, page) -> dict:
         # Get course table
         courses = dict()
+        classes = dict()
         soup = BeautifulSoup(page.content, "lxml")
 
         try:

@@ -1,4 +1,3 @@
-from ..course import Course
 from ..course_class import CourseClass
 
 class UciClass(CourseClass):
@@ -7,21 +6,22 @@ class UciClass(CourseClass):
     WEBSOC. No attributes are added, but helper methods and __init__ will be
     modified / added to help with construction
     '''
-    def __init__(self, cells = None, template_course = None, course_dict = None):
+    # TODO: FIX PARAMETERS!!!!
+    def __init__(self, course_id: str, cells = None, class_dict: dict = None):
 
 
-        if (template_course != None):
-            Course.__init__(self, template_course.__dict__)
+        if (class_dict != None):
+            CourseClass.__init__(self, course_id, class_dict)
         else:
-            Course.__init__(self, course_dict)
+            CourseClass.__init__(self, course_id)
 
         if (cells != None):
-            self.__initFromCells(cells)
+            self._init_from_cells(cells)
 
 
 
-    def __init_from_cells(self, cells):
-        self.code = cells[0].text
+    def _init_from_cells(self, cells):
+        self.id = cells[0].text
         self.type = cells[1].text
         self.units = self.toInt(cells[3].text.split("/")[-1])
         self.instructor = cells[4].get_text(separator="; ")
