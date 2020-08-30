@@ -22,7 +22,7 @@ class CourseClass:
         # The Class (also sometimes called course by some websites) Code, often used in registration
         self.id = None
 
-        self.type = None
+
         self.instructor = None
         self.time = None
 
@@ -48,11 +48,12 @@ class CourseClass:
         self.requested = 0
         self.restrictions = ""
         self.school = ""
+        self.type = ""
 
 
 
         if (class_dict != None):
-            self._initFromDict(class_dict)
+            self._init_from_dict(class_dict)
 
 
     def _init_from_dict(self, class_dict: dict):

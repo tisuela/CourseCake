@@ -30,24 +30,13 @@ class CourseBase(BaseModel):
     Used by live-search
     '''
     # primary keys
-    code: str
+    id: str
 
-    name: str
     title: str
     department: str
-    instructor: str
-    time: str
-    location: str
-    building: str
-    room: str
-    status: str
-    type: str
+
 
     units: int = Field(..., example=4)
-    max: int
-    enrolled: int
-    waitlisted: int
-    requested: int
 
     # optional
     department_title: str

@@ -135,7 +135,6 @@ class Class(Base):
     # It is not necessarily unique to the database,
     # Which is why university + id are primary keys
     id = Column(String, primary_key=True, nullable = False, index=True)
-    department = Column(String, nullable = False, index=True)
     instructor = Column(String, nullable = False)
     time = Column(String, nullable = False)
     location = Column(String, nullable = False)
@@ -152,7 +151,7 @@ class Class(Base):
 
     # nullable fields
 
-    restrictions = Column(String, nullable = False)
+    restrictions = Column(String, nullable = True)
 
     updated = Column(DateTime, default=datetime.utcnow)
 
@@ -171,8 +170,8 @@ class Class(Base):
         self.university_name = university
         self.term_id = term
         self.id = a_class.id
-        self.name = a_class.name
-        self.department = a_class.department
+        self.course_id = a_class.course_id
+
         self.instructor = a_class.instructor
         self.time = a_class.time
         self.location = a_class.location
@@ -187,10 +186,7 @@ class Class(Base):
         self.waitlisted = a_class.waitlisted
         self.requested = a_class.requested
 
-        self.department_title = a_class.department_title
-        self.restrictions = a_class.restrictions
-        self.school = a_class.school
 
 
     def __repr__(self):
-        return f"{self.id} | {self.name} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"
+        return f"{self.id} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"

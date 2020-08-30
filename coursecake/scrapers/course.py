@@ -49,7 +49,14 @@ class Course:
 
 
     def _init_from_dict(self, course_dict: dict):
-        self.__dict__.update(course_dict)
+        # print(course_dict)
+        for key in course_dict:
+
+            # DONT COPY CLASSES
+            if key != "classes":
+                self.__dict__[key] = course_dict[key]
+            else:
+                "CLASSES!"
 
 
     def is_valid_course(self) -> bool:
