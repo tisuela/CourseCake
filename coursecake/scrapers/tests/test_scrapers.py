@@ -59,4 +59,4 @@ def testGetAllCourses():
     assert len(courses) > 200
     assert classes_are_collected
     assert class_exists
-    assert len(classes) > 10000
+    assert len(classes) > 1000

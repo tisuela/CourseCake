@@ -21,6 +21,7 @@ class UciClass(CourseClass):
 
 
     def _init_from_cells(self, cells):
+
         self.id = cells[0].text
         self.type = cells[1].text
         self.units = self.toInt(cells[3].text.split("/")[-1])

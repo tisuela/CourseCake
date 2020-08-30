@@ -93,7 +93,14 @@ class UciScrapeRows:
                     self.row_contains_class = True
 
                     new_course = Course(course = self.current_course)
-                    self.courses[new_course.id] = new_course
+
+                    # check course was previously added
+                    if (self.courses.get(new_course.id) != None):
+                        # add new classes to the existing course
+                        self.courses[new_course.id].classes.extend(new_course.classes)
+                    else:
+                        # add a new course if it doesn't already exist
+                        self.courses[new_course.id] = new_course
 
                     self.current_course.classes.clear()
                     # scrape previous rows for the template course info
@@ -126,3 +133,8 @@ class UciScrapeRows:
             self.scrape_row(row)
 
             self.position += 1
+
+        # add the last list of classes from the last course
+        if len(self.current_course.classes) > 0:
+            new_course = Course(course = self.current_course)
+            self.courses[new_course.id] = new_course

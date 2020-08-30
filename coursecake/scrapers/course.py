@@ -30,6 +30,7 @@ class Course:
         # nullable in our db models
         self.classes = list()
 
+        self.prerequisites_str = ""
         self.restrictions = ""
         self.school = ""
 
