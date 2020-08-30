@@ -1,5 +1,5 @@
 ---
-title: RESTful API
+title: Web API
 ---
 ## [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
 Released /api/v1
