@@ -119,6 +119,7 @@ You’ll see output similar to this:
 donezo
 
 # Future features
-- More comprehensive university information on departments, course prerequisites, restricts, etc.
-- Prerequisite mapping to create a network of classes (along with a node graph GUI). Store using GraphQL
+- Seperation of the Course Schema into a smaller Course Schema and a Class Schema. A Class is an offering of a Course (watch me name things to avoid name collisions haha)
+- Implementing a GraphQL endpoint using Graphene.
+- Prerequisite mapping to create a network of classes (along with a node graph GUI) via Neo4j (probably in seperate repository).
 - IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS ty
