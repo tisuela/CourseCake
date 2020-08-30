@@ -19,7 +19,7 @@ def test_add_university():
     assert info["course-requisites"] == course_requisites
 
 def test_get_departments():
-    scraper = CourseScraper().getUciScraper()
+    scraper = CourseScraper().get_scraper("uci")
     departments = scraper.getDepartments()
     assert len(departments) > 5
 
