@@ -74,22 +74,10 @@ class CourseQuery:
     # these constants help clean the query from malicious requests
     # TODO: Fix departmentTitle
     VALID_PARAMETERS = [
-        "code",
-        "name",
+        "id",
         "title",
         "department",
-        "department_title"
-        "location",
-        "building",
-        "room",
-        "status",
-        "units",
-        "enrolled",
-        "waitlisted",
-        "requested",
-        "max",
-        "instructor",
-        "time",
+        "units"
     ]
 
     VALID_FILTERS = [
@@ -97,6 +85,10 @@ class CourseQuery:
         "equals",
         "not",
         "notlike"
+    ]
+
+    CASE_SENSITIVE_PARAMETERS = [
+        "id"
     ]
 
     def __init__(self, db: Session, university: str, args: dict = dict(), term_id: str = CURRENT_TERM_ID, offset: int = 0, limit: int = 500):
@@ -188,21 +180,22 @@ class CourseQuery:
             # parameter is defined before filter
             parameter = arg.split("[")[0].lower()
 
-            queryValues = [self.checkToInt(parameter, v.upper()) for v in self.args[arg].split(self.QUERY_DELIMITER)]
-
-            # filter is defined between brackets; [filter]
-            filter = ""
-
-            try:
-                filter = re.search(r"\[([A-Za-z0-9_]+)\]", arg).group(1).lower()
-            except AttributeError:
-                # catch error when no filter is specified
-                # when no filter is specified, filter is assumed to be equals; "="
-                pass
-
-
             # clean query
             if (parameter in self.VALID_PARAMETERS):
+                if parameter in self.CASE_SENSITIVE_PARAMETERS:
+                    queryValues = [self.checkToInt(parameter, v) for v in self.args[arg].split(self.QUERY_DELIMITER)]
+                else:
+                    queryValues = [self.checkToInt(parameter, v.upper()) for v in self.args[arg].split(self.QUERY_DELIMITER)]
+
+                # filter is defined between brackets; [filter]
+                filter = ""
+
+                try:
+                    filter = re.search(r"\[([A-Za-z0-9_]+)\]", arg).group(1).lower()
+                except AttributeError:
+                    # catch error when no filter is specified
+                    # when no filter is specified, filter is assumed to be equals; "="
+                    pass
 
                 # add filters
                 if (filter == "like"):
@@ -216,6 +209,8 @@ class CourseQuery:
 
                 elif (filter == "equals" or filter == ""):
                     self._addEqualsFilter(parameter, filter, queryValues)
+
+
 
 
 

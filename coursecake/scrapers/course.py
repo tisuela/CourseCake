@@ -22,13 +22,13 @@ class Course:
 
         self.department = None
 
-        ### Integers
 
-        self.units = None
 
         ### Optional Attributes ###
         # nullable in our db models
         self.classes = list()
+
+        self.units = -1
 
         self.prerequisites_str = ""
         self.restrictions = ""

@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 
 from ..scrapers.course import Course
+from ..scrapers.course_class import CourseClass
 from .sql import Base
 
 class University(Base):
@@ -49,17 +50,16 @@ class Course(Base):
     term_id = Column(String, primary_key=True, nullable = False)
     # TODO: Add Term
 
-    # Course code which is unique to the univerisity
+    # Course id which is unique to the univerisity
     # It is not necessarily unique to the database,
-    # Which is why university + code are primary keys
-    code = Column(String, primary_key=True, nullable = False, index=True)
+    # Which is why university + id are primary keys
+    id = Column(String, primary_key=True, nullable = False, index=True)
     title = Column(String, nullable = False)
     department = Column(String, nullable = False, index=True)
 
-    units = Column(Integer, nullable = False)
-
     # nullable fields
-
+    units = Column(Integer, nullable = False)
+    prerequisites_str = Column(String, nullable = False)
     department_title = Column(String, nullable = False)
     restrictions = Column(String, nullable = False)
     school = Column(String, nullable = False)
@@ -80,18 +80,20 @@ class Course(Base):
         '''
         self.university_name = university
         self.term_id = term
-        self.code = course.code
+        self.id = course.id
         self.title = course.title
         self.department = course.department
 
         self.units = course.units
+
+        self.prerequisites_str = course.prerequisites_str
         self.department_title = course.department_title
         self.restrictions = course.restrictions
         self.school = course.school
 
 
     def __repr__(self):
-        return f"{self.code} | {self.name} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"
+        return f"{self.id} | {self.units} | {self.term_id}\n"
 
 
 
@@ -127,12 +129,12 @@ class Class(Base):
     term_id = Column(String, primary_key=True, nullable = False)
     # TODO: Add Term
 
-    course_code = Column(String, ForeignKey("course.code"), nullable = False)
+    course_id = Column(String, ForeignKey("course.id"), nullable = False)
 
-    # Class code which is unique to the univerisity
+    # Class id which is unique to the univerisity
     # It is not necessarily unique to the database,
-    # Which is why university + code are primary keys
-    code = Column(String, primary_key=True, nullable = False, index=True)
+    # Which is why university + id are primary keys
+    id = Column(String, primary_key=True, nullable = False, index=True)
     department = Column(String, nullable = False, index=True)
     instructor = Column(String, nullable = False)
     time = Column(String, nullable = False)
@@ -157,38 +159,38 @@ class Class(Base):
     # relationships
     # prerequisites = relationship("Prerequisite", back_populates="courses")
     university = relationship("University", back_populates = "classes")
-    university = relationship("Course", back_populates = "classes")
+    course = relationship("Course", back_populates = "classes")
 
 
 
-    def __init__(self, class: Class, university: str, term: str):
+    def __init__(self, a_class: CourseClass, university: str, term: str):
         '''
         Courses uses a class objects
         See ../scraper/class.py
         '''
         self.university_name = university
         self.term_id = term
-        self.code = class.code
-        self.name = class.name
-        self.department = class.department
-        self.instructor = class.instructor
-        self.time = class.time
-        self.location = class.location
-        self.building = class.building
-        self.room = class.room
-        self.status = class.status
-        self.type = class.type
+        self.id = a_class.id
+        self.name = a_class.name
+        self.department = a_class.department
+        self.instructor = a_class.instructor
+        self.time = a_class.time
+        self.location = a_class.location
+        self.building = a_class.building
+        self.room = a_class.room
+        self.status = a_class.status
+        self.type = a_class.type
 
-        self.units = class.units
-        self.max = class.max
-        self.enrolled = class.enrolled
-        self.waitlisted = class.waitlisted
-        self.requested = class.requested
+        self.units = a_class.units
+        self.max = a_class.max
+        self.enrolled = a_class.enrolled
+        self.waitlisted = a_class.waitlisted
+        self.requested = a_class.requested
 
-        self.department_title = class.department_title
-        self.restrictions = class.restrictions
-        self.school = class.school
+        self.department_title = a_class.department_title
+        self.restrictions = a_class.restrictions
+        self.school = a_class.school
 
 
     def __repr__(self):
-        return f"{self.code} | {self.name} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"
+        return f"{self.id} | {self.name} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"
