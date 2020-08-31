@@ -5,4 +5,5 @@ class ScrapeRequisites:
         self.department_urls = list()
 
 
-    def __init_department_urls(self)
+    def __init_department_urls(self):
+        pass
