@@ -1,5 +1,5 @@
 class Prerequisite:
-    def __init__(self, type: courses: list, prerequisiteTo: str):
+    def __init__(self, type: str, courses: list, prerequisiteTo: str):
         # courses in this prereqs are either AND or OR
         self.type = type
 
