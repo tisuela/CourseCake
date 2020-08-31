@@ -108,11 +108,6 @@ class UciScrapeRows:
 
 
 
-
-
-
-
-
     def scrape_row(self, row):
         cells = row.findChildren(["th", "td"])
 
@@ -121,7 +116,6 @@ class UciScrapeRows:
 
         else:
             self.row_contains_class = False
-
 
 
 

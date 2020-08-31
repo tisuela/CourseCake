@@ -50,7 +50,6 @@ class UciScraper(Scraper):
         # list of department codes (str) for the queries
         self.deptCodes = list()
 
-
         # Uci's WebSoc requires that we identify ourselves (User-Agent)
         # The use of session will help for form submissions
         self.session = requests.Session()
@@ -149,7 +148,6 @@ class UciScraper(Scraper):
     def scrapePage(self, page) -> dict:
         # Get course table
         courses = dict()
-        classes = dict()
         soup = BeautifulSoup(page.content, "lxml")
 
         try:
@@ -161,9 +159,6 @@ class UciScraper(Scraper):
                 rowsScraper = UciScrapeRows(rows)
                 rowsScraper.scrape()
                 courses.update(rowsScraper.courses)
-
-
-
 
         except IndexError:
             # index error means no course list was in the page

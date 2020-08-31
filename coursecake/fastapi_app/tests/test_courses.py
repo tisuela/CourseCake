@@ -49,7 +49,7 @@ def test_heavy_search():
     assert len(response.json()) >= 5
 
 
-def test_basic_live_search():
+def atest_basic_live_search():
     response = client.get("/api/v1/courses/live-search/uci?department=compsci&badarg=harmful")
     assert response.status_code == 200
     assert len(response.json()) >= 50

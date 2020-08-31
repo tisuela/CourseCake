@@ -140,21 +140,37 @@ def test_bulk_add_courses(db):
     assert len(courses) == limit
 
 
-def test_bulk_merge_courses(db):
+def test_bulk_merge_courses_and_classes(db):
     '''
     Load testing for adding a course
     '''
     temp_course_id = course.id
-    limit = 900
+    temp_class_id = a_class.id
+    limit = 500
+    classes_per_course = 5
     course_list = list()
+    class_list = list()
     new_term_id = "2021-SUMMER-2"
 
+    # create courses and classes and insert courses
     for i in range(limit):
         new_course = Course(course.__dict__)
-        new_course.id = str(i) + temp_course_id
+        new_course.id = temp_course_id + str(i)
+
+        for j in range(classes_per_course):
+            new_class = CourseClass(course, a_class.__dict__)
+            new_class.id = temp_class_id + str(i) + str(j)
+            new_course.classes.append(new_class)
         course_list.append(new_course)
+
+    # extract classes from courses for bulk db insertion
+    for a_course in course_list:
+        class_list.extend(a_course.classes)
 
     crud.bulk_merge_courses(db, university.name, new_term_id, course_list)
     courses = crud.CourseQuery(db, university.name,  term_id = new_term_id, limit = limit).search()
-
+    crud.bulk_merge_classes(db, university.name, new_term_id, class_list)
     assert len(courses) == limit
+
+    added_classes = crud.ClassQuery(db, university.name,  term_id = new_term_id, limit = limit * classes_per_course).search()
+    assert len(added_classes) == limit * classes_per_course

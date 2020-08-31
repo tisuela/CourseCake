@@ -67,3 +67,29 @@ class Course(CourseBase):
     term_id: str = Field(..., example="FALL-2020-1")
     class Config:
         orm_mode = True
+
+
+
+class ClassBase(BaseModel):
+    '''
+    Used by live-search
+    '''
+    # primary keys
+    id: str
+
+    course_id: str
+    instructor: str
+
+
+    units: int = Field(..., example=4)
+
+
+class Class(ClassBase):
+    '''
+    All Course reads from the database carry more information
+    '''
+    # primary keys
+    university_name: str = Field(..., example="UCI")
+    term_id: str = Field(..., example="FALL-2020-1")
+    class Config:
+        orm_mode = True

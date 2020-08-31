@@ -85,7 +85,7 @@ def bulk_merge_courses(db: Session, university: str, term: str, courses: list):
 def bulk_merge_classes(db: Session, university: str, term: str, classes: list):
 
     for a_class in classes:
-        add_course(db, university.upper(), term.upper(), a_class, commit = False)
+        add_class(db, university.upper(), term.upper(), a_class, commit = False)
 
     db.commit()
 

@@ -1,6 +1,5 @@
 # contains all routes for the courses endpoint
 from typing import List, Optional
-from enum import Enum
 
 from fastapi import Depends, APIRouter, BackgroundTasks, Query, Request
 from sqlalchemy.orm import Session
@@ -11,7 +10,6 @@ from .. import schemas, structs
 from . import utils
 
 router = APIRouter()
-
 
 
 # dependency
@@ -31,7 +29,7 @@ async def all_courses(request: Request, offset: int = 0, limit: int = 50, db: Se
 
 
 
-@router.get("/search/{university}", response_model=List[schemas.Course])
+@router.get("/search/{university}", response_model=List[schemas.Class])
 @limiter.limit("20/second;60/minute;300/hour")
 async def search_courses(
     request: Request,
@@ -41,25 +39,15 @@ async def search_courses(
         title = "Term Code",
         description = "Search for courses in this term; YEAR-SEASON. Ex: Spring Semester = 2021-spring"
     ),
-    code: Optional[str] = Query(
+    id: Optional[str] = Query(
         None,
-        title = "Course code",
+        title = "Class id",
         description = "Unique within the term of a University"
     ),
-    name: Optional[str] = Query(
+    course_id: Optional[str] = Query(
         None,
-        title = "Course name",
+        title = "Course id",
         description = "The formal name of a course. Ex: course 101"
-    ),
-    title: Optional[str] = Query(
-        None,
-        title = "Course title",
-        description = "A more readable name of a course. Ex: Intro to course"
-    ),
-    department: Optional[str] = Query(
-        None,
-        title = "Department code",
-        description = "See your university's website for the code. Ex: COMPSCI"
     ),
     instructor: Optional[str] = Query(
         None,
@@ -118,8 +106,8 @@ async def search_courses(
     db: Session = Depends(get_db)
 
 ):
-    courses = crud.CourseQuery(db, university, request.query_params, term_id=term_id, offset=offset, limit=limit).search()
-    return courses
+    classes = crud.ClassQuery(db, university, request.query_params, term_id=term_id, offset=offset, limit=limit).search()
+    return classes
 
 
 # use CourseBase schema since live search is not as detailed
