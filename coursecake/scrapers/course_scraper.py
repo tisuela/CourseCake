@@ -1,18 +1,27 @@
 from .uci.uci_scraper import UciScraper
 from .course import Course
-
+from .scraper import Scraper
 import json
 
 class CourseScraper:
     '''
     All courses can be scraped from here
     '''
+    REGISTERED_SCRAPERS = {
+        "UCI": UciScraper
+    }
+
     def __init__(self):
 
         # Useful to construct other courses using the existing populated
         # attributes from this template
         # Ex: newCourse = Course(self.templateCourse.__dict__)
         self.templateCourse = Course()
+
+    def get_scraper(self, university: str) -> Scraper:
+        university = university.upper()
+
+        return self.REGISTERED_SCRAPERS[university]()
 
 
     def getUciScraper(self) -> UciScraper:
