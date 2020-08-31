@@ -3,7 +3,7 @@ from ..course import Course
 
 
 course = Course()
-course.id= "test 101"
+course.course_id= "test 101"
 course.title = "intro to course"
 course.department = "test"
 course.units = 4
@@ -17,7 +17,7 @@ def test_create_course():
     bad_course.title = "bas"
     assert not bad_course.is_valid_course()
     new_course = Course(course_dict = course.__dict__)
-    assert new_course.id == course.id
+    assert new_course.course_id == course.course_id
     assert new_course.is_valid_course()
 
 
@@ -27,7 +27,7 @@ def test_create_class():
     a_class = CourseClass(course)
     assert a_class.toInt("4") == 4
     class_id= "12345"
-    a_class.id = class_id
+    a_class.class_id = class_id
     a_class.type = "lecture"
     a_class.instructor = "Dr. Test"
     a_class.time = "time is an illusion"
@@ -42,5 +42,5 @@ def test_create_class():
     a_class.enrolled = 100
 
     assert a_class.isOpen()
-    assert a_class.course_id == course.id
-    assert a_class.id == class_id
+    assert a_class.course_id == course.course_id
+    assert a_class.class_id == class_id

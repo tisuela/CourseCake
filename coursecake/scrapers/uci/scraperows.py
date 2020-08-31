@@ -61,7 +61,7 @@ class UciScrapeRows:
 
                 if (course_name_title != None):
                     course_name = " ".join(course_name_title.find(text = True, recursive = False).strip().split())
-                    self.current_course.id = course_name.upper()
+                    self.current_course.course_id = course_name.upper()
                     self.current_course.title = course_name_title.find("b").text
 
                     # Department is the first word in course name
@@ -95,12 +95,12 @@ class UciScrapeRows:
                     new_course = Course(course = self.current_course)
 
                     # check course was previously added
-                    if (self.courses.get(new_course.id) != None):
+                    if (self.courses.get(new_course.course_id) != None):
                         # add new classes to the existing course
-                        self.courses[new_course.id].classes.extend(new_course.classes)
+                        self.courses[new_course.course_id].classes.extend(new_course.classes)
                     else:
                         # add a new course if it doesn't already exist
-                        self.courses[new_course.id] = new_course
+                        self.courses[new_course.course_id] = new_course
 
                     self.current_course.classes.clear()
                     # scrape previous rows for the template course info
@@ -131,4 +131,4 @@ class UciScrapeRows:
         # add the last list of classes from the last course
         if len(self.current_course.classes) > 0:
             new_course = Course(course = self.current_course)
-            self.courses[new_course.id] = new_course
+            self.courses[new_course.course_id] = new_course

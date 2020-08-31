@@ -100,7 +100,8 @@ class CourseQuery:
     # these constants help clean the query from malicious requests
     # TODO: Fix departmentTitle
     VALID_PARAMETERS = [
-        "id",
+        "course_id",
+        "class_id",
         "title",
         "department",
         "units"
@@ -114,7 +115,8 @@ class CourseQuery:
     ]
 
     CASE_SENSITIVE_PARAMETERS = [
-        "id"
+        "course_id",
+        "class_id",
     ]
 
     def __init__(self, db: Session, university: str, args: dict = dict(), term_id: str = CURRENT_TERM_ID, offset: int = 0, limit: int = 500):
@@ -257,8 +259,8 @@ class ClassQuery:
     # these constants help clean the query from malicious requests
     # TODO: Fix departmentTitle
     VALID_PARAMETERS = [
-        "id",
         "course_id",
+        "class_id",
         "location",
         "building",
         "room",
@@ -280,7 +282,8 @@ class ClassQuery:
     ]
 
     CASE_SENSITIVE_PARAMETERS = [
-        "id"
+        "course_id",
+        "class_id",
     ]
 
     def __init__(self, db: Session, university: str, args: dict = dict(), term_id: str = CURRENT_TERM_ID, offset: int = 0, limit: int = 500):

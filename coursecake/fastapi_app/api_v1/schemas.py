@@ -30,7 +30,7 @@ class CourseBase(BaseModel):
     Used by live-search
     '''
     # primary keys
-    id: str
+    course_id: str
 
     title: str
     department: str
@@ -75,7 +75,7 @@ class ClassBase(BaseModel):
     Used by live-search
     '''
     # primary keys
-    id: str
+    class_id: str
 
     course_id: str
     instructor: str

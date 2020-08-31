@@ -17,7 +17,7 @@ university = University("test1")
 term_id = "2020-FALL-1"
 
 course = Course()
-course.id = "test 101"
+course.course_id = "test 101"
 course.title = "intro to course"
 course.department = "test"
 course.units = 4
@@ -25,7 +25,7 @@ course.school = "School of Test"
 course.department_title = "Test ing"
 
 a_class = CourseClass(course)
-a_class.id = "123456"
+a_class.class_id = "123456"
 a_class.instructor = "Dr. Test"
 a_class.time = "time is an illusion"
 a_class.location = "Testing Hall 200"
@@ -59,8 +59,8 @@ def test_add_course(db):
     crud.add_course(db, university.name, term_id, course)
     # print(crud.CourseQuery(db, university.name, dict()).search()[0])
     # courseRow = crud.get_university(db, university.name.upper()).courses.filter(models.Course.__table__.c["id"].in_([course.id])).all()
-    assert len(crud.CourseQuery(db, university.name, {"id[equals]": course.id,
-                                                    "id[not]": course.id + "a",
+    assert len(crud.CourseQuery(db, university.name, {"id[equals]": course.course_id,
+                                                    "id[not]": course.course_id + "a",
                                                     "title[like]": course.title.upper(),
                                                     "school[notlike]": "exam"
                                                     }).search()) > 0
@@ -68,8 +68,8 @@ def test_add_course(db):
 def test_add_class(db):
     crud.add_class(db, university.name, term_id, a_class)
     # print(crud.ClassQuery(db, university.name, dict()).search()[0])
-    assert len(crud.ClassQuery(db, university.name, {"id[equals]": a_class.id,
-                                                    "id[not]": a_class.id + "a",
+    assert len(crud.ClassQuery(db, university.name, {"id[equals]": a_class.class_id,
+                                                    "id[not]": a_class.class_id + "a",
                                                     "instructor[like]": a_class.instructor.upper(),
                                                     "building[notlike]": "exam"
                                                     }).search()) > 0
@@ -79,8 +79,8 @@ def test_add_many_course_and_class(db):
     '''
     Load testing for adding a course
     '''
-    temp_course_id = course.id
-    temp_class_id = a_class.id
+    temp_course_id = course.course_id
+    temp_class_id = a_class.class_id
     limit = 90
     classes_per_course = 10
     courses = list()
@@ -90,11 +90,11 @@ def test_add_many_course_and_class(db):
     # create courses and classes and insert courses
     for i in range(limit):
         new_course = Course(course.__dict__)
-        new_course.id = temp_course_id + str(i)
+        new_course.course_id = temp_course_id + str(i)
 
         for j in range(classes_per_course):
             new_class = CourseClass(course, a_class.__dict__)
-            new_class.id = temp_class_id + str(i) + str(j)
+            new_class.class_id = temp_class_id + str(i) + str(j)
             new_course.classes.append(new_class)
         courses.append(new_course)
 
@@ -123,14 +123,14 @@ def test_bulk_add_courses(db):
     '''
     tests crud.bulk_add_course(db: Session)
     '''
-    temp_id = course.id
+    temp_id = course.course_id
     limit = 900
     course_list = list()
     new_term_id = "2021-SPRING-1"
 
     for i in range(limit):
         new_course = Course(course.__dict__)
-        new_course.id = str(i) + temp_id
+        new_course.course_id = str(i) + temp_id
         course_list.append(new_course)
 
     crud.bulk_add_courses(db, university.name, new_term_id, course_list)
@@ -143,8 +143,8 @@ def test_bulk_merge_courses_and_classes(db):
     '''
     Load testing for adding a course
     '''
-    temp_course_id = course.id
-    temp_class_id = a_class.id
+    temp_course_id = course.course_id
+    temp_class_id = a_class.class_id
     limit = 500
     classes_per_course = 5
     course_list = list()
@@ -154,11 +154,11 @@ def test_bulk_merge_courses_and_classes(db):
     # create courses and classes and insert courses
     for i in range(limit):
         new_course = Course(course.__dict__)
-        new_course.id = temp_course_id + str(i)
+        new_course.course_id = temp_course_id + str(i)
 
         for j in range(classes_per_course):
             new_class = CourseClass(course, a_class.__dict__)
-            new_class.id = temp_class_id + str(i) + str(j)
+            new_class.class_id = temp_class_id + str(i) + str(j)
             new_course.classes.append(new_class)
         course_list.append(new_course)
 

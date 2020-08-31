@@ -53,7 +53,7 @@ def testGetAllCourses():
             #print(course)
 
     for a_class in classes:
-        if a_class.id == "06000":
+        if a_class.class_id == "06000":
             class_exists = True
 
     assert len(courses) > 200

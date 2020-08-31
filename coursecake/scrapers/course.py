@@ -15,7 +15,7 @@ class Course:
         ### Strings
 
         # The formal name of the course which acts as an ID
-        self.id = None
+        self.course_id = None
 
         # The Title of the course; more human readable
         self.title = None
@@ -79,6 +79,6 @@ class Course:
     def __str__(self) -> str:
         return f'''Course:
         {self.title}
-        {self.id}
+        {self.course_id}
         {self.units}
         '''

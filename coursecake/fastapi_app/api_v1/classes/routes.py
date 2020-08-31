@@ -33,7 +33,7 @@ async def search_courses(
         title = "Term Code",
         description = "Search for courses in this term; YEAR-SEASON. Ex: Spring Semester = 2021-spring"
     ),
-    id: Optional[str] = Query(
+    class_id: Optional[str] = Query(
         None,
         title = "Class id",
         description = "Unique within the term of a University"

@@ -53,7 +53,7 @@ class Course(Base):
     # Course id which is unique to the univerisity
     # It is not necessarily unique to the database,
     # Which is why university + id are primary keys
-    id = Column(String, primary_key=True, nullable = False, index=True)
+    course_id = Column(String, primary_key=True, nullable = False, index=True)
     title = Column(String, nullable = False)
     department = Column(String, nullable = False, index=True)
 
@@ -80,7 +80,7 @@ class Course(Base):
         '''
         self.university_name = university
         self.term_id = term
-        self.id = course.id
+        self.course_id = course.course_id
         self.title = course.title
         self.department = course.department
 
@@ -93,10 +93,10 @@ class Course(Base):
 
 
     def __repr__(self):
-        return f"{self.id} | {self.units} | {self.term_id}\n"
+        return f"{self.course_id} | {self.units} | {self.term_id}\n"
 
 # for GraphQL
-Course.query = scoped_session(SessionLocal).query_property()
+# Course.query = scoped_session(SessionLocal).query_property()
 
 
 class Class(Base):
@@ -130,12 +130,12 @@ class Class(Base):
     term_id = Column(String, primary_key=True, nullable = False)
     # TODO: Add Term
 
-    course_id = Column(String, ForeignKey("course.id"), nullable = False)
+    course_id = Column(String, ForeignKey("course.course_id"), nullable = False)
 
     # Class id which is unique to the univerisity
     # It is not necessarily unique to the database,
     # Which is why university + id are primary keys
-    id = Column(String, primary_key=True, nullable = False, index=True)
+    class_id = Column(String, primary_key=True, nullable = False, index=True)
     instructor = Column(String, nullable = False)
     time = Column(String, nullable = False)
     location = Column(String, nullable = False)
@@ -168,7 +168,7 @@ class Class(Base):
         '''
         self.university_name = university
         self.term_id = term
-        self.id = a_class.id
+        self.class_id = a_class.class_id
         self.course_id = a_class.course_id
 
         self.instructor = a_class.instructor
@@ -188,9 +188,9 @@ class Class(Base):
 
 
     def __repr__(self):
-        return f"{self.id} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"
+        return f"{self.class_id} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"
 
 
 
 # for GraphQL
-Class.query = scoped_session(SessionLocal).query_property()
+# Class.query = scoped_session(SessionLocal).query_property()
