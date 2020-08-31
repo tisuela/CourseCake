@@ -121,7 +121,7 @@ async def search_courses(
     courses = crud.CourseQuery(db, university, request.query_params, term_id=term_id, offset=offset, limit=limit).search()
     return courses
 
-
+'''
 # use CourseBase schema since live search is not as detailed
 @router.get("/live-search/{university}", response_model=List[schemas.CourseBase])
 @limiter.limit("5/second;10/minute;30/hour")
@@ -174,5 +174,6 @@ async def search_courses(
     )
 
 ):
-    courses = utils.handleUciLiveSearch(request.query_params, term_id=term_id)
+    courses = utils.uci_live_search_courses(request.query_params, term_id=term_id)
     return courses
+'''

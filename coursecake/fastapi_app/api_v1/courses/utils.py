@@ -1,6 +1,6 @@
 from ....scrapers.course_scraper import CourseScraper
 
-def handleUciLiveSearch(args: dict, term_id: str = "FAll-2020-1") -> dict:
+def uci_live_search_courses(args: dict, term_id: str = "FAll-2020-1") -> dict:
     '''
     Gets the latest (hence live) courses by directly
     access the Uci course schedule (uses scraper)

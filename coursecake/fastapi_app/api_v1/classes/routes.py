@@ -21,12 +21,6 @@ def get_db():
         db.close()
 
 
-@router.get("/all", response_model=List[schemas.Course])
-@limiter.limit("5/second;60/minute;300/hour")
-async def all_courses(request: Request, offset: int = 0, limit: int = 50, db: Session = Depends(get_db)):
-    courses = crud.get_courses(db, offset = offset, limit = limit)
-    return courses
-
 
 
 @router.get("/search/{university}", response_model=List[schemas.Class])
@@ -108,59 +102,3 @@ async def search_courses(
 ):
     classes = crud.ClassQuery(db, university, request.query_params, term_id=term_id, offset=offset, limit=limit).search()
     return classes
-
-
-# use CourseBase schema since live search is not as detailed
-@router.get("/live-search/{university}", response_model=List[schemas.CourseBase])
-@limiter.limit("5/second;10/minute;30/hour")
-async def search_courses(
-    request: Request,
-    university: structs.UniversityName,
-    term_id: str = Query(
-        "2020-fall",
-        title = "Term Code",
-        description = "Search for courses in this term; YEAR-SEASON. Ex: Spring Semester = 2021-spring"
-    ),
-    code: Optional[str] = Query(
-        None,
-        title = "Course code",
-        description = "Unique within the term of a University"
-    ),
-    title: Optional[str] = Query(
-        None,
-        title = "Course title",
-        description = "A more readable name of a course. Ex: Intro to course"
-    ),
-    department: Optional[str] = Query(
-        None,
-        title = "Department code",
-        description = "See your university's website for the code. Ex: COMPSCI"
-    ),
-    units: Optional[str] = Query(
-        None,
-        title = "Units",
-    ),
-    instructor: Optional[str] = Query(
-        None,
-        title = "Instructor",
-        description = "The instructor teaching the course. Some courses have multiple instructors"
-    ),
-    breadth: Optional[str] = Query(
-        None,
-        title = "Breadth / GE Requirement",
-        description = "The GE Requirement of the Course -- see your University website. Ex:GE-2."
-    ),
-    starttime: Optional[str] = Query(
-        None,
-        title = "Start Time",
-        description = "Daily course instruction must begin after this time"
-    ),
-    endtime: Optional[str] = Query(
-        None,
-        title = "End Time",
-        description = "Daily course instruction must end before this time"
-    )
-
-):
-    courses = utils.handleUciLiveSearch(request.query_params, term_id=term_id)
-    return courses
