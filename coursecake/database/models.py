@@ -96,7 +96,7 @@ class Course(Base):
         return f"{self.course_id} | {self.units} | {self.term_id}\n"
 
 # for GraphQL
-# Course.query = scoped_session(SessionLocal).query_property()
+Course.query = scoped_session(SessionLocal).query_property()
 
 
 class Class(Base):
@@ -193,4 +193,4 @@ class Class(Base):
 
 
 # for GraphQL
-# Class.query = scoped_session(SessionLocal).query_property()
+Class.query = scoped_session(SessionLocal).query_property()
