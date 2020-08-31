@@ -48,6 +48,11 @@ async def search_courses(
         title = "Instructor name",
         description = "Instructor of course. Some courses have multiple instructors"
     ),
+    time: Optional[str] = Query(
+        None,
+        title = "Time",
+        description = "Ex: MWF 8am-9:30am"
+    ),
     location: Optional[str] = Query(
         None,
         title = "Location",

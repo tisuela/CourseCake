@@ -41,15 +41,10 @@ async def search_courses(
         title = "Term Code",
         description = "Search for courses in this term; YEAR-SEASON. Ex: Spring Semester = 2021-spring"
     ),
-    code: Optional[str] = Query(
+    id: Optional[str] = Query(
         None,
         title = "Course code",
         description = "Unique within the term of a University"
-    ),
-    name: Optional[str] = Query(
-        None,
-        title = "Course name",
-        description = "The formal name of a course. Ex: course 101"
     ),
     title: Optional[str] = Query(
         None,
@@ -61,51 +56,25 @@ async def search_courses(
         title = "Department code",
         description = "See your university's website for the code. Ex: COMPSCI"
     ),
-    instructor: Optional[str] = Query(
-        None,
-        title = "Instructor name",
-        description = "Instructor of course. Some courses have multiple instructors"
-    ),
-    location: Optional[str] = Query(
-        None,
-        title = "Location",
-        description = "Includes building and room info"
-    ),
-    building: Optional[str] = Query(
-        None,
-        title = "Building",
-        description = "Unique within university"
-    ),
-    room: Optional[str] = Query(
-        None,
-        title = "Room",
-        description = "Unique within building"
-    ),
-    status: Optional[str] = Query(
-        None,
-        title = "Status",
-        description = "OPEN / FULL / CLOSED / etc..."
-    ),
     units: Optional[int] = Query(
         None,
         title = "Units",
         description = "Some (few) courses have variable units. The highest possible units in a course is shown."
     ),
-    enrolled: Optional[int] = Query(
+    prerequistes_str: Optional[str] = Query(
         None,
-        title = "Students Enrolled",
+        title = "Prerequisites String",
+        description = "A String containing a course's prerequisites"
     ),
-    waitlisted: Optional[int] = Query(
+    department_title: Optional[str] = Query(
         None,
-        title = "Students Waitlisted",
+        title = "Department Title",
+        description = "Human-friendly Department name. Ex: Humanities"
     ),
-    requested: Optional[int] = Query(
+    school: Optional[str] = Query(
         None,
-        title = "Students that have Requested",
-    ),
-    max: Optional[int] = Query(
-        None,
-        title = "Maximum students",
+        title = "School",
+        description = "Ex: Donald Bren School of Information..."
     ),
     offset: Optional[int] = Query(
         0,

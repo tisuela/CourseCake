@@ -151,8 +151,6 @@ class Class(Base):
 
     # nullable fields
 
-    restrictions = Column(String, nullable = True)
-
     updated = Column(DateTime, default=datetime.utcnow)
 
     # relationships

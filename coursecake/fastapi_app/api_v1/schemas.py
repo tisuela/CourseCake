@@ -39,10 +39,10 @@ class CourseBase(BaseModel):
     units: int = Field(..., example=4)
 
     # optional
+    prerequisites_str: str
     department_title: str
     restrictions: str
     school: str
-
 
 
 
@@ -79,9 +79,31 @@ class ClassBase(BaseModel):
 
     course_id: str
     instructor: str
-
+    time: str
+    location: str
+    building: str
+    room: str
+    status: str
+    type: str
 
     units: int = Field(..., example=4)
+    max: int
+    enrolled: int
+    waitlisted: int
+    requested: int
+
+
+
+class ClassCreate(ClassBase):
+    '''
+    All Course reads from the database carry more information
+    '''
+    # primary keys
+    university_name: str = Field(..., example="UCI")
+    term_id: str = Field(..., example="FALL-2020-1")
+    updated: datetime
+    class Config:
+        orm_mode = True
 
 
 class Class(ClassBase):
@@ -91,5 +113,6 @@ class Class(ClassBase):
     # primary keys
     university_name: str = Field(..., example="UCI")
     term_id: str = Field(..., example="FALL-2020-1")
+    updated: datetime
     class Config:
         orm_mode = True
