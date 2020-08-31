@@ -38,7 +38,6 @@ a_class.enrolled = 100
 
 
 
-
 @pytest.fixture(scope="module")
 def db():
     models.Base.metadata.drop_all(bind=engine)

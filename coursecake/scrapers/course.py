@@ -56,7 +56,7 @@ class Course:
             if key != "classes":
                 self.__dict__[key] = course_dict[key]
             else:
-                "CLASSES!"
+                pass
 
 
     def is_valid_course(self) -> bool:
@@ -66,13 +66,6 @@ class Course:
 
         return True
 
-
-
-    def isOpen(self) -> bool:
-        '''
-        Checks if course is open for registration
-        '''
-        return (self.status.lower().strip() == "open")
 
 
     def toInt(self, s: str) -> int:

@@ -60,9 +60,6 @@ class CourseClass:
         self.__dict__.update(class_dict)
 
 
-
-
-
     def isOpen(self) -> bool:
         '''
         Checks if course is open for registration
