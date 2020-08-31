@@ -31,29 +31,27 @@ def test_all(db):
     assert len(response.json()) >= 50
 
 
-def test_basic_search():
+def test_basic_course_search():
     response = client.get("/api/v1/courses/search/uci")
     assert response.status_code == 200
     assert len(response.json()) >= 50
 
 
-def test_medium_search():
+def test_medium_course_search():
     response = client.get("/api/v1/courses/search/uci?department=art")
     assert response.status_code == 200
     assert len(response.json()) >= 10
 
 
-def test_heavy_search():
-    response = client.get("/api/v1/courses/search/uci?department[like]=co&professor[ilike]=pattis&units[not]=8")
+def test_heavy_course_search():
+    response = client.get("/api/v1/courses/search/uci?department[like]=co&school[notlike]=bren&units[not]=8")
     assert response.status_code == 200
     assert len(response.json()) >= 5
 
-
-def atest_basic_live_search():
-    response = client.get("/api/v1/courses/live-search/uci?department=compsci&badarg=harmful")
+def test_heavy_class_search():
+    response = client.get("/api/v1/courses/search/uci?time[like]=W&instructor[notlike]=pattis&units[not]=8")
     assert response.status_code == 200
-    assert len(response.json()) >= 50
-
+    assert len(response.json()) >= 5
 
 def test_upload_all():
     response = client.post("/api/v1/admin/update/all?token=bad")
