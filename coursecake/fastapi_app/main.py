@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from starlette.requests import Request
+from starlette.graphql import GraphQLApp
+import graphene
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
@@ -7,8 +9,8 @@ from ..database import crud, models, sql
 from .api_v1.courses import routes as v1_courses_routes
 from .api_v1.classes import routes as v1_classes_routes
 from .api_v1.admin import routes as v1_admin_routes
+from .graphql import schemas as graphql_schemas
 from .limiter import limiter
-
 
 models.Base.metadata.create_all(bind=sql.engine)
 
@@ -33,7 +35,7 @@ app = FastAPI(
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-
+app.add_route("/graphql", GraphQLApp(schema = graphene.Schema(query = graphql_schemas.Query)))
 
 @app.get("/hello")
 async def hello(request: Request):

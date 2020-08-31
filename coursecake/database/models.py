@@ -1,11 +1,11 @@
 from datetime import datetime
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, scoped_session
 
 
 from ..scrapers.course import Course
 from ..scrapers.course_class import CourseClass
-from .sql import Base
+from .sql import Base, SessionLocal
 
 class University(Base):
     '''
@@ -95,7 +95,8 @@ class Course(Base):
     def __repr__(self):
         return f"{self.id} | {self.units} | {self.term_id}\n"
 
-
+# for GraphQL
+Course.query = scoped_session(SessionLocal).query_property()
 
 
 class Class(Base):
@@ -188,3 +189,8 @@ class Class(Base):
 
     def __repr__(self):
         return f"{self.id} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"
+
+
+
+# for GraphQL
+Class.query = scoped_session(SessionLocal).query_property()
