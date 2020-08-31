@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship, scoped_session
 from ..scrapers.course import Course
 from ..scrapers.course_class import CourseClass
 from .sql import Base, SessionLocal
-
+# TODO: RENAME IDs TO NOT BE IDS
 class University(Base):
     '''
     Holds redundant information, but might?? aid in future queries
