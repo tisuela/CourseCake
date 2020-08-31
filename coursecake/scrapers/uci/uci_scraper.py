@@ -50,7 +50,6 @@ class UciScraper(Scraper):
         # list of department codes (str) for the queries
         self.deptCodes = list()
 
-
         # Uci's WebSoc requires that we identify ourselves (User-Agent)
         # The use of session will help for form submissions
         self.session = requests.Session()
@@ -117,6 +116,33 @@ class UciScraper(Scraper):
 
         return courses
 
+    def merge_courses(self, src: dict, target: dict) -> dict:
+        '''
+        It's possible that a course's classes can be spread out between
+        two pages when iterating over the courses, ending up in duplicate
+        keys and lost information
+
+        this method merges two course dicts to find duplicate keys and merge
+        their class lists to ensure no information is lost
+
+        target is the dict where we want the values to be added/merged to
+
+        src contains the new values u want to add
+
+        This "merges" the information into the newer dict; src.
+        It returns the new dict, which u then want to ADD to the target dict.
+        SO basically, this doesn't do all the work
+        '''
+
+        target_keys = set(target.keys())
+
+        for src_key in src:
+            if src_key in target_keys:
+                src[src_key].classes.extend(target[src_key].classes)
+
+
+        return src
+
 
 
     def scrapePage(self, page) -> dict:
@@ -133,9 +159,6 @@ class UciScraper(Scraper):
                 rowsScraper = UciScrapeRows(rows)
                 rowsScraper.scrape()
                 courses.update(rowsScraper.courses)
-
-
-
 
         except IndexError:
             # index error means no course list was in the page
@@ -172,7 +195,7 @@ class UciScraper(Scraper):
             courseCodes = f"{lowerBound}-{upperBound}"
             print("UciScraper -- getCoursesByCourseCodes --", "scraping", courseCodes)
 
-            courses.update(self.getCourseCodeCourses(courseCodes))
+            courses.update(self.merge_courses(self.getCourseCodeCourses(courseCodes), courses))
 
             lowerBound = upperBound + 1
             upperBound += increment

@@ -19,7 +19,7 @@ def test_add_university():
     assert info["course-requisites"] == course_requisites
 
 def test_get_departments():
-    scraper = CourseScraper().getUciScraper()
+    scraper = CourseScraper().get_scraper("uci")
     departments = scraper.getDepartments()
     assert len(departments) > 5
 
@@ -38,5 +38,25 @@ def testGetCoursesCode():
 def testGetAllCourses():
     scraper = CourseScraper().getUciScraper()
     courses = scraper.scrape(testing = True)
+    classes = list()
 
-    assert len(courses) > 1000
+    classes_are_collected = False
+    class_exists = False
+
+    for course in scraper.courses.values():
+        classes.extend(course.classes)
+        if len(course.classes) > 7:
+            classes_are_collected = True
+
+            #for a_class in course.classes:
+            #    print(a_class)
+            #print(course)
+
+    for a_class in classes:
+        if a_class.class_id == "06000":
+            class_exists = True
+
+    assert len(courses) > 200
+    assert classes_are_collected
+    assert class_exists
+    assert len(classes) > 1000
