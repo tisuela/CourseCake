@@ -7,3 +7,4 @@ The `coursecake.database` package uses `sqlalchemy` to insert, update, and query
 
 ## Upload courses
 `coursecake.database` uses `coursecake.scrapers` to scrape courses for insertion into the database.
+d
