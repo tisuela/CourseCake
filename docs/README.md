@@ -15,7 +15,7 @@ All of the latest scraped data is stored in a local database, which avoids conge
 
 Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
 
-## What is a Course?
+## What is a Course? 
 Here is an example response using one of our `courses` endpoints. Full documentation available [here](http://docs.coursecake.tisuela.com/RESTful-API).
 The response is a dictionary containing a list of `course` objects. The schema of a `course` is shown in this example.
 
