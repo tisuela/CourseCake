@@ -1,10 +1,16 @@
 ---
-title: Web API
+title: REST API
 ---
 ## [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
-Released /api/v1
-With the new release, you can [try out our API](http://coursecake.tisuela.com/api/v1) or look at comprehensive [documentation](http://coursecake.tisuela.com/api/v1) [here](http://coursecake.tisuela.com/api/v1)
+You can check out CourseCake online! [Try out our REST API](http://coursecake.tisuela.com/api/v1) or look at comprehensive [documentation](http://coursecake.tisuela.com/api/v1) [here](http://coursecake.tisuela.com/api/v1)
 
+
+## GraphQL
+[coursecake.tisuela.com/api/graphql](http://coursecake.tisuela.com/api/graphql) is another Web API endpoint (it is not RESTful) for GraphQL.
+
+[GraphQL](https://graphql.org/) is a query language for APIs. It allows for more dynamic, specific queries, helping CourseCake give you the information you need. However, the kind of requests you will have to make are more complex. You can see our GraphQL Schema documentation and try it out live on our [GraphiQL browser](http://coursecake.tisuela.com/api/graphql).  
+
+New to GraphQL? Learn more on their website: https://graphql.org/
 
 ## `Course` vs `Class` -- What's the Difference?
 A `Course` is a unit of teaching that lasts a term.

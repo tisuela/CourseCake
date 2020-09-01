@@ -42,7 +42,7 @@ schema = graphene.Schema(query = graphql_schemas.Query)
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-app.add_route("/graphql", GraphQLApp(schema = schema))
+app.add_route("/api/graphql", GraphQLApp(schema = schema))
 
 @app.get("/hello")
 async def hello(request: Request):
