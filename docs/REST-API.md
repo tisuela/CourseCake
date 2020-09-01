@@ -6,7 +6,7 @@ You can check out CourseCake online! [Try out our REST API](http://coursecake.ti
 
 
 ## GraphQL
-[coursecake.tisuela.com/api/graphql](http://coursecake.tisuela.com/api/graphql) is another Web API endpoint (it is not RESTful) for GraphQL.
+[coursecake.tisuela.com/api/graphql](http://coursecake.tisuela.com/api/graphql) is another Web API endpoint (it is not RESTful) for queries via GraphQL.
 
 [GraphQL](https://graphql.org/) is a query language for APIs. It allows for more dynamic, specific queries, helping CourseCake give you the information you need. However, the kind of requests you will have to make are more complex. You can see our GraphQL Schema documentation and try it out live on our [GraphiQL browser](http://coursecake.tisuela.com/api/graphql).  
 
