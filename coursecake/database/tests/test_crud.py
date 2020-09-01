@@ -59,8 +59,8 @@ def test_add_course(db):
     crud.add_course(db, university.name, term_id, course)
     # print(crud.CourseQuery(db, university.name, dict()).search()[0])
     # courseRow = crud.get_university(db, university.name.upper()).courses.filter(models.Course.__table__.c["id"].in_([course.id])).all()
-    assert len(crud.CourseQuery(db, university.name, {"id[equals]": course.course_id,
-                                                    "id[not]": course.course_id + "a",
+    assert len(crud.CourseQuery(db, university.name, {"course_id[equals]": course.course_id,
+                                                    "course_id[not]": course.course_id + "a",
                                                     "title[like]": course.title.upper(),
                                                     "school[notlike]": "exam"
                                                     }).search()) > 0
@@ -68,8 +68,8 @@ def test_add_course(db):
 def test_add_class(db):
     crud.add_class(db, university.name, term_id, a_class)
     # print(crud.ClassQuery(db, university.name, dict()).search()[0])
-    assert len(crud.ClassQuery(db, university.name, {"id[equals]": a_class.class_id,
-                                                    "id[not]": a_class.class_id + "a",
+    assert len(crud.ClassQuery(db, university.name, {"class_id[equals]": a_class.class_id,
+                                                    "class_id[not]": a_class.class_id + "a",
                                                     "instructor[like]": a_class.instructor.upper(),
                                                     "building[notlike]": "exam"
                                                     }).search()) > 0
