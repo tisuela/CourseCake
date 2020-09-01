@@ -2,7 +2,7 @@
 ![Build](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master)
 
 There are three main features CourseCake offers that make university course information more "edible" for developers:
-- Web API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/RESTful-API)
+- Web API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/REST-API)
 - Database package - [docs](http://docs.coursecake.tisuela.com/Database)
 - Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
@@ -15,45 +15,16 @@ All of the latest scraped data is stored in a local database, which avoids conge
 
 Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
 
-## What is a Course? 
-Here is an example response using one of our `courses` endpoints. Full documentation available [here](http://docs.coursecake.tisuela.com/RESTful-API).
-The response is a dictionary containing a list of `course` objects. The schema of a `course` is shown in this example.
+## `Course` vs `Class` -- What's the Difference?
+A `Course` is a unit of teaching that lasts a term.
 
+A `Class` is an offering of a `Course`. This means a `Class` has information for the purpose of enrollment and meaning, such as  instructor, meeting times, location, and status (open or closed). A `Course` has many `classes`, however each `Class` belongs to exactly one `Course`.
 
-```
-{
-  "courses": [
-    {
-      "building": "string",
-      "code": "string",
-      "department": "string",
-      "departmentTitle": "string",
-      "enrolled": 0,
-      "instructor": "string",
-      "location": "string",
-      "max": 0,
-      "name": "string",
-      "requested": 0,
-      "restrictions": "string",
-      "room": "string",
-      "school": "string",
-      "status": "string",
-      "time": "string",
-      "title": "string",
-      "type": "string",
-      "units": 0,
-      "updated": "datetime: string,null",
-      "waitlisted": 0
-    }
-  ]
-}
-```
-
-
+See more about `Course` and `Class`, such as their schemas, in the documentation below
 
 # Documentation
 
-[RESTful API ](http://docs.coursecake.tisuela.com/RESTful-API)
+[RESTful API ](http://docs.coursecake.tisuela.com/REST-API)
 
 [Database](http://docs.coursecake.tisuela.com/Database)
 
