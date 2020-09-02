@@ -104,7 +104,10 @@ class CourseQuery:
         "class_id",
         "title",
         "department",
-        "units"
+        "department_title",
+        "units",
+        "school",
+        "restrictions"
     ]
 
     VALID_FILTERS = [

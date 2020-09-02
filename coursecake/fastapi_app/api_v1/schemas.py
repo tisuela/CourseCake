@@ -65,6 +65,7 @@ class Course(CourseBase):
     # primary keys
     university_name: str = Field(..., example="UCI")
     term_id: str = Field(..., example="FALL-2020-1")
+    updated: datetime
     class Config:
         orm_mode = True
 
