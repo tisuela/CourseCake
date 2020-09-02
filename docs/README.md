@@ -95,4 +95,4 @@ donezo
 - Prerequisite mapping to create a network of classes (along with a node graph GUI) via Neo4j (probably in seperate repository).
 - IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS ty
 
-[![HitCount](http://hits.dwyl.com/nananananate/CourseCake.svg)](http://hits.dwyl.com/nananananate/CourseCake) [![GitHub license](https://img.shields.io/github/license/nananananate/CourseCake.svg)](https://github.com/nananananate/CourseCake/blob/master/docs/LICENSE)
+[![HitCount](http://hits.dwyl.com/nananananate/CourseCake.svg)](http://hits.dwyl.com/nananananate/CourseCake) [![GitHub license](https://img.shields.io/github/license/nananananate/CourseCake.svg)](https://github.com/nananananate/CourseCake/blob/master/LICENSE)
