@@ -1,5 +1,5 @@
 # [CourseCake](http://docs.coursecake.tisuela.com/)
-![Build](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master)
+![Build](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master) [![Website coursecake.tisuela.com](https://img.shields.io/website?up_color=success&up_message=up&url=https%3A%2F%2Fcoursecake.tisuela.com)](https://coursecake.tisuela.com/) ![last commit](https://img.shields.io/github/last-commit/nananananate/CourseCake)
 
 There are three main features CourseCake offers that make university course information more "edible" for developers:
 - Web API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/REST-API)
@@ -94,3 +94,5 @@ donezo
 - Implementing a GraphQL endpoint using Graphene.
 - Prerequisite mapping to create a network of classes (along with a node graph GUI) via Neo4j (probably in seperate repository).
 - IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS ty
+
+[![HitCount](http://hits.dwyl.com/nananananate/CourseCake.svg)](http://hits.dwyl.com/nananananate/CourseCake) [![GitHub license](https://img.shields.io/github/license/nananananate/CourseCake.svg)](https://github.com/nananananate/CourseCake/blob/master/LICENSE)
