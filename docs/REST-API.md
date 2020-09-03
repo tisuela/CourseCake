@@ -157,14 +157,14 @@ import requests
 url = "http://coursecake.tisuela.com/api/v1/courses/search/uci"    
 
 # search parameters for the GET request
-searchParams = {
+search_params = {
     "department[like]": "compsci",
-    "instructor[not]": "badprof",
+    "title[not]": "intro to bad course",
     "units": "4"
 }
 
 # send request
-response = requests.get(url, params=searchParams)
+response = requests.get(url, params=search_params)
 
 # view body of response
 print(response.text)
