@@ -7,7 +7,3 @@ There are three main features CourseCake offers that make university course info
 - Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
 CourseCake aims to create an API to access course data, where college course information is unified by our schemas. By making course data easier to responsibly access and more "edible" for developers, we hope CourseCake gives a smooth approach to build useful tools for students.
-
-# NEWS
-## WE ARE NOW ONLINE
-#### REST API endpoints accessible from [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
