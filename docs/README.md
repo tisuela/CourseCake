@@ -1,19 +1,19 @@
 # [CourseCake](http://docs.coursecake.tisuela.com/)
-![Build](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master) [![Website coursecake.tisuela.com](https://img.shields.io/website?up_color=success&up_message=up&url=https%3A%2F%2Fcoursecake.tisuela.com)](https://coursecake.tisuela.com/) ![last commit](https://img.shields.io/github/last-commit/nananananate/CourseCake)
+![Build](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master)  [![Website coursecake.tisuela.com](https://img.shields.io/website?label=Web%20API&up_color=success&up_message=up&url=https%3A%2F%2Fcoursecake.tisuela.com)](https://coursecake.tisuela.com/) ![last commit](https://img.shields.io/github/last-commit/nananananate/CourseCake) ![commits activity](https://img.shields.io/github/commit-activity/m/nananananate/CourseCake)
 
 There are three main features CourseCake offers that make university course information more "edible" for developers:
-- Web API [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/REST-API)
+- Web API (REST + GraphQL) [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/REST-API)
 - Database package - [docs](http://docs.coursecake.tisuela.com/Database)
 - Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
-Courcake aims to create an API to access course data, where college course information is unified by our schemas. By making course data easier to responsibly access and more "edible" for developers, we hope CourseCake gives a smooth approach to build useful tools for students.
+CourseCake aims to create an API to access course data, where college course information is unified by our schemas. By making course data easier to responsibly access and more "edible" for developers, we hope CourseCake gives a smooth approach to build useful tools for students.
 
 ## UC Irvine -- Zot your courses easier and responsibly
 Currently the only supported school in CourseCake, the motivation of CourseCake is to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
 
 All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and allows successful requests even when WebSoc is down.
 
-Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper wesbites.
+Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper websites.
 
 ## `Course` vs `Class` -- What's the Difference?
 A `Course` is a unit of teaching that lasts a term.
@@ -34,7 +34,10 @@ See more about `Course` and `Class`, such as their schemas, in the documentation
 ## Installation
 
 #### Clone repository
-`git clone https://github.com/nananananate/CourseScraper`
+```
+git clone https://github.com/nananananate/CourseCake
+cd CourseCake
+```
 
 #### Create Python virtual environment
 
@@ -48,7 +51,7 @@ On Windows:
 The second argument is the location to create the virtual environment. Generally, you can just create this in your project and call it env.
 
 
-#### Activate virtual encironment
+#### Activate virtual environment
 On macOS and Linux:
 `source env/bin/activate`
 
