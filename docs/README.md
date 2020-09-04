@@ -1,4 +1,4 @@
-# [CourseCake](http://docs.coursecake.tisuela.com/)
+# [![CourseCake](https://github.com/nananananate/CourseCake/blob/master/docs/CourseCake.png?raw=true)](https://docs.coursecake.tisuela.com/)
 ![Build](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master)  [![Website coursecake.tisuela.com](https://img.shields.io/website?label=Web%20API&up_color=success&up_message=up&url=https%3A%2F%2Fcoursecake.tisuela.com)](https://coursecake.tisuela.com/) ![last commit](https://img.shields.io/github/last-commit/nananananate/CourseCake) ![commits activity](https://img.shields.io/github/commit-activity/m/nananananate/CourseCake)
 
 There are three main features CourseCake offers that make university course information more "edible" for developers:
