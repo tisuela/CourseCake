@@ -16,19 +16,19 @@ All of the latest scraped data is stored in a local database, which avoids conge
 Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper websites.
 
 ## 📚 Course vs 📝 Class -- What's the Difference?
-A `Course` is a unit of teaching that lasts a term.
+📚 A `Course` is a unit of teaching that lasts a term.
 
-A `Class` is an offering of a `Course`. This means a `Class` has information for the purpose of enrollment and meaning, such as  instructor, meeting times, location, and status (open or closed). A `Course` has many `classes`, however each `Class` belongs to exactly one `Course`.
+📝 A `Class` is an offering of a `Course`. This means a `Class` has information for the purpose of enrollment and meaning, such as  instructor, meeting times, location, and status (open or closed). A `Course` has many `classes`, however each `Class` belongs to exactly one `Course`.
 
 See more about `Course` and `Class`, such as their schemas, in the documentation below ⬇
 
 # Documentation
 
-[Web API](http://docs.coursecake.tisuela.com/REST-API)
+[🌐 Web API](http://docs.coursecake.tisuela.com/REST-API)
 
-[Database](http://docs.coursecake.tisuela.com/Database)
+[💾 Database](http://docs.coursecake.tisuela.com/Database)
 
-[Scrapers](http://docs.coursecake.tisuela.com/Scrapers)
+[🔍 Scrapers](http://docs.coursecake.tisuela.com/Scrapers)
 
 
 ## Installation
