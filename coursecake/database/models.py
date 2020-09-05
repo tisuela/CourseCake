@@ -3,7 +3,7 @@ from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship, scoped_session
 
 
-from ..scrapers.course import Course
+from ..scrapers.course import Course as ClsCourse
 from ..scrapers.course_class import CourseClass
 from .sql import Base, SessionLocal
 # TODO: RENAME IDs TO NOT BE IDS
@@ -73,7 +73,7 @@ class Course(Base):
 
 
 
-    def __init__(self, course: Course, university: str, term: str):
+    def __init__(self, course: ClsCourse, university: str, term: str):
         '''
         Courses uses a course objects
         See ../scraper/course.py
