@@ -1,8 +1,10 @@
+import requests
+from bs4 import BeautifulSoup
+
 from ..scraper import Scraper
 from ..course import Course
 from .scraperows import UciScrapeRows
-from bs4 import BeautifulSoup
-import requests
+
 
 
 
