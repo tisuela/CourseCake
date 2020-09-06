@@ -24,23 +24,25 @@ class CourseClass:
 
 
         self.instructor = None
+        self.days = None
         self.time = None
 
         # Full location string, with building  + room
         self.location = None
         self.building = None
         self.room = None
-        self.status = None
 
-        ### Integers
 
-        self.units = None
+
+
 
         ### Optional Attributes ###
         # not necessarily nullable in our db models
 
         # time of final
         self.final = ""
+        self.units = -1
+        self.status = "UNKNOWN"
 
         self.max = -1
         self.enrolled = -1
