@@ -58,7 +58,7 @@ class UcscScraper(Scraper):
         raise InvalidTermId(self.term_id, encoded_term_id)
 
 
-    def get_classes(self, term_code: str = None) -> dict:
+    def get_classes(self, testing: bool = False, term_code: str = None) -> dict:
         '''
         Gets all courses (base information) + classes from
         SlugSurvival.
@@ -90,7 +90,7 @@ class UcscScraper(Scraper):
 
                 new_class = CourseClass(self.courses[course_id])
                 new_class.class_id = a_class["num"]
-                new_class.instructor = a_class["ins"]["d"]
+                new_class.instructor = ";".join(a_class["ins"]["d"])
                 new_class.location = a_class["loct"][0]["loc"]
 
                 if len(new_class.location) < 1:

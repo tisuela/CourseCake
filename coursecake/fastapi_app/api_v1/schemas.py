@@ -7,6 +7,7 @@ Pydantic Schemas also help generate documentation.
 
 These schemas are based on the models defined in database.models
 '''
+from typing import List
 from datetime import datetime
 from pydantic import BaseModel, Field
 
@@ -43,7 +44,8 @@ class CourseBase(BaseModel):
     department_title: str
     restrictions: str
     school: str
-
+    class Config:
+        orm_mode = True
 
 
 class CourseCreate(CourseBase):
@@ -55,19 +57,11 @@ class CourseCreate(CourseBase):
     term_id: str = Field(..., example="FALL-2020-1")
 
     updated: datetime
-    pass
 
 
-class Course(CourseBase):
-    '''
-    All Course reads from the database carry more information
-    '''
-    # primary keys
-    university_name: str = Field(..., example="UCI")
-    term_id: str = Field(..., example="FALL-2020-1")
-    updated: datetime
-    class Config:
-        orm_mode = True
+
+
+
 
 
 
@@ -92,6 +86,21 @@ class ClassBase(BaseModel):
     enrolled: int
     waitlisted: int
     requested: int
+    class Config:
+        orm_mode = True
+
+
+class Course(CourseBase):
+    '''
+    All Course reads from the database carry more information
+    '''
+    # primary keys
+    university_name: str = Field(..., example="UCI")
+    term_id: str = Field(..., example="FALL-2020-1")
+    updated: datetime
+    classes: List[ClassBase] = []
+    class Config:
+        orm_mode = True
 
 
 
@@ -115,5 +124,6 @@ class Class(ClassBase):
     university_name: str = Field(..., example="UCI")
     term_id: str = Field(..., example="FALL-2020-1")
     updated: datetime
+    course: CourseBase
     class Config:
         orm_mode = True

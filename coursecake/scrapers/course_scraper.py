@@ -1,4 +1,5 @@
 from .uci.uci_scraper import UciScraper
+from .ucsc.ucsc_scraper import UcscScraper
 from .course import Course
 from .scraper import Scraper
 import json
@@ -8,7 +9,8 @@ class CourseScraper:
     All courses can be scraped from here
     '''
     REGISTERED_SCRAPERS = {
-        "UCI": UciScraper
+        "UCI": UciScraper,
+        "UCSC": UcscScraper
     }
 
     def __init__(self):
@@ -18,10 +20,10 @@ class CourseScraper:
         # Ex: newCourse = Course(self.templateCourse.__dict__)
         self.templateCourse = Course()
 
-    def get_scraper(self, university: str) -> Scraper:
+    def get_scraper(self, university: str, term_id: str = "2020-FALL-1") -> Scraper:
         university = university.upper()
 
-        return self.REGISTERED_SCRAPERS[university]()
+        return self.REGISTERED_SCRAPERS[university](term_id)
 
 
     def getUciScraper(self) -> UciScraper:

@@ -7,6 +7,14 @@ class UciClass(CourseClass):
     modified / added to help with construction
     '''
     # TODO: FIX PARAMETERS!!!!
+
+    DAYS_DECODER = {
+        "M": "MONDAY",
+        "Tu": "TUESDAY",
+        "W": "WEDNESDAY",
+        "Th": "THURSDAY",
+        "F": "FRIDAY"
+    }
     def __init__(self, course_id: str, cells = None, class_dict: dict = None):
 
 
@@ -25,9 +33,10 @@ class UciClass(CourseClass):
         self.class_id = cells[0].text
         self.type = cells[1].text
         self.units = self.toInt(cells[3].text.split("/")[-1])
-        self.instructor = cells[4].get_text(separator="; ")
-        self.time = " ".join(cells[5].text.strip().split())
-
+        self.instructor = cells[4].get_text(separator=";")
+        days_time = " ".join(cells[5].text.strip().split())
+        self.time = days_time.split()[-1]
+        self.days = self._decode_days(days_time.split()[0])
         # Get location
         self.location = cells[6].text.strip().upper()
         self.building = self.location.rsplit(" ",1)[0]
@@ -41,3 +50,13 @@ class UciClass(CourseClass):
         self.waitlisted = self.toInt(cells[10].text)
         self.requested_waitlisted = self.toInt(cells[11].text)
         self.status = cells[-1].text
+
+
+    def _decode_days(self, days_str: str):
+        decoded = list()
+
+        for coded_day in self.DAYS_DECODER:
+            if coded_day in days_str:
+                decoded.append(self.DAYS_DECODER[coded_day])
+
+        return decoded

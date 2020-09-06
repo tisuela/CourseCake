@@ -220,6 +220,19 @@ class UciScraper(Scraper):
         return self.courses
 
 
+    # TODO: FIX TO RETURN CLASSES
+    def get_classes(self, testing: bool = False) -> dict:
+        '''
+        Gets all Uci courses
+        '''
+        # self.getCoursesByDepartment()
+        if testing:
+            self.courses = self.getCoursesByCourseCodes(max = 10000)
+        else:
+            self.courses = self.getCoursesByCourseCodes()
+
+        return self.courses
+
 '''
 Alternative:
     import urllib.request as urllib

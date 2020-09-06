@@ -69,7 +69,7 @@ class Course(Base):
     # relationships
     # prerequisites = relationship("Prerequisite", back_populates="courses")
     university = relationship("University", back_populates = "courses")
-    classes = relationship("Class", back_populates = "course", lazy = "dynamic")
+    classes = relationship("Class", back_populates = "course", lazy = "subquery")
 
 
 
@@ -157,7 +157,7 @@ class Class(Base):
     # relationships
     # prerequisites = relationship("Prerequisite", back_populates="courses")
     university = relationship("University", back_populates = "classes")
-    course = relationship("Course", back_populates = "classes")
+    course = relationship("Course", back_populates = "classes", lazy = "subquery")
 
 
 

@@ -32,6 +32,9 @@ async def update_all(
     term_id: str = Query(
         "2020-fall"
     ),
+    testing: bool = Query(
+        False
+    ),
 ):
 
     if not utils.verifyAdminToken(token):
@@ -40,6 +43,6 @@ async def update_all(
             detail="Incorrect token"
         )
 
-    background_tasks.add_task(uploads.update_all, db, term_id)
+    background_tasks.add_task(uploads.update_all, db, term_id, testing)
 
     return {"message": "initiated updates for all database information via scrapers. this will take a few minutes."}
