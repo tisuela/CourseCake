@@ -2,6 +2,7 @@
 from ..course_scraper import CourseScraper
 from ..universities import Universities
 
+
 def test_add_university():
     universities = Universities()
     uni = "testing"
@@ -10,22 +11,22 @@ def test_add_university():
 
     universities.add(
         uni,
-        **{"course-schedule": course_schedule,
-            "course-requisites": course_requisites
-        }
+        **{"course-schedule": course_schedule, "course-requisites": course_requisites}
     )
     info = universities.getUniversity(uni)
 
     assert info["course-requisites"] == course_requisites
+
 
 def test_get_departments():
     scraper = CourseScraper().get_scraper("uci")
     departments = scraper.getDepartments()
     assert len(departments) > 5
 
+
 def testGetCoursesDept():
     scraper = CourseScraper().getUciScraper()
-    courses = scraper.getCourses({"department":"compsci"})
+    courses = scraper.getCourses({"department": "compsci"})
     assert len(courses) > 10
 
 
@@ -37,7 +38,7 @@ def testGetCoursesCode():
 
 def testGetAllCourses():
     scraper = CourseScraper().getUciScraper()
-    courses = scraper.scrape(testing = True)
+    courses = scraper.scrape(testing=True)
     classes = list()
 
     classes_are_collected = False
@@ -48,9 +49,9 @@ def testGetAllCourses():
         if len(course.classes) > 7:
             classes_are_collected = True
 
-            #for a_class in course.classes:
+            # for a_class in course.classes:
             #    print(a_class)
-            #print(course)
+            # print(course)
 
     for a_class in classes:
         if a_class.class_id == "06000":

@@ -10,8 +10,6 @@ from ..main import app
 client = TestClient(app)
 
 
-
-
 @pytest.fixture(scope="module")
 def db():
     models.Base.metadata.drop_all(bind=engine)
@@ -24,7 +22,7 @@ def db():
 
 def test_all(db):
     # need to populate db first
-    uploads.update_all(db, testing = True)
+    uploads.update_all(db, testing=True)
 
     response = client.get("/api/v1/courses/all")
     assert response.status_code == 200
@@ -44,14 +42,20 @@ def test_medium_course_search():
 
 
 def test_heavy_course_search():
-    response = client.get("/api/v1/courses/search/uci?department[like]=co&school[notlike]=bren&units[not]=8")
+    response = client.get(
+        "/api/v1/courses/search/uci?department[like]=co&school[notlike]=bren&units[not]=8"
+    )
     assert response.status_code == 200
     assert len(response.json()) >= 5
 
+
 def test_heavy_class_search():
-    response = client.get("/api/v1/courses/search/uci?time[like]=W&instructor[notlike]=pattis&units[not]=8")
+    response = client.get(
+        "/api/v1/courses/search/uci?time[like]=W&instructor[notlike]=pattis&units[not]=8"
+    )
     assert response.status_code == 200
     assert len(response.json()) >= 5
+
 
 def test_upload_all():
     response = client.post("/api/v1/admin/update/all?token=bad")

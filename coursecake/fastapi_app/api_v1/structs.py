@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class UniversityName(str, Enum):
     uci = "uci"
     ucsc = "ucsc"

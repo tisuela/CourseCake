@@ -1,17 +1,19 @@
 from .course import Course
 
+
 class CourseClass:
-    '''
+    """
     All information needed to be collected about a course
 
     The best name for this class would be Class, but that would risk
     collisions with the python's class
-    '''
-    def __init__(self, course: Course, class_dict = None):
-        '''
+    """
+
+    def __init__(self, course: Course, class_dict=None):
+        """
         All None attributes must be provided
         Can be constructed as empty, from a dictionary
-        '''
+        """
         ### Mandatory attributes ###
 
         ### Strings
@@ -22,7 +24,6 @@ class CourseClass:
         # The Class (also sometimes called course by some websites) Code, often used in registration
         self.class_id = None
 
-
         self.instructor = None
         self.days = None
         self.time = None
@@ -31,10 +32,6 @@ class CourseClass:
         self.location = None
         self.building = None
         self.room = None
-
-
-
-
 
         ### Optional Attributes ###
         # not necessarily nullable in our db models
@@ -52,22 +49,17 @@ class CourseClass:
         self.school = ""
         self.type = ""
 
-
-
-        if (class_dict != None):
+        if class_dict != None:
             self._init_from_dict(class_dict)
-
 
     def _init_from_dict(self, class_dict: dict):
         self.__dict__.update(class_dict)
 
-
     def isOpen(self) -> bool:
-        '''
+        """
         Checks if course is open for registration
-        '''
-        return (self.status.lower().strip() == "open")
-
+        """
+        return self.status.lower().strip() == "open"
 
     def toInt(self, s: str) -> int:
         try:
@@ -75,10 +67,8 @@ class CourseClass:
         except ValueError:
             return -1
 
-
-
     def __str__(self) -> str:
-        return f'''CourseClass:
+        return f"""CourseClass:
         {self.class_id}
         {self.course_id}
         {self.type}
@@ -90,4 +80,4 @@ class CourseClass:
         {self.max}
         {self.enrolled}
         {self.status}
-        '''
+        """

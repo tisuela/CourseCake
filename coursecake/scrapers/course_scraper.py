@@ -4,14 +4,13 @@ from .course import Course
 from .scraper import Scraper
 import json
 
+
 class CourseScraper:
-    '''
+    """
     All courses can be scraped from here
-    '''
-    REGISTERED_SCRAPERS = {
-        "UCI": UciScraper,
-        "UCSC": UcscScraper
-    }
+    """
+
+    REGISTERED_SCRAPERS = {"UCI": UciScraper, "UCSC": UcscScraper}
 
     def __init__(self):
 
@@ -25,7 +24,6 @@ class CourseScraper:
 
         return self.REGISTERED_SCRAPERS[university](term_id)
 
-
     def getUciScraper(self) -> UciScraper:
         return UciScraper()
 
@@ -35,20 +33,17 @@ class CourseScraper:
         # courses = UciScraper().getDepartmentCourses("COMPSCI")
         return courses
 
-
     def downloadCoursesAsJson(self, courses, fileName):
         with open(fileName, "w+") as jsonFile:
-            json.dump({"courses": list(course.__dict__ for course in courses.values())}, jsonFile)
-
+            json.dump(
+                {"courses": list(course.__dict__ for course in courses.values())},
+                jsonFile,
+            )
 
         jsonFile.close()
 
 
-
-
-
-
-'''
+"""
 only used for testing
 def main():
     courseScraper = CourseScraper()
@@ -74,4 +69,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-'''
+"""

@@ -1,11 +1,13 @@
 from ..course_class import CourseClass
 
+
 class UciClass(CourseClass):
-    '''
+    """
     This class is used to construct Course objects from Uci's course schedule,
     WEBSOC. No attributes are added, but helper methods and __init__ will be
     modified / added to help with construction
-    '''
+    """
+
     # TODO: FIX PARAMETERS!!!!
 
     DAYS_DECODER = {
@@ -13,20 +15,18 @@ class UciClass(CourseClass):
         "Tu": "TUESDAY",
         "W": "WEDNESDAY",
         "Th": "THURSDAY",
-        "F": "FRIDAY"
+        "F": "FRIDAY",
     }
-    def __init__(self, course_id: str, cells = None, class_dict: dict = None):
 
+    def __init__(self, course_id: str, cells=None, class_dict: dict = None):
 
-        if (class_dict != None):
+        if class_dict != None:
             CourseClass.__init__(self, course_id, class_dict)
         else:
             CourseClass.__init__(self, course_id)
 
-        if (cells != None):
+        if cells != None:
             self._init_from_cells(cells)
-
-
 
     def _init_from_cells(self, cells):
 
@@ -39,8 +39,8 @@ class UciClass(CourseClass):
         self.days = self._decode_days(days_time.split()[0])
         # Get location
         self.location = cells[6].text.strip().upper()
-        self.building = self.location.rsplit(" ",1)[0]
-        self.room = self.location.rsplit(" ",1)[-1]
+        self.building = self.location.rsplit(" ", 1)[0]
+        self.room = self.location.rsplit(" ", 1)[-1]
 
         self.final = cells[7].text.strip()
 
@@ -50,7 +50,6 @@ class UciClass(CourseClass):
         self.waitlisted = self.toInt(cells[10].text)
         self.requested_waitlisted = self.toInt(cells[11].text)
         self.status = cells[-1].text
-
 
     def _decode_days(self, days_str: str):
         decoded = list()

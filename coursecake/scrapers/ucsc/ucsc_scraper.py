@@ -8,7 +8,6 @@ from ..scraper import Scraper
 from .constants import TERMS_API_URL, CLASSES_API_BASE_URL
 
 
-
 class InvalidTermId(Exception):
     def __init__(self, term_id: str, encoded_term_id: str):
         self.term_id = term_id
@@ -16,14 +15,14 @@ class InvalidTermId(Exception):
 
     def __str__(self):
 
-        return f"Invalid Term Id, {self.term_id}" + \
-                f" Encoded Term Id, {self.encoded_term_id} did not" + \
-                " match with any term name found in SlugSurvival"
+        return (
+            f"Invalid Term Id, {self.term_id}"
+            + f" Encoded Term Id, {self.encoded_term_id} did not"
+            + " match with any term name found in SlugSurvival"
+        )
 
 
 class UcscScraper(Scraper):
-
-
     def __init__(self, term_id: str = "2020-FALL-1"):
         Scraper.__init__(self, "UCSC", term_id)
         self.encoded_term_id = self._encode_term_id(term_id)
@@ -31,22 +30,20 @@ class UcscScraper(Scraper):
         # get term code as defined in SlugSurvival
         self.term_code = self._get_term_code(self.encoded_term_id)
 
-
     def _encode_term_id(self, term_id: str):
-        '''
+        """
         Encodes the term_id so we can match it with a term code
         in SlugSurvival's endpoints
-        '''
+        """
         term_info = term_id.split("-")
         encoded = f"{term_info[0]} {term_info[1]} QUARTER"
         return encoded
 
-
     def _get_term_code(self, encoded_term_id: str):
-        '''
+        """
         Gets the SlugSurvival term code by matching our
         encoded_term_id with SlugSurvival's term name
-        '''
+        """
         term_response = requests.get(TERMS_API_URL)
         terms = term_response.json()
 
@@ -57,14 +54,13 @@ class UcscScraper(Scraper):
         # Raise error if term not found
         raise InvalidTermId(self.term_id, encoded_term_id)
 
-
     def get_classes(self, testing: bool = False, term_code: str = None) -> dict:
-        '''
+        """
         Gets all courses (base information) + classes from
         SlugSurvival.
 
         Populates self.courses and also returns a list of classees
-        '''
+        """
         # default term_code is the attribute stored in class after __init__
         if term_code == None:
             term_code = self.term_code
@@ -87,7 +83,6 @@ class UcscScraper(Scraper):
                     new_course.department = department
                     self.courses[course_id] = new_course
 
-
                 new_class = CourseClass(self.courses[course_id])
                 new_class.class_id = a_class["num"]
                 new_class.instructor = ";".join(a_class["ins"]["d"])
@@ -100,14 +95,17 @@ class UcscScraper(Scraper):
                     new_class.building = new_class.location.split()[0]
                     new_class.room = new_class.location.split()[-1]
 
-                if (not isinstance(a_class["loct"][0]["t"], str)):
+                if not isinstance(a_class["loct"][0]["t"], str):
                     new_class.days = [""]
                     new_class.time = ""
                 else:
-                    new_class.days = list(day.upper() for day in a_class["loct"][0]["t"]["day"])
-                    new_class.time = f'{a_class["loct"][0]["t"]["time"]["start"]}-' + \
-                                        f'{a_class["loct"][0]["t"]["time"]["end"]}'
-
+                    new_class.days = list(
+                        day.upper() for day in a_class["loct"][0]["t"]["day"]
+                    )
+                    new_class.time = (
+                        f'{a_class["loct"][0]["t"]["time"]["start"]}-'
+                        + f'{a_class["loct"][0]["t"]["time"]["end"]}'
+                    )
 
                 self.courses[course_id].classes.append(new_class)
                 classes.append(new_class)

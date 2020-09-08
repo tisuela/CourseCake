@@ -9,9 +9,9 @@ from ..sql import SessionLocal, engine
 
 
 class University:
-
     def __init__(self, name):
         self.name = name
+
 
 university = University("test1")
 term_id = "2020-FALL-1"
@@ -30,12 +30,11 @@ a_class.instructor = "Dr. Test"
 a_class.time = "time is an illusion"
 a_class.location = "Testing Hall 200"
 a_class.building = "Testing Hall"
-a_class.room  = "200"
+a_class.room = "200"
 a_class.status = "OPEN"
 a_class.units = 4
 a_class.final = "never"
 a_class.enrolled = 100
-
 
 
 @pytest.fixture(scope="module")
@@ -54,31 +53,51 @@ def test_add_university(db):
     assert universityRow != None
 
 
-
 def test_add_course(db):
     crud.add_course(db, university.name, term_id, course)
     # print(crud.CourseQuery(db, university.name, dict()).search()[0])
     # courseRow = crud.get_university(db, university.name.upper()).courses.filter(models.Course.__table__.c["id"].in_([course.id])).all()
-    assert len(crud.CourseQuery(db, university.name, {"course_id[equals]": course.course_id,
-                                                    "course_id[not]": course.course_id + "a",
-                                                    "title[like]": course.title.upper(),
-                                                    "school[notlike]": "exam"
-                                                    }).search()) > 0
+    assert (
+        len(
+            crud.CourseQuery(
+                db,
+                university.name,
+                {
+                    "course_id[equals]": course.course_id,
+                    "course_id[not]": course.course_id + "a",
+                    "title[like]": course.title.upper(),
+                    "school[notlike]": "exam",
+                },
+            ).search()
+        )
+        > 0
+    )
+
 
 def test_add_class(db):
     crud.add_class(db, university.name, term_id, a_class)
     # print(crud.ClassQuery(db, university.name, dict()).search()[0])
-    assert len(crud.ClassQuery(db, university.name, {"class_id[equals]": a_class.class_id,
-                                                    "class_id[not]": a_class.class_id + "a",
-                                                    "instructor[like]": a_class.instructor.upper(),
-                                                    "building[notlike]": "exam"
-                                                    }).search()) > 0
+    assert (
+        len(
+            crud.ClassQuery(
+                db,
+                university.name,
+                {
+                    "class_id[equals]": a_class.class_id,
+                    "class_id[not]": a_class.class_id + "a",
+                    "instructor[like]": a_class.instructor.upper(),
+                    "building[notlike]": "exam",
+                },
+            ).search()
+        )
+        > 0
+    )
 
 
 def test_add_many_course_and_class(db):
-    '''
+    """
     Load testing for adding a course
-    '''
+    """
     temp_course_id = course.course_id
     temp_class_id = a_class.class_id
     limit = 90
@@ -98,7 +117,7 @@ def test_add_many_course_and_class(db):
             new_course.classes.append(new_class)
         courses.append(new_course)
 
-        crud.add_course(db, university.name, new_term_id, new_course, commit = False)
+        crud.add_course(db, university.name, new_term_id, new_course, commit=False)
 
     db.commit()
 
@@ -108,21 +127,24 @@ def test_add_many_course_and_class(db):
 
     # insert classes
     for a_course_class in new_classes:
-        crud.add_class(db, university.name, new_term_id, a_course_class, commit = False)
+        crud.add_class(db, university.name, new_term_id, a_course_class, commit=False)
     db.commit()
 
-    added_courses = crud.CourseQuery(db, university.name,  term_id = new_term_id, limit = limit).search()
+    added_courses = crud.CourseQuery(
+        db, university.name, term_id=new_term_id, limit=limit
+    ).search()
     assert len(added_courses) == limit
 
-    added_classes = crud.ClassQuery(db, university.name,  term_id = new_term_id, limit = limit * classes_per_course).search()
+    added_classes = crud.ClassQuery(
+        db, university.name, term_id=new_term_id, limit=limit * classes_per_course
+    ).search()
     assert len(added_classes) == limit * classes_per_course
 
 
-
 def test_bulk_add_courses(db):
-    '''
+    """
     tests crud.bulk_add_course(db: Session)
-    '''
+    """
     temp_id = course.course_id
     limit = 900
     course_list = list()
@@ -134,15 +156,17 @@ def test_bulk_add_courses(db):
         course_list.append(new_course)
 
     crud.bulk_add_courses(db, university.name, new_term_id, course_list)
-    courses = crud.CourseQuery(db, university.name,  term_id = "2021-SPRING", limit = limit).search()
+    courses = crud.CourseQuery(
+        db, university.name, term_id="2021-SPRING", limit=limit
+    ).search()
 
     assert len(courses) == limit
 
 
 def test_bulk_merge_courses_and_classes(db):
-    '''
+    """
     Load testing for adding a course
-    '''
+    """
     temp_course_id = course.course_id
     temp_class_id = a_class.class_id
     limit = 500
@@ -167,9 +191,13 @@ def test_bulk_merge_courses_and_classes(db):
         class_list.extend(a_course.classes)
 
     crud.bulk_merge_courses(db, university.name, new_term_id, course_list)
-    courses = crud.CourseQuery(db, university.name,  term_id = new_term_id, limit = limit).search()
+    courses = crud.CourseQuery(
+        db, university.name, term_id=new_term_id, limit=limit
+    ).search()
     crud.bulk_merge_classes(db, university.name, new_term_id, class_list)
     assert len(courses) == limit
 
-    added_classes = crud.ClassQuery(db, university.name,  term_id = new_term_id, limit = limit * classes_per_course).search()
+    added_classes = crud.ClassQuery(
+        db, university.name, term_id=new_term_id, limit=limit * classes_per_course
+    ).search()
     assert len(added_classes) == limit * classes_per_course
