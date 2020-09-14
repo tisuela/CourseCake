@@ -27,6 +27,9 @@ class UcscScraper(Scraper):
         Scraper.__init__(self, "UCSC", term_id)
         self.encoded_term_id = self._encode_term_id(term_id)
 
+        self.session = requests.Session()
+        self.session.headers.update({"User-Agent": "User"})
+
         # get term code as defined in SlugSurvival
         self.term_code = self._get_term_code(self.encoded_term_id)
 
@@ -44,7 +47,7 @@ class UcscScraper(Scraper):
         Gets the SlugSurvival term code by matching our
         encoded_term_id with SlugSurvival's term name
         """
-        term_response = requests.get(TERMS_API_URL)
+        term_response = self.session.get(TERMS_API_URL)
         terms = term_response.json()
 
         for term in terms:
@@ -66,7 +69,7 @@ class UcscScraper(Scraper):
             term_code = self.term_code
 
         url = f"{CLASSES_API_BASE_URL}{term_code}.json"
-        classes_response = requests.get(url)
+        classes_response = self.session.get(url)
         class_info = classes_response.json()
         classes = list()
 
