@@ -49,6 +49,9 @@ class CourseClass:
         self.school = ""
         self.type = ""
 
+        # Who provided this data (3rd party API? coded in-house? team member?)
+        self.provider = ""
+
         if class_dict != None:
             self._init_from_dict(class_dict)
 

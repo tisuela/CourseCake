@@ -78,12 +78,14 @@ class UcscScraper(Scraper):
                 # if course is new, add it to the course dict
                 if course_id not in self.courses:
                     new_course = Course()
+                    new_course.provider = "SlugSurvival https://slugsurvival.com/"
                     new_course.course_id = course_id
                     new_course.title = a_class["n"]
                     new_course.department = department
                     self.courses[course_id] = new_course
 
                 new_class = CourseClass(self.courses[course_id])
+                new_class.provider = "SlugSurvival https://slugsurvival.com/"
                 new_class.class_id = a_class["num"]
                 new_class.instructor = ";".join(a_class["ins"]["d"])
                 new_class.location = a_class["loct"][0]["loc"]

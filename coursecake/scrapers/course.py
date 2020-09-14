@@ -41,6 +41,9 @@ class Course:
         # Ex: COMSPSCI -> Computer Science
         self.department_title = ""
 
+        # Who provided this data (3rd party API? coded in-house? team member?)
+        self.provider = ""
+
         if course_dict != None:
             self._init_from_dict(course_dict)
 

@@ -44,6 +44,8 @@ class CourseBase(BaseModel):
     restrictions: str
     school: str
 
+    provider: str = Field(..., example="SlugSurvival")
+
     class Config:
         orm_mode = True
 
@@ -82,6 +84,8 @@ class ClassBase(BaseModel):
     enrolled: int
     waitlisted: int
     requested: int
+
+    provider: str = Field(..., example="SlugSurvival")
 
     class Config:
         orm_mode = True

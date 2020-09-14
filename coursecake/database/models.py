@@ -71,6 +71,9 @@ class Course(Base):
     restrictions = Column(String, nullable=False)
     school = Column(String, nullable=False)
 
+    # Name 3rd party provider of info
+    provider = Column(String, nullable=True)
+
     updated = Column(DateTime, default=datetime.utcnow)
 
     # relationships
@@ -97,6 +100,8 @@ class Course(Base):
         self.department_title = course.department_title
         self.restrictions = course.restrictions
         self.school = course.school
+
+        self.provider = course.provider
 
     def __repr__(self):
         return f"{self.course_id} | {self.units} | {self.term_id}\n"
@@ -162,6 +167,9 @@ class Class(Base):
 
     # nullable fields
 
+    # Name 3rd party provider of info
+    provider = Column(String, nullable=True)
+
     updated = Column(DateTime, default=datetime.utcnow)
 
     # relationships
@@ -200,6 +208,8 @@ class Class(Base):
         self.enrolled = a_class.enrolled
         self.waitlisted = a_class.waitlisted
         self.requested = a_class.requested
+
+        self.provider = a_class.provider
 
     def __repr__(self):
         return f"{self.class_id} | {self.instructor} | {self.units} | {self.status} | {self.term_id}\n"
