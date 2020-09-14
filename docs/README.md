@@ -8,12 +8,26 @@ There are three main features CourseCake offers that make university course info
 
 CourseCake aims to create an API to access course data, where college course information is unified by our schemas. By making course 📚 data easier to responsibly access and more "edible" 🍰 for developers, we hope CourseCake gives a smooth approach to build useful tools for students.
 
+
+## 🆕 Recent Changes
+- 🐌 Support for UCSC via [SlugSurvival](https://slugsurvival.com/)
+- 📚|📝Separation of the Course Schema into a smaller Course Schema and a Class Schema. A Class is an offering of a Course
+- 📈 Implementing a GraphQL endpoint using Graphene.
+
+
+## 🐌 UC Santa Cruz -- Getting course information is piece of banana cake.
+UC Santa Cruz course data is provided by [SlugSurvival's](https://slugsurvival.com/) [API](https://slugsurvival.com/explain/opensource). They have a pretty cool course planning app, [check it out](https://slugsurvival.com/).
+
+Y'all have a neat-lookin campus -- I hope CourseCake helps y'all continue to code neat-lookin apps. If you need more features from CourseCake, feel free to open up an issue. I'm always open for help too! [Scroll down](#future-features) for cool things to jump in on.
+
 ## 🐜 UC Irvine -- Zot your courses easier and responsibly
-Currently the only supported school in CourseCake, the motivation of CourseCake is to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
+The motivation of CourseCake is to make it easier to develop tools like AntPlanner and Antscoper, and promote a responsible use of WebSoc by not abusing its resources.
 
-All of the latest scraped data is stored in a local database, which avoids congesting WebSoc and allows successful requests even when WebSoc is down.
+All of the latest scraped data is stored in our database, which avoids congesting WebSoc and allows successful requests even when WebSoc is down.
 
-Endpoints that do directly query WebSoc are ratelimited and follow usage rates similar to other UCI Irvine course helper websites.
+
+## 🤷‍♂️ Where's my university?
+[Open up an issue](https://github.com/nananananate/CourseCake/issues/new/choose)! If there's enough of a need, I'm down to add support for your school. If you'd like to help code a scraper or have an API to provide, [let me know](https://github.com/nananananate/CourseCake/issues/new/choose).
 
 ## 📚 Course vs 📝 Class -- What's the Difference?
 📚 A `Course` is a unit of teaching that lasts a term.
@@ -93,9 +107,11 @@ You’ll see output similar to this:
 donezo
 
 # Future features
-- Seperation of the Course Schema into a smaller Course Schema and a Class Schema. A Class is an offering of a Course (watch me name things to avoid name collisions haha)
-- Implementing a GraphQL endpoint using Graphene.
-- Prerequisite mapping to create a network of classes (along with a node graph GUI) via Neo4j (probably in seperate repository).
-- IF ANYONE WANTS TO HELP LEMME KNOW PLSSSS ty
+Things I'm working on! [Open up an issue](https://github.com/nananananate/CourseCake/issues/new/choose) to suggest features or request to help out! I'm down to guide you in webscraping, using SQLAlchemy, or general back-end web development in Python :D  
+- Adding instructor ratings from Rate My Professor via [ratemyprof-api](https://github.com/nananananate/ratemyprof-api)
+- Prerequisite mapping (AND visualization!) to create a network of classes (along with a node graph GUI) via Neo4j (probably in seperate repository).
+
+
+
 
 [![GitHub license](https://img.shields.io/github/license/nananananate/CourseCake.svg)](https://github.com/nananananate/CourseCake/blob/master/LICENSE)
