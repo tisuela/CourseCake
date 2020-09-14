@@ -9,13 +9,13 @@ from ...database import models, sql
 class Course(SQLAlchemyObjectType):
     class Meta:
         model = models.Course
-        interfaces = (relay.Node, )
+        interfaces = (relay.Node,)
 
 
 class Class(SQLAlchemyObjectType):
     class Meta:
         model = models.Class
-        interfaces = (relay.Node, )
+        interfaces = (relay.Node,)
 
 
 class Query(graphene.ObjectType):

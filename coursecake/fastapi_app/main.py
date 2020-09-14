@@ -18,47 +18,39 @@ from .limiter import limiter
 
 models.Base.metadata.create_all(bind=sql.engine)
 
-tags_metadata= [
+tags_metadata = [
     {
         "name": "courses",
         "description": "Find all course information here",
         "externalDocs": {
             "description": "Courses external docs",
-            "url": "https://docs.coursecake.tisuela.com/RESTful-API"
-        }
+            "url": "https://docs.coursecake.tisuela.com/RESTful-API",
+        },
     }
 ]
 
 app = FastAPI(
-        title = "CourseCake",
-        version="v1.0-beta",
-        openapi_tags=tags_metadata,
-        redoc_url = "/",
-        docs_url = "/api/v1"
-
+    title="CourseCake",
+    version="v1.0-beta",
+    openapi_tags=tags_metadata,
+    redoc_url="/",
+    docs_url="/api/v1",
 )
 
-schema = graphene.Schema(query = graphql_schemas.Query)
+schema = graphene.Schema(query=graphql_schemas.Query)
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-app.add_route("/api/graphql", GraphQLApp(schema = schema))
+app.add_route("/api/graphql", GraphQLApp(schema=schema))
+
 
 @app.get("/hello")
 async def hello(request: Request):
     return {"message": "Hello World"}
 
-app.include_router(
-    v1_courses_routes.router,
-    prefix="/api/v1/courses",
-    tags=["courses"])
 
-app.include_router(
-    v1_classes_routes.router,
-    prefix="/api/v1/classes",
-    tags=["classes"])
+app.include_router(v1_courses_routes.router, prefix="/api/v1/courses", tags=["courses"])
 
-app.include_router(
-    v1_admin_routes.router,
-    prefix="/api/v1/admin",
-    tags=["admin"])
+app.include_router(v1_classes_routes.router, prefix="/api/v1/classes", tags=["classes"])
+
+app.include_router(v1_admin_routes.router, prefix="/api/v1/admin", tags=["admin"])

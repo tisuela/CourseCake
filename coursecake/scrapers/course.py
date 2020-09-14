@@ -1,16 +1,21 @@
 import copy
 
+
 class Course:
-    '''
+    """
     All information needed to be collected about a course
-    '''
-    def __init__(self, course_dict = None, course = None, ):
-        '''
+    """
+
+    def __init__(
+        self,
+        course_dict=None,
+        course=None,
+    ):
+        """
         All None attributes must be provided
         Can be constructed as empty, from a dictionary
-        '''
+        """
         ### Mandatory attributes ###
-
 
         ### Strings
 
@@ -21,8 +26,6 @@ class Course:
         self.title = None
 
         self.department = None
-
-
 
         ### Optional Attributes ###
         # nullable in our db models
@@ -38,15 +41,17 @@ class Course:
         # Ex: COMSPSCI -> Computer Science
         self.department_title = ""
 
-        if (course_dict != None):
+        # Who provided this data (3rd party API? coded in-house? team member?)
+        self.provider = ""
+
+        if course_dict != None:
             self._init_from_dict(course_dict)
 
-        if (course != None):
+        if course != None:
             self._init_from_dict(course.__dict__)
 
             # must deep copy list
             self.classes = copy.deepcopy(course.classes)
-
 
     def _init_from_dict(self, course_dict: dict):
         # print(course_dict)
@@ -58,7 +63,6 @@ class Course:
             else:
                 pass
 
-
     def is_valid_course(self) -> bool:
         for value in self.__dict__.values():
             if value == None:
@@ -66,19 +70,15 @@ class Course:
 
         return True
 
-
-
     def toInt(self, s: str) -> int:
         try:
             return int(s)
         except ValueError:
             return -1
 
-
-
     def __str__(self) -> str:
-        return f'''Course:
+        return f"""Course:
         {self.title}
         {self.course_id}
         {self.units}
-        '''
+        """

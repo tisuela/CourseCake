@@ -7,11 +7,17 @@ from . import models
 from ..scrapers.course import Course
 from ..scrapers.course_class import CourseClass
 
+
 def get_universities(db: Session, offset: int = 0, limit: int = 100) -> list:
     return db.query(models.University).offset(offset).limit(limit).all()
 
+
 def get_university(db: Session, name: str) -> models.University:
-    return db.query(models.University).filter(models.University.name == name.upper()).first()
+    return (
+        db.query(models.University)
+        .filter(models.University.name == name.upper())
+        .first()
+    )
 
 
 def add_university(db: Session, name: str) -> models.University:
@@ -25,13 +31,15 @@ def get_courses(db: Session, offset: int = 0, limit: int = 100) -> list:
     return db.query(models.Course).offset(offset).limit(limit).all()
 
 
-def add_course(db: Session, university: str, term: str, courseObj: Course, commit: bool = True) -> models.Course:
-    '''
+def add_course(
+    db: Session, university: str, term: str, courseObj: Course, commit: bool = True
+) -> models.Course:
+    """
     courseObj is the basic python instance of Course defined in
     scrapers.course
 
     courseModelis SQL version
-    '''
+    """
     courseModel = models.Course(courseObj, university.upper(), term.upper())
     db.merge(courseModel)
 
@@ -40,13 +48,15 @@ def add_course(db: Session, university: str, term: str, courseObj: Course, commi
     return courseModel
 
 
-def add_class(db: Session, university: str, term: str, classObj: CourseClass, commit: bool = True) -> models.Course:
-    '''
+def add_class(
+    db: Session, university: str, term: str, classObj: CourseClass, commit: bool = True
+) -> models.Course:
+    """
     classeObj is the basic python instance of CourseClass defined in
     scrapers.course_class
 
     classModel is SQL version
-    '''
+    """
     classModel = models.Class(classObj, university.upper(), term.upper())
     db.merge(classModel)
 
@@ -56,9 +66,9 @@ def add_class(db: Session, university: str, term: str, classObj: CourseClass, co
 
 
 def bulk_add_courses(db: Session, university: str, term: str, courses: list):
-    '''
+    """
     DOES NOT MERGE
-    '''
+    """
     toInsert = list()
     university = university.upper()
     term = term.upper()
@@ -69,13 +79,11 @@ def bulk_add_courses(db: Session, university: str, term: str, courses: list):
     db.commit()
 
 
-
-
 def bulk_merge_courses(db: Session, university: str, term: str, courses: list):
 
     for course in courses:
         if course.is_valid_course():
-            add_course(db, university.upper(), term.upper(), course, commit = False)
+            add_course(db, university.upper(), term.upper(), course, commit=False)
         else:
             # print("INVALID COURSE", course)
             pass
@@ -85,15 +93,16 @@ def bulk_merge_courses(db: Session, university: str, term: str, courses: list):
 def bulk_merge_classes(db: Session, university: str, term: str, classes: list):
 
     for a_class in classes:
-        add_class(db, university.upper(), term.upper(), a_class, commit = False)
+        add_class(db, university.upper(), term.upper(), a_class, commit=False)
 
     db.commit()
 
 
 class CourseQuery:
-    '''
+    """
     dynamically builds a query for courses and executes it
-    '''
+    """
+
     QUERY_DELIMITER = ","
     CURRENT_TERM_ID = "2020-FALL-1"
 
@@ -104,22 +113,28 @@ class CourseQuery:
         "class_id",
         "title",
         "department",
-        "units"
+        "department_title",
+        "units",
+        "school",
+        "restrictions",
     ]
 
-    VALID_FILTERS = [
-        "like",
-        "equals",
-        "not",
-        "notlike"
-    ]
+    VALID_FILTERS = ["like", "equals", "not", "notlike"]
 
     CASE_SENSITIVE_PARAMETERS = [
         "course_id",
         "class_id",
     ]
 
-    def __init__(self, db: Session, university: str, args: dict = dict(), term_id: str = CURRENT_TERM_ID, offset: int = 0, limit: int = 500):
+    def __init__(
+        self,
+        db: Session,
+        university: str,
+        args: dict = dict(),
+        term_id: str = CURRENT_TERM_ID,
+        offset: int = 0,
+        limit: int = 500,
+    ):
         university = university.upper()
         term_id = term_id.upper()
 
@@ -134,71 +149,70 @@ class CourseQuery:
 
             # check if term_id is fully specified
             # if not, fill in assumed values
-            if (len(term_args) < 3):
+            if len(term_args) < 3:
                 term_id += "-1"
 
             # print(f"searching {university} for max of {limit} results")
 
-            self.query = db.query(models.University).filter(models.University.name == university).first().courses.filter(models.Course.term_id == term_id)
+            self.query = (
+                db.query(models.University)
+                .filter(models.University.name == university)
+                .first()
+                .courses.filter(models.Course.term_id == term_id)
+            )
         else:
-            self.query = db.query(models.University).filter(models.University.name == university).first().courses
-
-
-
+            self.query = (
+                db.query(models.University)
+                .filter(models.University.name == university)
+                .first()
+                .courses
+            )
 
     def checkToInt(self, column: str, value: str):
-        '''
+        """
         tbh this feels like a terrible function
         but im gonna do it
 
         returns string when the column is string
         returns int when the column is int
-        '''
-        intColumns = ["units", "enrolled",
-                    "requested", "waitlisted",
-                    "max"]
+        """
+        intColumns = ["units", "enrolled", "requested", "waitlisted", "max"]
 
-        if (column in intColumns):
+        if column in intColumns:
             return int(value)
         return value
 
-
-
     def _addLikeFilter(self, column: str, filter: str, values: list):
-        '''
+        """
         Adds LIKE filter to query
-        '''
+        """
         for value in values:
             value = value.upper()
-            self.query = self.query.filter(models.Course.__table__.c[column].ilike(f"%{value}%"))
-
-
+            self.query = self.query.filter(
+                models.Course.__table__.c[column].ilike(f"%{value}%")
+            )
 
     def _addNotLikeFilter(self, column: str, filter: str, values: list):
-        '''
+        """
         Adds LIKE filter to query
-        '''
+        """
         for value in values:
             value = value.upper()
-            self.query = self.query.filter(~models.Course.__table__.c[column].ilike(f"%{value}%"))
-
-
+            self.query = self.query.filter(
+                ~models.Course.__table__.c[column].ilike(f"%{value}%")
+            )
 
     def _addEqualsFilter(self, column: str, filter: str, values: list):
-        '''
+        """
         Adds EQUALS filter to query
-        '''
+        """
         self.query = self.query.filter(models.Course.__table__.c[column].in_(values))
 
-
-
     def _addNotEqualsFilter(self, column: str, filter: str, values: list):
-        '''
+        """
         Adds NOT EQUALS filter to query
-        '''
+        """
         self.query = self.query.filter(~models.Course.__table__.c[column].in_(values))
-
-
 
     def _buildQuery(self):
         # within args, a query is defined as:
@@ -209,11 +223,17 @@ class CourseQuery:
             parameter = arg.split("[")[0].lower()
 
             # clean query
-            if (parameter in self.VALID_PARAMETERS):
+            if parameter in self.VALID_PARAMETERS:
                 if parameter in self.CASE_SENSITIVE_PARAMETERS:
-                    queryValues = [self.checkToInt(parameter, v) for v in self.args[arg].split(self.QUERY_DELIMITER)]
+                    queryValues = [
+                        self.checkToInt(parameter, v)
+                        for v in self.args[arg].split(self.QUERY_DELIMITER)
+                    ]
                 else:
-                    queryValues = [self.checkToInt(parameter, v.upper()) for v in self.args[arg].split(self.QUERY_DELIMITER)]
+                    queryValues = [
+                        self.checkToInt(parameter, v.upper())
+                        for v in self.args[arg].split(self.QUERY_DELIMITER)
+                    ]
 
                 # filter is defined between brackets; [filter]
                 filter = ""
@@ -226,21 +246,17 @@ class CourseQuery:
                     pass
 
                 # add filters
-                if (filter == "like"):
+                if filter == "like":
                     self._addLikeFilter(parameter, filter, queryValues)
 
-                elif (filter == "notlike"):
+                elif filter == "notlike":
                     self._addNotLikeFilter(parameter, filter, queryValues)
 
-                elif (filter == "not"):
+                elif filter == "not":
                     self._addNotEqualsFilter(parameter, filter, queryValues)
 
-                elif (filter == "equals" or filter == ""):
+                elif filter == "equals" or filter == "":
                     self._addEqualsFilter(parameter, filter, queryValues)
-
-
-
-
 
     def search(self):
         self._buildQuery()
@@ -250,9 +266,10 @@ class CourseQuery:
 
 
 class ClassQuery:
-    '''
+    """
     dynamically builds a query for courses and executes it
-    '''
+    """
+
     QUERY_DELIMITER = ","
     CURRENT_TERM_ID = "2020-FALL-1"
 
@@ -271,22 +288,25 @@ class ClassQuery:
         "enrolled",
         "waitlisted",
         "requested",
-        "max"
+        "max",
     ]
 
-    VALID_FILTERS = [
-        "like",
-        "equals",
-        "not",
-        "notlike"
-    ]
+    VALID_FILTERS = ["like", "equals", "not", "notlike"]
 
     CASE_SENSITIVE_PARAMETERS = [
         "course_id",
         "class_id",
     ]
 
-    def __init__(self, db: Session, university: str, args: dict = dict(), term_id: str = CURRENT_TERM_ID, offset: int = 0, limit: int = 500):
+    def __init__(
+        self,
+        db: Session,
+        university: str,
+        args: dict = dict(),
+        term_id: str = CURRENT_TERM_ID,
+        offset: int = 0,
+        limit: int = 500,
+    ):
         university = university.upper()
         term_id = term_id.upper()
 
@@ -301,71 +321,70 @@ class ClassQuery:
 
             # check if term_id is fully specified
             # if not, fill in assumed values
-            if (len(term_args) < 3):
+            if len(term_args) < 3:
                 term_id += "-1"
 
             # print(f"searching {university} for max of {limit} results")
 
-            self.query = db.query(models.University).filter(models.University.name == university).first().classes.filter(models.Course.term_id == term_id)
+            self.query = (
+                db.query(models.University)
+                .filter(models.University.name == university)
+                .first()
+                .classes.filter(models.Course.term_id == term_id)
+            )
         else:
-            self.query = db.query(models.University).filter(models.University.name == university).first().classes
-
-
-
+            self.query = (
+                db.query(models.University)
+                .filter(models.University.name == university)
+                .first()
+                .classes
+            )
 
     def checkToInt(self, column: str, value: str):
-        '''
+        """
         tbh this feels like a terrible function
         but im gonna do it
 
         returns string when the column is string
         returns int when the column is int
-        '''
-        intColumns = ["units", "enrolled",
-                    "requested", "waitlisted",
-                    "max"]
+        """
+        intColumns = ["units", "enrolled", "requested", "waitlisted", "max"]
 
-        if (column in intColumns):
+        if column in intColumns:
             return int(value)
         return value
 
-
-
     def _addLikeFilter(self, column: str, filter: str, values: list):
-        '''
+        """
         Adds LIKE filter to query
-        '''
+        """
         for value in values:
             value = value.upper()
-            self.query = self.query.filter(models.Class.__table__.c[column].ilike(f"%{value}%"))
-
-
+            self.query = self.query.filter(
+                models.Class.__table__.c[column].ilike(f"%{value}%")
+            )
 
     def _addNotLikeFilter(self, column: str, filter: str, values: list):
-        '''
+        """
         Adds LIKE filter to query
-        '''
+        """
         for value in values:
             value = value.upper()
-            self.query = self.query.filter(~models.Class.__table__.c[column].ilike(f"%{value}%"))
-
-
+            self.query = self.query.filter(
+                ~models.Class.__table__.c[column].ilike(f"%{value}%")
+            )
 
     def _addEqualsFilter(self, column: str, filter: str, values: list):
-        '''
+        """
         Adds EQUALS filter to query
-        '''
+        """
         self.query = self.query.filter(models.Class.__table__.c[column].in_(values))
 
-
-
     def _addNotEqualsFilter(self, column: str, filter: str, values: list):
-        '''
+        """
         Adds NOT EQUALS filter to query
-        '''
+        """
         self.query = self.query.filter(~models.Class.__table__.c[column].in_(values))
-
-
 
     def _buildQuery(self):
         # within args, a query is defined as:
@@ -376,11 +395,17 @@ class ClassQuery:
             parameter = arg.split("[")[0].lower()
 
             # clean query
-            if (parameter in self.VALID_PARAMETERS):
+            if parameter in self.VALID_PARAMETERS:
                 if parameter in self.CASE_SENSITIVE_PARAMETERS:
-                    queryValues = [self.checkToInt(parameter, v) for v in self.args[arg].split(self.QUERY_DELIMITER)]
+                    queryValues = [
+                        self.checkToInt(parameter, v)
+                        for v in self.args[arg].split(self.QUERY_DELIMITER)
+                    ]
                 else:
-                    queryValues = [self.checkToInt(parameter, v.upper()) for v in self.args[arg].split(self.QUERY_DELIMITER)]
+                    queryValues = [
+                        self.checkToInt(parameter, v.upper())
+                        for v in self.args[arg].split(self.QUERY_DELIMITER)
+                    ]
 
                 # filter is defined between brackets; [filter]
                 filter = ""
@@ -393,21 +418,17 @@ class ClassQuery:
                     pass
 
                 # add filters
-                if (filter == "like"):
+                if filter == "like":
                     self._addLikeFilter(parameter, filter, queryValues)
 
-                elif (filter == "notlike"):
+                elif filter == "notlike":
                     self._addNotLikeFilter(parameter, filter, queryValues)
 
-                elif (filter == "not"):
+                elif filter == "not":
                     self._addNotEqualsFilter(parameter, filter, queryValues)
 
-                elif (filter == "equals" or filter == ""):
+                elif filter == "equals" or filter == "":
                     self._addEqualsFilter(parameter, filter, queryValues)
-
-
-
-
 
     def search(self):
         self._buildQuery()

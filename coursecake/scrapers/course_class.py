@@ -1,17 +1,19 @@
 from .course import Course
 
+
 class CourseClass:
-    '''
+    """
     All information needed to be collected about a course
 
     The best name for this class would be Class, but that would risk
     collisions with the python's class
-    '''
-    def __init__(self, course: Course, class_dict = None):
-        '''
+    """
+
+    def __init__(self, course: Course, class_dict=None):
+        """
         All None attributes must be provided
         Can be constructed as empty, from a dictionary
-        '''
+        """
         ### Mandatory attributes ###
 
         ### Strings
@@ -22,25 +24,22 @@ class CourseClass:
         # The Class (also sometimes called course by some websites) Code, often used in registration
         self.class_id = None
 
-
         self.instructor = None
+        self.days = None
         self.time = None
 
         # Full location string, with building  + room
         self.location = None
         self.building = None
         self.room = None
-        self.status = None
-
-        ### Integers
-
-        self.units = None
 
         ### Optional Attributes ###
         # not necessarily nullable in our db models
 
         # time of final
         self.final = ""
+        self.units = -1
+        self.status = "UNKNOWN"
 
         self.max = -1
         self.enrolled = -1
@@ -50,22 +49,20 @@ class CourseClass:
         self.school = ""
         self.type = ""
 
+        # Who provided this data (3rd party API? coded in-house? team member?)
+        self.provider = ""
 
-
-        if (class_dict != None):
+        if class_dict != None:
             self._init_from_dict(class_dict)
-
 
     def _init_from_dict(self, class_dict: dict):
         self.__dict__.update(class_dict)
 
-
     def isOpen(self) -> bool:
-        '''
+        """
         Checks if course is open for registration
-        '''
-        return (self.status.lower().strip() == "open")
-
+        """
+        return self.status.lower().strip() == "open"
 
     def toInt(self, s: str) -> int:
         try:
@@ -73,10 +70,8 @@ class CourseClass:
         except ValueError:
             return -1
 
-
-
     def __str__(self) -> str:
-        return f'''CourseClass:
+        return f"""CourseClass:
         {self.class_id}
         {self.course_id}
         {self.type}
@@ -88,4 +83,4 @@ class CourseClass:
         {self.max}
         {self.enrolled}
         {self.status}
-        '''
+        """

@@ -1,20 +1,20 @@
 import json
-'''
+
+"""
 writes and obtains data on university needed for scraping.
 Ex: course schedule link, catalogue link, etc.
-'''
+"""
 
 
 class Universities:
     def __init__(self):
         self.jsonFileName = "./coursecake/scrapers/universities.json"
 
-
     def getData(self) -> dict:
-        '''
+        """
         Gets existing university data
         Returns empty dict if file does not exist
-        '''
+        """
         data = dict()
 
         with open(self.jsonFileName, "r") as jsonFile:
@@ -22,8 +22,6 @@ class Universities:
         jsonFile.close()
 
         return data
-
-
 
     def getUniversity(self, name: str):
         name = name.upper()
@@ -34,18 +32,17 @@ class Universities:
         except FileNotFoundError as e:
             return f"file not found, message: \n {e}"
 
-
     def add(self, name: str, **kwargs) -> None:
-        '''
+        """
         Add a new university to the json file
-        '''
+        """
 
         try:
             # get existing data
             data = self.getData()
             name = name.upper()
 
-            if (data.get(name) != None):
+            if data.get(name) != None:
                 # override existing info
                 data[name].update(kwargs)
             else:
@@ -57,11 +54,10 @@ class Universities:
         with open(self.jsonFileName, "w+") as jsonFile:
             json.dump(data, jsonFile)
 
-
         jsonFile.close()
 
 
-'''
+"""
 def main():
     adder = Universities()
     data = adder.getData()
@@ -102,4 +98,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-'''
+"""
