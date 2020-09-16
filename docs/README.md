@@ -11,7 +11,7 @@ CourseCake aims to create an API to access course data, where college course inf
 
 ## 🆕 Recent Changes
 - 🐌 Support for UCSC via [SlugSurvival](https://slugsurvival.com/)
-- 📚|📝Separation of the Course Schema into a smaller Course Schema and a Class Schema. A Class is an offering of a Course
+- 📚📝 Separation of the Course Schema into a smaller Course Schema and a Class Schema. A Class is an offering of a Course
 - 📈 Implementing a GraphQL endpoint using Graphene.
 
 
