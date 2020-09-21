@@ -10,10 +10,14 @@ CourseCake aims to create an API to access course data, where college course inf
 
 
 ## 🆕 Recent Changes
+- 🐴 Support for Calpoly
 - 🐌 Support for UCSC via [SlugSurvival](https://slugsurvival.com/)
 - 📚📝 Separation of the Course Schema into a smaller Course Schema and a Class Schema. A Class is an offering of a Course
 - 📈 Implementing a GraphQL endpoint using Graphene.
 
+
+## 🐴 Cal Poly -- Create course discovery applications faster
+Seeking to aid applications like [CollegeFlows](https://www.collegeflows.com/) and [PolyFlowBuilder](https://polyflowbuilder.duncanapple.io/), we hope that CourseCake encourages innovation among students at Cal Poly San Luis Obispo.
 
 ## 🐌 UC Santa Cruz -- Getting course information is piece of banana cake.
 UC Santa Cruz course data is provided by [SlugSurvival's](https://slugsurvival.com/) [API](https://slugsurvival.com/explain/opensource). They have a pretty cool course planning app, [check it out](https://slugsurvival.com/).
