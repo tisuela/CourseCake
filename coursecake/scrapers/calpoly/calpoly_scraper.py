@@ -79,9 +79,9 @@ class CalpolyScraper(Scraper):
 
                 # get location info
                 a_class.location = cells[3].text.strip()
-                building_room = cells[3].text.rsplit(" ", 1)
-                a_class.building = building_room[0]
-                a_class.room = building_room[-1]
+                building_room = cells[3].text.strip().rsplit(" ", 1)
+                a_class.building = building_room[0].strip()
+                a_class.room = building_room[-1].strip()
 
                 a_class.instructor = cells[4].text.strip()
 
