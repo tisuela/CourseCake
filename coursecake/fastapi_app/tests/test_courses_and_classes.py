@@ -40,6 +40,7 @@ def test_basic_ucsc_course_search():
     assert response.status_code == 200
     assert len(response.json()) >= 50
 
+
 def test_medium_course_search():
     response = client.get("/api/v1/courses/search/uci?department=art")
     assert response.status_code == 200

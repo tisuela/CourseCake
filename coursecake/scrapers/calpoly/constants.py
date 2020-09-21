@@ -101,22 +101,21 @@ DEPARTMENTS = [
     "UNIV",
     "WGS",
     "WLC",
-    "WVIT"
+    "WVIT",
 ]
 
 BASE_URL = "https://cmsweb.pscs.calpoly.edu/psc/CSLOPRD/EMPLOYEE/SA/c/COMMUNITY_ACCESS.CLASS_SEARCH.GBL"
 BASE_HEADERS = {
-    "Content-Type":"application/x-www-form-urlencoded",
+    "Content-Type": "application/x-www-form-urlencoded",
     # need cookies
     "User-Agent": "User",
     # Set school to CalPoly Slo
-
 }
 
 TERMS_FORM_DATA = {
     "ICAJAX": "1",
     "CLASS_SRCH_WRK2_INSTITUTION$31$": "SLCMP",
-    "ICAction": "SLO_SS_DERIVED_STRM$prompt"
+    "ICAction": "SLO_SS_DERIVED_STRM$prompt",
 }
 
 SEARCH_FORM_DATA = {
@@ -125,13 +124,10 @@ SEARCH_FORM_DATA = {
     # Click action is Class Search
     "ICAction": "CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH",
     # Get all classes
-    "SSR_CLSRCH_WRK_CATALOG_NBR$1":"99999999",
+    "SSR_CLSRCH_WRK_CATALOG_NBR$1": "99999999",
     "SSR_CLSRCH_WRK_SSR_EXACT_MATCH1$1": "T",
     # Include open AND closed classes
-    "SSR_CLSRCH_WRK_SSR_OPEN_ONLY$chk$3":"N"
+    "SSR_CLSRCH_WRK_SSR_OPEN_ONLY$chk$3": "N",
 }
 
-CONFIRM_FORM_DATA = {
-    "ICAction": "#ICSave",
-    "CLASS_SRCH_WRK2_INSTITUTION$31$": "SLCMP"
-}
+CONFIRM_FORM_DATA = {"ICAction": "#ICSave", "CLASS_SRCH_WRK2_INSTITUTION$31$": "SLCMP"}

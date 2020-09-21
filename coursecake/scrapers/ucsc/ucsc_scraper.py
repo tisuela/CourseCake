@@ -8,8 +8,6 @@ from ..scraper import Scraper, InvalidTermId
 from .constants import TERMS_API_URL, CLASSES_API_BASE_URL
 
 
-
-
 class UcscScraper(Scraper):
     def __init__(self, term_id: str = "2020-FALL-1"):
         Scraper.__init__(self, "UCSC", term_id)

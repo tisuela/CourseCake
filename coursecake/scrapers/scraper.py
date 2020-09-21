@@ -2,7 +2,6 @@ from .universities import Universities
 from .course import Course
 
 
-
 class InvalidTermId(Exception):
     def __init__(self, term_id: str, encoded_term_id: str = None):
         self.term_id = term_id
@@ -16,6 +15,7 @@ class InvalidTermId(Exception):
             + " match with any supported term in the scraper"
         )
 
+
 class Scraper:
     def __init__(self, universityName: str, term_id: str):
         self.universityName = universityName
@@ -27,7 +27,6 @@ class Scraper:
 
         # dictionary of course
         self.courses = dict()
-
 
         self.classees = dict()
 

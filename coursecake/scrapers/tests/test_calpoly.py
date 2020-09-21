@@ -14,3 +14,10 @@ def test_init():
 
     with pytest.raises(InvalidTermId) as e:
         scraper = calpoly_scraper.CalpolyScraper("1800-FALL-1")
+
+
+def test_scraper():
+    scraper = calpoly_scraper.CalpolyScraper(TERM_ID)
+    scraper.get_classes(testing=True)
+
+    print(scraper.term_code)
