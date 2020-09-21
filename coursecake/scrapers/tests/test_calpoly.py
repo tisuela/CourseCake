@@ -20,4 +20,8 @@ def test_scraper():
     scraper = calpoly_scraper.CalpolyScraper(TERM_ID)
     scraper.get_classes(testing=True)
 
-    print(scraper.term_code)
+    print(f"courses = {len(scraper.courses)}")
+    print(f"classes = {len(scraper.classes)}")
+
+    assert len(scraper.courses) > 10
+    assert len(scraper.classes) > 11

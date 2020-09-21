@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup, NavigableString
 
 from ..scraper import Scraper, InvalidTermId
 from ..course import Course
+from ..course_class import CourseClass
 from .constants import (
     BASE_URL,
     BASE_HEADERS,
@@ -49,8 +50,53 @@ class CalpolyScraper(Scraper):
 
         return term_encoder
 
+    def scrape_class_status(self, cell) -> str:
+        src = cell.find("img")["src"].upper()
+
+        if "OPEN" in src:
+            return "OPEN"
+        elif "CLOSED" in src:
+            return "CLOSED"
+        elif "WAITLIST" in src:
+            return "WAITLIST"
+
+        # return None if invalid src
+        return None
+
+    def scrape_classes_table(self, table, course: Course) -> Course:
+        for row in table.find_all("tr", recursive=False):
+            cells = row.find_all("td", recursive=False)
+
+            # check if this is actually the cells containing course info
+            if len(cells) > 2:
+                a_class = CourseClass(course)
+                a_class.class_id = cells[0].text.strip()
+
+                # get days and time
+                days_times = cells[2].text.strip().split(" ", 1)
+                a_class.days = days_times[0].strip()
+                a_class.time = days_times[-1].strip()
+
+                # get location info
+                a_class.location = cells[3].text.strip()
+                building_room = cells[3].text.rsplit(" ", 1)
+                a_class.building = building_room[0]
+                a_class.room = building_room[-1]
+
+                a_class.instructor = cells[4].text.strip()
+
+                a_class.status = self.scrape_class_status(cells[-1])
+
+                course.classes.append(a_class)
+
+                self.classes[a_class.class_id] = a_class
+
+        return course
+
     def scrape_classes_page(self, page, department: str):
-        c = 0
+        """
+        Scrape classes from calpoly schedule of classes web page
+        """
         soup = BeautifulSoup(page.content, "lxml")
         course = None
 
@@ -58,6 +104,7 @@ class CalpolyScraper(Scraper):
             "table"
         ):
 
+            # get the course cell which precedes class schedule info
             course_cell = table.find("tr", recursive=False).find(
                 "td", class_="PAGROUPBOXLABELLEVEL1", recursive=False
             )
@@ -75,25 +122,10 @@ class CalpolyScraper(Scraper):
                 course.title = course_info[-1].strip()
                 course.department = department
 
-                print(course)
-
-        """
-        for table in soup.find_all("table"):
-            #print(table["class"])
+            # look for the class table
             if table["class"][0].strip() == "PSLEVEL1GRIDNBONBO":
-                for row in table.children:
-
-                    if not isinstance(row, NavigableString):
-
-                        cells = row.find_all("td")
-                        if len(cells) > 2:
-                            print("--- row")
-                            for cell in cells:
-                                print(cell.text.strip())
-                            c += 1
-
-                print("classes = ", c)
-        """
+                self.scrape_classes_table(table, course)
+                self.courses[course.course_id] = course
 
     def get_classes(self, testing: bool = False, term_code: str = None) -> dict:
         test_limit = 1
