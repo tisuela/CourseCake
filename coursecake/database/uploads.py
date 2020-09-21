@@ -16,19 +16,14 @@ def update_all(db: Session, term_id: str = "2020-FALL-1", testing: bool = False)
     if len(term_args) < 3:
         term_id += "-1"
 
-    uci = "uci"
-    uci_scraper = CourseScraper().get_scraper(uci, term_id)
-    uci_scraper.get_classes(testing=testing)
-    uci_courses = list(uci_scraper.courses.values())
+    universities = ["uci", "ucsc", "calpoly"]
+    scrapers = CourseScraper()
 
-    upload_courses(db, term_id, testing, uci, uci_courses)
-
-    ucsc = "ucsc"
-    ucsc_scraper = CourseScraper().get_scraper(ucsc, term_id)
-    ucsc_scraper.get_classes(testing=testing)
-    ucsc_courses = list(ucsc_scraper.courses.values())
-
-    upload_courses(db, term_id, testing, ucsc, ucsc_courses)
+    for university in universities:
+        scraper = scrapers.get_scraper(university, term_id)
+        scraper.get_classes(testing=testing)
+        courses = list(scraper.courses.values())
+        upload_courses(db, term_id, testing, university, courses)
 
 
 def upload_courses(

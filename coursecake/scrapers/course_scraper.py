@@ -1,5 +1,6 @@
 from .uci.uci_scraper import UciScraper
 from .ucsc.ucsc_scraper import UcscScraper
+from .calpoly.calpoly_scraper import CalpolyScraper
 from .course import Course
 from .scraper import Scraper
 import json
@@ -10,7 +11,11 @@ class CourseScraper:
     All courses can be scraped from here
     """
 
-    REGISTERED_SCRAPERS = {"UCI": UciScraper, "UCSC": UcscScraper}
+    REGISTERED_SCRAPERS = {
+        "UCI": UciScraper,
+        "UCSC": UcscScraper,
+        "CALPOLY": CalpolyScraper,
+    }
 
     def __init__(self):
 

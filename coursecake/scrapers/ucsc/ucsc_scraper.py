@@ -4,22 +4,8 @@ import requests
 
 from ..course import Course
 from ..course_class import CourseClass
-from ..scraper import Scraper
+from ..scraper import Scraper, InvalidTermId
 from .constants import TERMS_API_URL, CLASSES_API_BASE_URL
-
-
-class InvalidTermId(Exception):
-    def __init__(self, term_id: str, encoded_term_id: str):
-        self.term_id = term_id
-        self.encoded_term_id = encoded_term_id
-
-    def __str__(self):
-
-        return (
-            f"Invalid Term Id, {self.term_id}"
-            + f" Encoded Term Id, {self.encoded_term_id} did not"
-            + " match with any term name found in SlugSurvival"
-        )
 
 
 class UcscScraper(Scraper):

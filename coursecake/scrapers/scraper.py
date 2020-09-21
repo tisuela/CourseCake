@@ -2,6 +2,20 @@ from .universities import Universities
 from .course import Course
 
 
+class InvalidTermId(Exception):
+    def __init__(self, term_id: str, encoded_term_id: str = None):
+        self.term_id = term_id
+        self.encoded_term_id = encoded_term_id
+
+    def __str__(self):
+
+        return (
+            f"Invalid Term Id, {self.term_id}"
+            + f" Encoded Term Id, {self.encoded_term_id} did not"
+            + " match with any supported term in the scraper"
+        )
+
+
 class Scraper:
     def __init__(self, universityName: str, term_id: str):
         self.universityName = universityName
@@ -14,18 +28,21 @@ class Scraper:
         # dictionary of course
         self.courses = dict()
 
+        self.classes = dict()
+
         # at least one of these params needed to query scraper
         self.requiredParams = list()
 
-    def getCourses(self, args: dict) -> dict:
+    def get_classes(self) -> dict:
         """
         Needs implementation by child
         """
         courses = dict()
         return courses
 
-    def scrape(self) -> dict:
+    def get_courses(self) -> dict:
         """
-        Implemented by child
+        Needs implementation by child
         """
-        return self.courses
+        courses = dict()
+        return courses
