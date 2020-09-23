@@ -21,60 +21,6 @@ You can see our GraphQL Schema documentation and **try it out live** on our [Gra
 New to GraphQL? Learn more on their website: [graphql.org](https://graphql.org/)
 
 
-## REST API Endpoints
-🌐 `/api/v1`
-
-[Full documentation](https://coursecake.tisuela.com)
-
-[Try it out!](https://coursecake.tisuela.com/api/v1)
-
-### All courses
-📚 `GET /courses/all/<university>`
-
-Returns all courses from a university.
-`university` is determined by their domain.edu.
-
-### Search Courses
-🔍 `GET courses/search/<university>`
-
-Query our database for courses
-
-
-#### Create complex queries
-🔬 All parameter names can be followed by [filter]. This allows for powerful queries, allowing us to query Course information *for you*.
-The default filter (applied when no filter is specified) is `equals`.
-
-For example:
-```
-title[like]=dance
-```
-
-Here are all valid filters:
-`like`
-`notlike`
-`equals`
-`not`
-
-You can search for multiple values for a parameter by separating them with commas:
-```
-/courses/search/<university>?units=4,8&department[not]=compsci,biosci
-```
-
-Here are the supported search parameters:
-
-Parameter |  Description
---- | ---
-"id" | Course id, like DANCE 101
-"units" |
-"department" | See Department codes on your school's Course Schedule
-"title" | Readable name, like Intro to Dance
-
-
-Here's a request that returns all of UCI's in-person classes taught on Monday, Wednesday, and Friday which are not taught by Professor Badprof
-```
-GET coursecake.tisuela.com/api/v1/classes/search/uci?location[notlike]=line,remote,tba&time[like]=mwf&instructor=goodprof
-```
-
 ## Quickstart
 Lets search for all the courses in a university. Note that we specify a `limit` in each request; the default `limit` is 50 results per request. This is to prevent API abuse.
 
@@ -143,6 +89,63 @@ curl http://coursecake.tisuela.com/api/v1/courses/search/uci?department[like]=co
 ## Try it out!
 Try out our API using Swagger UI [here](http://coursecake.tisuela.com/api/v1):
 [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
+
+
+
+## REST API Endpoints
+🌐 `/api/v1`
+
+[Full documentation](https://coursecake.tisuela.com)
+
+[Try it out!](https://coursecake.tisuela.com/api/v1)
+
+### All courses
+📚 `GET /courses/all/<university>`
+
+Returns all courses from a university.
+`university` is determined by their domain.edu.
+
+### Search Courses
+🔍 `GET courses/search/<university>`
+
+Query our database for courses
+
+
+#### Create complex queries
+🔬 All parameter names can be followed by [filter]. This allows for powerful queries, allowing us to query Course information *for you*.
+The default filter (applied when no filter is specified) is `equals`.
+
+For example:
+```
+title[like]=dance
+```
+
+Here are all valid filters:
+`like`
+`notlike`
+`equals`
+`not`
+
+You can search for multiple values for a parameter by separating them with commas:
+```
+/courses/search/<university>?units=4,8&department[not]=compsci,biosci
+```
+
+Here are the supported search parameters:
+
+Parameter |  Description
+--- | ---
+"id" | Course id, like DANCE 101
+"units" |
+"department" | See Department codes on your school's Course Schedule
+"title" | Readable name, like Intro to Dance
+
+
+Here's a request that returns all of UCI's in-person classes taught on Monday, Wednesday, and Friday which are not taught by Professor Badprof
+```
+GET coursecake.tisuela.com/api/v1/classes/search/uci?location[notlike]=line,remote,tba&time[like]=mwf&instructor=goodprof
+```
+
 
 
 ## Course vs Class

@@ -40,12 +40,6 @@ All of the latest scraped data is stored in our database, which avoids congestin
 ## Where's my university? 🤷‍♂️
 [Open up an issue](https://github.com/nananananate/CourseCake/issues/new/choose)! If there's enough of a need, I'm down to add support for your school. If you'd like to help code a scraper or have an API to provide, [let me know](https://github.com/nananananate/CourseCake/issues/new/choose).
 
-## Course vs Class
-📚 A `Course` is a unit of teaching that lasts a term.
-
-📝 A `Class` is an offering of a `Course`. This means a `Class` has information for the purpose of enrollment and meaning, such as  instructor, meeting times, location, and status (open or closed). A `Course` has many `classes`, however each `Class` belongs to exactly one `Course`.
-
-See more about `Course` and `Class`, such as their schemas, in the documentation below ⬇
 
 ## Documentation
 
