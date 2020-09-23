@@ -20,61 +20,6 @@ You can see our GraphQL Schema documentation and **try it out live** on our [Gra
 
 New to GraphQL? Learn more on their website: [graphql.org](https://graphql.org/)
 
-## Course vs Class
-📚 A `Course` is a unit of teaching that lasts a term.
-
-📝 A `Class` is an offering of a `Course`. This means a `Class` has information for the purpose of enrollment and meaning, such as  instructor, meeting times, location, and status (open or closed). A `Course` has many `classes`, however each `Class` belongs to exactly one `Course`.
-
-
-### Course Schema
-📚 This defines a `Course` as a response from our REST API and GraphQL Web API, the model in `database.models`, and the class in `scrapers.course`.
-s
-Below is an example:
-```
-{
-  "course_id": "string",
-  "title": "string",
-  "department": "string",
-  "units": 4,
-  "prerequisites_str": "string",
-  "department_title": "string",
-  "restrictions": "string",
-  "school": "string",
-  "university_name": "UCI",
-  "term_id": "FALL-2020-1"
-}
-
-```
-
-### Class Schema
-📝 This defines a `Class` as a response from our REST API and GraphQL Web API, the model in `database.models`, and the class (renamed `CourseClass`) in `scrapers.course_class`.
-
-Looking at our source code, you see names like `CourseClass` or `a_class`. This naming prevents collisions with each other and with the python-built in blueprint for objects: `class`.
-
-Below is an example:
-```
-{
-  "class_id": "string",
-  "course_id": "string",
-  "instructor": "string",
-  "time": "string",
-  "location": "string",
-  "building": "string",
-  "room": "string",
-  "status": "string",
-  "type": "string",
-  "units": 4,
-  "max": 0,
-  "enrolled": 0,
-  "waitlisted": 0,
-  "requested": 0,
-  "university_name": "UCI",
-  "term_id": "FALL-2020-1",
-  "updated": "2019-08-24T14:15:22Z"
-}
-```
-
-The breakdown of a course from the JSON response is analogous to the definition of a `Course` in `coursecake/scrapers/course.py`:
 
 ## REST API Endpoints
 🌐 `/api/v1`
@@ -96,8 +41,8 @@ Query our database for courses
 
 
 #### Create complex queries
-🔬 All parameter names can be followed by [filter].
-The default filter (applied when no filter is specified) is equals
+🔬 All parameter names can be followed by [filter]. This allows for powerful queries, allowing us to query Course information *for you*.
+The default filter (applied when no filter is specified) is `equals`.
 
 For example:
 ```
@@ -112,7 +57,7 @@ Here are all valid filters:
 
 You can search for multiple values for a parameter by separating them with commas:
 ```
-/courses/search/<university>?units=4,8
+/courses/search/<university>?units=4,8&department[not]=compsci,biosci
 ```
 
 Here are the supported search parameters:
@@ -130,16 +75,40 @@ Here's a request that returns all of UCI's in-person classes taught on Monday, W
 GET coursecake.tisuela.com/api/v1/classes/search/uci?location[notlike]=line,remote,tba&time[like]=mwf&instructor=goodprof
 ```
 
-
-
-## Can't find what you are looking for?
-The comprehensive documentation (less readable) can be found [here](http://coursecake.tisuela.com):
-[coursecake.tisuela.com](http://coursecake.tisuela.com)
-
-
-## API Examples
+## Quickstart
+Lets search for all the courses in a university. Note that we specify a `limit` in each request; the default `limit` is 50 results per request. This is to prevent API abuse.
 
 ### Python
+You will need the `requests` library. To install, run on you command line: `python -m pip install requests`
+```
+import requests
+
+# URL to the Search API endpoint
+url = "http://coursecake.tisuela.com/api/v1/courses/search/uci"   
+
+# send request
+response = requests.get(url, params=search_params)
+
+# view body of response
+print(response.text)
+
+# get the courses JSON
+courses_json = response.json()
+```
+
+### Curl
+```
+curl http://coursecake.tisuela.com/api/v1/courses/search/uci
+```
+
+
+## Complex Examples
+The below examples show how to create complex, powerful queries to our REST API.
+
+Each case is the same. We search for `courses` at `UCI` that are within a `department` which contains (`like`) `comp` or `bio`. Next, we look for `courses` that have a `title` which does `not` match `intro to bad course`. Finally, only courses with `units` that `equal` `4` are returned.
+
+### Python
+You will need the `requests` library. To install, run on you command line: `python -m pip install requests`
 ```
 import requests
 
@@ -148,18 +117,95 @@ url = "http://coursecake.tisuela.com/api/v1/courses/search/uci"
 
 # search parameters for the GET request
 search_params = {
-    "department[like]": "compsci",
+
+    # courses which contain "comp" OR "bio"
+    "department[like]": "comp,bio",
+
+    # courses with a title that does NOT MATCH "intro to bad course"
     "title[not]": "intro to bad course",
+
+    # courses with units that EQUAL 4
     "units": "4"
 }
 
 # send request
 response = requests.get(url, params=search_params)
 
-# view body of response
-print(response.text)
+# get the courses JSON
+courses_json = response.json()
+```
+
+### Curl
+```
+curl http://coursecake.tisuela.com/api/v1/courses/search/uci?department[like]=comp,bio&title[not]=intro%20to%20bad%20course&units=4
 ```
 
 ## Try it out!
 Try out our API using Swagger UI [here](http://coursecake.tisuela.com/api/v1):
 [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1)
+
+
+## Course vs Class
+📚 A `Course` is a unit of teaching that lasts a term.
+
+📝 A `Class` is an offering of a `Course`. This means a `Class` has information for the purpose of enrollment and meaning, such as  instructor, meeting times, location, and status (open or closed). A `Course` has many `classes`, however each `Class` belongs to exactly one `Course`.
+
+
+### Course Schema
+📚 This defines a `Course` as a response from our REST API and GraphQL Web API, the model in `database.models`, and the class in `scrapers.course`.
+s
+Below is an example:
+```
+{
+"course_id": "string",
+"title": "string",
+"department": "string",
+"units": 4,
+"prerequisites_str": "string",
+"department_title": "string",
+"restrictions": "string",
+"school": "string",
+"provider": "SlugSurvival",
+"university_name": "UCI",
+"term_id": "FALL-2020-1",
+"updated": "2019-08-24T14:15:22Z",
+"classes": [ ]
+}
+
+```
+
+### Class Schema
+📝 This defines a `Class` as a response from our REST API and GraphQL Web API, the model in `database.models`, and the class (renamed `CourseClass`) in `scrapers.course_class`.
+
+Looking at our source code, you see names like `CourseClass` or `a_class`. This naming prevents collisions with each other and with the python-built in blueprint for objects: `class`.
+
+Below is an example:
+```
+{
+"class_id": "string",
+"course_id": "string",
+"instructor": "string",
+"time": "string",
+"location": "string",
+"building": "string",
+"room": "string",
+"status": "string",
+"type": "string",
+"units": 4,
+"max": 0,
+"enrolled": 0,
+"waitlisted": 0,
+"requested": 0,
+"provider": "SlugSurvival",
+"university_name": "UCI",
+"term_id": "FALL-2020-1",
+"updated": "2019-08-24T14:15:22Z",
+"course": {}
+}
+```
+
+
+
+## Can't find what you are looking for?
+The comprehensive documentation (less readable) can be found [here](http://coursecake.tisuela.com):
+[coursecake.tisuela.com](http://coursecake.tisuela.com)
