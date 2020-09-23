@@ -1,4 +1,4 @@
-# [![CourseCake](https://github.com/nananananate/CourseCake/blob/master/docs/coursecake_header.png?raw=true)](https://docs.coursecake.tisuela.com/)
+[![CourseCake](https://github.com/nananananate/CourseCake/blob/master/docs/coursecake_header.png?raw=true)](https://docs.coursecake.tisuela.com/)
 ![Build](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e8ce080e567747998a0efd337069b1ed)](https://www.codacy.com/manual/nananananate/CourseCake?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nananananate/CourseCake&amp;utm_campaign=Badge_Grade) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master)  [![Website coursecake.tisuela.com](https://img.shields.io/website?label=Web%20API&up_color=success&up_message=up&url=https%3A%2F%2Fcoursecake.tisuela.com)](https://coursecake.tisuela.com/) ![last commit](https://img.shields.io/github/last-commit/nananananate/CourseCake) ![commits activity](https://img.shields.io/github/commit-activity/m/nananananate/CourseCake)
 
 There are three main features CourseCake offers that make university course information more "edible" for developers:
@@ -40,7 +40,7 @@ All of the latest scraped data is stored in our database, which avoids congestin
 
 See more about `Course` and `Class`, such as their schemas, in the documentation below ⬇
 
-# Documentation
+## Documentation
 
 [🌐 Web API](http://docs.coursecake.tisuela.com/REST-API)
 
@@ -110,7 +110,7 @@ You’ll see output similar to this:
 ```
 donezo
 
-# Future features
+## Future features
 Things I'm working on! [Open up an issue](https://github.com/nananananate/CourseCake/issues/new/choose) to suggest features or request to help out! I'm down to guide you in webscraping, using SQLAlchemy, or general back-end web development in Python :D  
 - Adding instructor ratings from Rate My Professor via [ratemyprof-api](https://github.com/nananananate/ratemyprof-api)
 - Prerequisite mapping (AND visualization!) to create a network of classes (along with a node graph GUI) via Neo4j (probably in seperate repository).
