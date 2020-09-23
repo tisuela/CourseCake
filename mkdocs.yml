@@ -1,4 +1,4 @@
 site_name: My Docs
 theme:
   name: material
-  favicon: images/favicon
+  favicon: images/favicon.png
