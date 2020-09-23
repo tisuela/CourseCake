@@ -1,4 +1,7 @@
-site_name: My Docs
+site_name: CourseCake Docs
+repo_url: https://github.com/nananananate/CourseCake
+repo_name: nananananate/CourseCake
 theme:
   name: material
   favicon: images/favicon.png
+  logo: images/favicon.png
