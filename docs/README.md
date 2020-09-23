@@ -2,18 +2,18 @@
 ![Build](https://github.com/nananananate/CourseCake/workflows/Python%20application/badge.svg) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e8ce080e567747998a0efd337069b1ed)](https://www.codacy.com/manual/nananananate/CourseCake?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nananananate/CourseCake&amp;utm_campaign=Badge_Grade) [![Coverage Status](https://coveralls.io/repos/github/nananananate/CourseCake/badge.svg?branch=master)](https://coveralls.io/github/nananananate/CourseCake?branch=master)  [![Website coursecake.tisuela.com](https://img.shields.io/website?label=Web%20API&up_color=success&up_message=up&url=https%3A%2F%2Fcoursecake.tisuela.com)](https://coursecake.tisuela.com/) ![last commit](https://img.shields.io/github/last-commit/nananananate/CourseCake) ![commits activity](https://img.shields.io/github/commit-activity/m/nananananate/CourseCake)
 
 There are three main features CourseCake offers that make university course information more "edible" for developers:
-- 🌐 Web API (REST + GraphQL) [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/REST-API)
-- 💾 Database package - [docs](http://docs.coursecake.tisuela.com/Database)
-- 🔍 Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
+* 🌐 Web API (REST + GraphQL) [coursecake.tisuela.com/api/v1](http://coursecake.tisuela.com/api/v1) - [docs](https://docs.coursecake.tisuela.com/REST-API)
+* 💾 Database package - [docs](http://docs.coursecake.tisuela.com/Database)
+* 🔍 Scraper package - [docs](https://docs.coursecake.tisuela.com/Scrapers)
 
 CourseCake aims to create an API to access course data, where college course information is unified by our schemas. By making course 📚 data easier to responsibly access and more "edible" 🍰 for developers, we hope CourseCake gives a smooth approach to build useful tools for students.
 
 
 ## 🆕 Recent Changes
-- 🐴 Support for Calpoly
-- 🐌 Support for UCSC via [SlugSurvival](https://slugsurvival.com/)
-- 📚📝 Separation of the Course Schema into a smaller Course Schema and a Class Schema. A Class is an offering of a Course
-- 📈 Implementing a GraphQL endpoint using Graphene.
+* 🐴 Support for Calpoly
+* 🐌 Support for UCSC via [SlugSurvival](https://slugsurvival.com/)
+* 📚📝 Separation of the Course Schema into a smaller Course Schema and a Class Schema. A Class is an offering of a Course
+* 📈 Implementing a GraphQL endpoint using Graphene.
 
 
 ## 🐴 Cal Poly -- Create course discovery applications faster

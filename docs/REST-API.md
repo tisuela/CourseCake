@@ -7,20 +7,20 @@ title: REST API
 You can check out [CourseCake online](coursecake.tisuela.com)! Try out our [REST API](http://coursecake.tisuela.com/api/v1) or [GraphQL](http://coursecake.tisuela.com/api/graphql) endpoint. Take a look at comprehensive documentation [here](http://coursecake.tisuela.com/api/v1)
 
 
-## [📈 GraphQL](http://coursecake.tisuela.com/api/graphql) - Beyond REST
+## [GraphQL 📈](http://coursecake.tisuela.com/api/graphql) - Beyond REST
 [coursecake.tisuela.com/api/graphql](http://coursecake.tisuela.com/api/graphql) is another Web API endpoint (it is not RESTful) for queries via GraphQL.
 
 [GraphQL](https://graphql.org/) is a query language for APIs. It allows for more dynamic, specific queries, helping CourseCake give you the information you need. However, the kind of requests you will have to make are more complex. You can see our GraphQL Schema documentation and try it out live on our [GraphiQL browser](http://coursecake.tisuela.com/api/graphql).  
 
 New to GraphQL? Learn more on their website: https://graphql.org/
 
-## 📚 Course vs 📝 Class -- What's the Difference?
+## Course 📚 vs Class 📝 -- What's the Difference?
 📚 A `Course` is a unit of teaching that lasts a term.
 
 📝 A `Class` is an offering of a `Course`. This means a `Class` has information for the purpose of enrollment and meaning, such as  instructor, meeting times, location, and status (open or closed). A `Course` has many `classes`, however each `Class` belongs to exactly one `Course`.
 
 
-### 📚 Course Schema
+### Course Schema 📚
 This defines a `Course` as a response from our REST API and GraphQL Web API, the model in `coursecake.database.models`, and the class in `coursecake.scrapers.course`.
 s
 Below is an example:
@@ -40,7 +40,7 @@ Below is an example:
 
 ```
 
-### 📝 Class Schema
+### Class Schema 📝
 This defines a `Class` as a response from our REST API and GraphQL Web API, the model in `coursecake.database.models`, and the class (renamed `CourseClass`) in `coursecake.scrapers.course_class`.
 
 Looking at our source code, you see names like `CourseClass` or `a_class`. This naming prevents collisions with each other and with the python-built in blueprint for objects: `class`.
@@ -70,17 +70,17 @@ Below is an example:
 
 The breakdown of a course from the JSON response is analogous to the definition of a `Course` in `coursecake/scrapers/course.py`:
 
-## 🌐 API Endpoints `/api/v1`
+## API Endpoints 🌐 `/api/v1`
 
-### 📚 All courses `GET /courses/all/<university>`
+### All courses 📚 `GET /courses/all/<university>`
 Returns all courses from a university.
 `university` is determined by their domain.edu.
 
-### 🔍 Search Courses `GET courses/search/<university>`
+### Search Courses 🔍 `GET courses/search/<university>`
 Query our database for courses
 
 
-#### 🔬 Create complex queries
+#### Create complex queries 🔬
 All parameter names can be followed by [filter].
 The default filter (applied when no filter is specified) is equals
 
