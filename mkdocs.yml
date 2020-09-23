@@ -1,7 +1,13 @@
 site_name: CourseCake Docs
+site_url: http://docs.coursecake.tisuela.com/
+
 repo_url: https://github.com/nananananate/CourseCake
 repo_name: nananananate/CourseCake
+
 theme:
   name: material
   favicon: images/favicon.png
   logo: images/favicon.png
+
+extra:
+  disquis: coursecake-docs
