@@ -2,7 +2,7 @@
 title: Database
 ---
 
-## UNDER CONSTRUCTION, SORRY
+## UNDER CONSTRUCTION, SORRYY
 if u need info desperately, there are random comments and docstrings in the code
 
 
