@@ -1,0 +1,2 @@
+# CourseCake
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/16500c36280a48d1a3832b374add7617)](https://app.codacy.com/gh/nananananate/CourseCake?utm_source=github.com&utm_medium=referral&utm_content=nananananate/CourseCake&utm_campaign=Badge_Grade)
